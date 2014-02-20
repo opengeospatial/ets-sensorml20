@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ctl:package 
+	xmlns:ctl="http://www.occamlab.com/ctl" 
+	xmlns:parsers="http://www.occamlab.com/te/parsers" 
+	xmlns:ocp="http://www.occamlab.com/te/parsers" 
+	xmlns:tep="http://teamengine.sourceforge.net/parsers" 
+	xmlns:sml="http://www.opengis.net/sensorml/2.0"
+	xmlns:swe="http://www.opengis.net/swe/2.0" 
+	xmlns:gml="http://www.opengis.net/gml/3.2" 
+	xmlns:xi="http://www.w3.org/2001/XInclude" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+  <ctl:suite name="sml:suite">
+    <ctl:title>SensorML 2.0 Compliance Test Suite</ctl:title>
+    <ctl:description>Verifies that an SensorML 2.0 implementation complies with the Sensor Model Language (SensorML) Implementation Specification.</ctl:description>
+    <ctl:starting-test>sml:Main</ctl:starting-test>
+  </ctl:suite>
+
+  <ctl:test name="sml:Main">
+    <ctl:assertion>The schema satisfies all applicable assertions.</ctl:assertion>
+    <ctl:code>
+      <!--
+                1.)  Prompt the user to provide the url for an SensorML implementation.
+                2.)  Send a request to the provided url to determine if there is a response
+                3.)  If there is a response, then begin executing tests, else fail.
+            -->
+      <ctl:message>**********************************************************************</ctl:message>
+      <ctl:message>Testing started at:  <xsl:value-of select="current-dateTime()" /></ctl:message>
+      <ctl:message>**********************************************************************</ctl:message>
+      <xsl:variable name="form-values">
+        <ctl:form height="700" width="1024">
+          <body>
+            <h2>Compliance Test Suite for Sensor Model Language (SensorML) 2.0</h2>
+			<p>
+                  Please provide a URL from which a SensorML document can 
+                  be retrieved. Modify the URL template below to specify the 
+                  location of an OGC SensorML 2.0 implementation to be tested.
+            </p>
+            <blockquote>
+              <table border="1" padding="4" bgcolor="#99ccff">
+                <tr>
+                  <td align="left">
+                    <b>SensorML URL:</b>
+                  </td>
+                  <td align="center">
+                    <input name="service-url" size="128" type="text" value="" />
+                  </td>
+                </tr>
+              </table>
+            </blockquote>
+            <input type="submit" value="Start" />
+          </body>
+        </ctl:form>
+      </xsl:variable>
+      <!-- Get user input:  Get the value of the SensorML URL that the user supplies -->
+      <xsl:variable name="sml.get.url" select="$form-values/values/value[@key='service-url']" />
+      <ctl:message>Executing tests on the SensorML implementation found at the following URL:  <xsl:value-of select="$sml.get.url" /></ctl:message>
+		<ctl:call-test name="sml:SchemaValidation">
+			<ctl:with-param name="serviceURL" select="$sml.get.url" />
+		</ctl:call-test>
+    </ctl:code>
+  </ctl:test>
+
+  <ctl:test name="sml:SchemaValidation">
+    <ctl:param name="serviceURL" />
+    <ctl:assertion>The provided SensorML complies with the SensorML 2.0 Implementation Specification.</ctl:assertion>
+    <ctl:code>
+      <ctl:message>Executing a request for getting the context of the provided SensorML from "<xsl:value-of select="$serviceURL" />"</ctl:message>
+      <xsl:variable name="response">
+        <ctl:request>
+          <ctl:url>
+            <xsl:value-of select="$serviceURL" />
+          </ctl:url>
+          <ctl:method>get</ctl:method>
+		  <parsers:XMLValidatingParser>
+			<parsers:schemas>
+				<parsers:schema type="resource">xsd\w3c\xml.xsd</parsers:schema>
+				<parsers:schema type="resource">xsd\ogc\sensorML\2.0\sensorML.xsd</parsers:schema>
+			</parsers:schemas>
+		  </parsers:XMLValidatingParser>
+        </ctl:request>
+      </xsl:variable>
+      <xsl:choose>
+        <xsl:when test="not($response/*)">
+          <ctl:message>FAILURE: Missing or invalid response entity.</ctl:message>
+          <ctl:fail />
+        </xsl:when>
+      </xsl:choose>
+    </ctl:code>
+  </ctl:test>
+  
+</ctl:package>
