@@ -12,7 +12,7 @@
 	<description>Checks SensorML instances for conformance to OGC 12-000.</description>
   </suite>
   <revision>
-	<name>r0</name>
+	<name>r1</name>
 	<status>Beta</status>
 	<sources>
 	  <source>sensorML20/ctl</source>

@@ -7,7 +7,7 @@
 		To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .
 		</documentation>
 	</annotation>
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://schemas.opengis.net/xlink/1.0.0/xlinks.xsd"/>
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"/>
 	<!-- ================================================= -->
 	<element name="AbstractSWE" type="swe:AbstractSWEType" abstract="true">
 		<annotation>
@@ -136,7 +136,7 @@ It is also required that the symbol be an identifier for a unit of measure as sp
 	</simpleType>
 	<!-- ================================================= -->
 	<attributeGroup name="AssociationAttributeGroup">
-		<attributeGroup ref="xlink:simpleLink"/>
+		<attributeGroup ref="xlink:simpleAttrs"/>
 	</attributeGroup>
   <!-- ================================================= -->
   <complexType name="Reference">    

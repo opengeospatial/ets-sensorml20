@@ -17,7 +17,7 @@ elementFormDefault="qualified" version="1.1.0 2010-01-30" xml:lang="en">
 		includes and imports
 	============================================================== -->
 	<include schemaLocation="owsCommon.xsd"></include>
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://schemas.opengis.net/xlink/1.0.0/xlinks.xsd"></import>
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"></import>
 	<!-- ==============================================================
 		elements and types
 	============================================================== -->

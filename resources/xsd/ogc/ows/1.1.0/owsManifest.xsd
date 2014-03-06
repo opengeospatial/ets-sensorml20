@@ -17,7 +17,7 @@ elementFormDefault="qualified" version="1.1.0 2010-01-30" xml:lang="en">
 		includes and imports
 	============================================================== -->
 	<include schemaLocation="owsDataIdentification.xsd"/>
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://schemas.opengis.net/xlink/1.0.0/xlinks.xsd"/>
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"/>
 	<!-- ==========================================================
 		Types and elements
 	    ========================================================== -->
@@ -26,7 +26,7 @@ elementFormDefault="qualified" version="1.1.0 2010-01-30" xml:lang="en">
 	<complexType name="AbstractReferenceBaseType">
 		<annotation>
 			<documentation> Base for a reference to a remote or local resource. </documentation>
-			<documentation>This type contains only a restricted and annotated set of the attributes from the xlink:simpleLink attributeGroup. </documentation>
+			<documentation>This type contains only a restricted and annotated set of the attributes from the xlink:simpleAttrs attributeGroup. </documentation>
 		</annotation>
 		<attribute name="type" type="string" fixed="simple" form="qualified"/>
 		<attribute ref="xlink:href" use="required">
@@ -41,7 +41,7 @@ elementFormDefault="qualified" version="1.1.0 2010-01-30" xml:lang="en">
 		</attribute>
 		<attribute ref="xlink:arcrole" use="optional">
 			<annotation>
-				<documentation>Although allowed, this attribute is not expected to be useful in this application of xlink:simpleLink. </documentation>
+				<documentation>Although allowed, this attribute is not expected to be useful in this application of xlink:simpleAttrs. </documentation>
 			</annotation>
 		</attribute>
 		<attribute ref="xlink:title" use="optional">
@@ -51,12 +51,12 @@ elementFormDefault="qualified" version="1.1.0 2010-01-30" xml:lang="en">
 		</attribute>
 		<attribute ref="xlink:show" use="optional">
 			<annotation>
-				<documentation>Although allowed, this attribute is not expected to be useful in this application of xlink:simpleLink. </documentation>
+				<documentation>Although allowed, this attribute is not expected to be useful in this application of xlink:simpleAttrs. </documentation>
 			</annotation>
 		</attribute>
 		<attribute ref="xlink:actuate" use="optional">
 			<annotation>
-				<documentation>Although allowed, this attribute is not expected to be useful in this application of xlink:simpleLink. </documentation>
+				<documentation>Although allowed, this attribute is not expected to be useful in this application of xlink:simpleAttrs. </documentation>
 			</annotation>
 		</attribute>
 	</complexType>
