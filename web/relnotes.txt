@@ -1,5 +1,10 @@
 <h3>Release Notes</h3>
 
+<h2>r1</h2>
+<ul>
+   <li> Add conformance Tests. (Annex A and Annex B) </li>
+</ul>
+
 <h2>r0</h2>
 <ul>
    <li>First release - basic test against schema.</li>
