@@ -12,7 +12,7 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:smlFunctions="https://cite.opengeospatial.org/sos-1.0.0/src/ctl/functions.xml">
+	xmlns:smlFunctions="https://cite.opengeospatial.org/sml-2.0.0/src/ctl/functions.xml">
 
 	<ctl:suite name="sml:suite">
 		<ctl:title>SensorML 2.0 Compliance Test Suite</ctl:title>
