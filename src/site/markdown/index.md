@@ -11,5 +11,5 @@ the Annex A and Annex B in Documents.
 
 ## Release Notes
 
-Release notes are available [here.](relnotes.txt)
+Release notes are available [here.](relnotes.html)
 

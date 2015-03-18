@@ -4,7 +4,7 @@ The OGC Sensor Model Language 2.0.0 Test-Suite provides the Executable Test Scri
 
   * _Sensor Model Language Documents_, version 2.0.0 [[OGC 12-000]](https://portal.opengeospatial.org/files/?artifact_id=55939)
 
-Detailed information about this test suite is available [here]( http://htmlpreview.github.com/?https://github.com/opengeospatial/ets-sensorml20/blob/master/src/main/web/index.html).
+Detailed information about this test suite is available [here](http://opengeospatial.github.io/ets-sensorml20).
 
 ## License
 
@@ -21,18 +21,7 @@ mvn install
      
 ## Testing an Implementation
 
-For UNIX/OS Users
-
-Clone this repository:
-```     
-git clone https://github.com/opengeospatial/ets-sensorml20.git
-```
-Run:
-```   
-build.sh**
-```
-
-For Windows users and to get more information about running tests in TEAM Engine, check the instructions at the [CITE wiki](http://cite.opengeospatial.org/easytesting)
+Follow the [TEAM ENGINE instructions](http://opengeospatial.github.io/teamengine/installation.html) to install and run the tests in TEAM ENGINE.
 
 ## Bugs
 
