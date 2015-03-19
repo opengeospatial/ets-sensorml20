@@ -67,10 +67,10 @@
 								<h3>SensorML URL Example:</h3>
 								a SensorML with a public URL ( The root element is "sml:SensorML"). <br />
 								For example:<br />
-								<a target="_blank" href="https://github.com/opengeospatial/ets-sensorml20/blob/master/src/main/example/SensorML2_1.xml">
-								https://github.com/opengeospatial/ets-sensorml20/blob/master/src/main/example/SensorML2_1.xml</a><br />
-								<a target="_blank" href="https://github.com/opengeospatial/ets-sensorml20/blob/master/src/main/example/SensorML2_2.xml">
-								https://github.com/opengeospatial/ets-sensorml20/blob/master/src/main/example/SensorML2_2.xml</a>
+								<a target="_blank" href="https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/main/example/SensorML2_1.xml">
+								https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/main/example/SensorML2_1.xml</a><br />
+								<a target="_blank" href="https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/main/example/SensorML2_2.xml">
+								https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/main/example/SensorML2_2.xml</a>
 							</p>
 						</blockquote>
 					</body>
