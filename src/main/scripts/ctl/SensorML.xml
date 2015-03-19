@@ -53,7 +53,26 @@
 								</tr>
 							</table>
 						</blockquote>
-						<input type="submit" value="Start" />
+						<blockquote>
+							<table border="1" padding="4" bgcolor="#00ffff" align="center">
+								<tr>
+									<td>
+										<input type="submit" value="Start" />
+									</td>
+								</tr>				
+							</table>						
+						</blockquote>
+						<blockquote>
+							<p>
+								<h3>SensorML URL Example:</h3>
+								a SensorML with a public URL ( The root element is "sml:SensorML"). <br />
+								For example:<br />
+								<a target="_blank" href="https://github.com/opengeospatial/ets-sensorml20/blob/master/src/main/example/SensorML2_1.xml">
+								https://github.com/opengeospatial/ets-sensorml20/blob/master/src/main/example/SensorML2_1.xml</a><br />
+								<a target="_blank" href="https://github.com/opengeospatial/ets-sensorml20/blob/master/src/main/example/SensorML2_2.xml">
+								https://github.com/opengeospatial/ets-sensorml20/blob/master/src/main/example/SensorML2_2.xml</a>
+							</p>
+						</blockquote>
 					</body>
 				</ctl:form>
 			</xsl:variable>
