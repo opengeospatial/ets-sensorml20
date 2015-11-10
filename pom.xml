@@ -10,7 +10,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opengis.cite</groupId>
   <artifactId>ets-sensorml20</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.4-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>ets-sensorml20</name>
@@ -47,7 +47,7 @@
 
   <properties>
     <ets-code>sensorml20</ets-code>
-    <spec-version>0.1</spec-version>
+    <spec-version>0.4</spec-version>
   </properties>
 
   <dependencies>
