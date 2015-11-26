@@ -12,9 +12,21 @@ import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.ETSAssert;
 import org.opengis.cite.sensorml20.util.ValidationUtils;
 import org.testng.annotations.Test;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import java.io.File;
+import java.io.IOException;
 
 public class CoreAbstractProcess extends BaseFixture{
 
@@ -58,15 +70,42 @@ public class CoreAbstractProcess extends BaseFixture{
 		}
 	}
 	
-	@Test(description = "Requirement 10" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
-	public void ExtensionIndependence()
+	@Test(description = "Requirement 10" , groups  = "CoreAbstractProcess" /*, dependsOnMethods  = { "DependencyCore" }*/)
+	public void ExtensionIndependence() throws ParserConfigurationException, SAXException, IOException
 	{
+		File fXmlFile = new File("C:/Users/liu/Desktop/SensorML_Sample.xml");
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder;
+	
+		dBuilder = dbFactory.newDocumentBuilder();
+		Document doc = dBuilder.parse(fXmlFile);
+		//String nn = doc.getDocumentElement();
+		//System.out.println("---------------------Output:["+nn+"]--------------------");
+
+		NodeList aaa = doc.getDocumentElement().getElementsByTagName("sml:inputs");
+		Element aaaa = (Element)aaa.item(0);
+		
+		
+		//System.out.println("---------------------Output:["+aaaa.getAttribute(name)+"]--------------------");
+		
+		//aaaa.lookupNamespaceURI("sml");
+
+		/*
 		NodeList extensionList = this.testSubject.getDocumentElement().getElementsByTagName("gml:extension");
 		int listLength = extensionList.getLength();
-		if(listLength == 0)
+		if(listLength != 0)
 		{
+			for(int i=0 ; i<listLength ; i++)
+			{
+				Node item = extensionList.item(i);
+				String namespace = item.getNamespaceURI();
+					
+			}
+			
+			
+			
 			throw new AssertionError("extension property does not exist !!");
-		}
+		}*/
 	}
 	
 	@Test(description = "Requirement 11" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
