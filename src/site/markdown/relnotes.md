@@ -1,6 +1,9 @@
 # SensorML 2.0 Release Notes
 
-## 0.3 
+## 0.4
+- Comply with conformance classes from requirement 1 to 40. Conformance classes of requirement 15 and 20 are still under investigated.
+
+## 0.3
 
 - Update pom.xml to build with Maven 2 and minor updates in index.md
 
@@ -10,7 +13,7 @@
 
 ## r1
 
-  * Add conformance Tests. (Annex A and Annex B) 
+  * Add conformance Tests. (Annex A and Annex B)
 
 ## r0
 
