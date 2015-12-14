@@ -27,7 +27,6 @@ public class AggregateProcess extends BaseFixture{
 		if(componentsList.getLength() > 0)
 		{
 			Node components = componentsList.item(1);
-			
 		}
 	}	
 	

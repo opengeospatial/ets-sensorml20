@@ -10,7 +10,7 @@ public class ConfigurableProcesses extends BaseFixture{
 		//Dependency CoreAbstractProcess
 	}
 	
-	@Test(description = "Requirement 39" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" , "ByPointOrLocation" , "ByPostion" , "ByTrajectory" , "ByProcess" , "Definition"})
+	@Test(description = "Requirement 39" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" , "TwoModesRequired" , "SettingsProperty" , "SetValueRestriction" , "SetArrayValueRestriction" , "SetConstraintRestriction"})
 	public void PackageFullyImplemented()
 	{
 		//Dependency All ConfigurableProcesses Tests

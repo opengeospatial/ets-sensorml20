@@ -5,10 +5,11 @@ import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
-import org.junit.Assert;
+//import org.junit.Assert;
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.ETSAssert;
 import org.opengis.cite.sensorml20.util.ValidationUtils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -63,7 +64,8 @@ public class CoreConcepts extends BaseFixture{
 		{
 			result.add("Core Model Must Define Parameters");
 		}
-		Assert.assertTrue( GetArrayToString(result) , result.size() == 0 );
+		//Assert.assertTrue( GetArrayToString(result) , result.size() == 0 );
+		Assert.assertTrue(result.size() == 0, GetArrayToString(result) );
 	}
 	
 	private String GetArrayToString(ArrayList<String> ary)
@@ -115,7 +117,8 @@ public class CoreConcepts extends BaseFixture{
 				result.add("Process Shall include metadata["+str.replace("sml:", "")+"]");
 			}
 	    }
-		Assert.assertTrue( GetArrayToString(result) , result.size() == 0 );
+		//Assert.assertTrue( GetArrayToString(result) , result.size() == 0 );
+		Assert.assertTrue(result.size() == 0, GetArrayToString(result) );
 	}
 	
 	@Test(description = "Requirement 5" , groups  = "CoreConceptss" , priority = 5)
@@ -166,7 +169,8 @@ public class CoreConcepts extends BaseFixture{
 		}
 		
 		//還想不到錯誤名稱怎麼訂，先這樣吧!!
-		Assert.assertTrue( "Execution Verify Error !!" , result );
+		//Assert.assertTrue( "Execution Verify Error !!" , result );
+		Assert.assertTrue(result, "Execution Verify Error !!" );
 	}
 }
 

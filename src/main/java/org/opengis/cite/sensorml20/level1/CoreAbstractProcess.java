@@ -7,10 +7,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
 
-import org.junit.Assert;
+//import org.junit.Assert;
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.ETSAssert;
 import org.opengis.cite.sensorml20.util.ValidationUtils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import org.w3c.dom.Element;
@@ -22,9 +23,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
 import java.io.File;
 import java.io.IOException;
 
@@ -146,7 +144,8 @@ public class CoreAbstractProcess extends BaseFixture{
 			            + "[-A-Za-z0-9+&@#/%?=~_|!:,.;]"
 			            + "*[-A-Za-z0-9+&@#/%=~_|]";
 			    
-			    Assert.assertTrue( "TypeOf Url Error !!" , url.matches(urlRegex) );
+			    //Assert.assertTrue( "TypeOf Url Error !!" , url.matches(urlRegex) );
+			    Assert.assertTrue(url.matches(urlRegex), "TypeOf Url Error !!" );
 			}
 		}
 	}
