@@ -1,7 +1,22 @@
 # SensorML 2.0 Release Notes
 
 ## 0.4
-- Comply with conformance classes from requirement 1 to 40. Conformance classes of requirement 15 and 20 are still under investigated.
+- #22 Process with Advanced Data Types. Req 36 ~ 37
+- #21 Physical System: Req 33~35
+- #20 Physical Component. Req 26 ~ 32
+- #19 Conformance class - Aggregate Process. Req 22~25
+- #17 Conformance classes - A.14 - XML/Configurable Process minimum requirement
+- #15 Conformance classes - A.12 - XML/Physical Component minimum requirement
+- #13 Conformance classes - A.10 - XML/Simple Process minimum requirement
+- #12 Conformance classes - A.9 - XML/Core Process minimum requirement
+- #11 Conformance classes - A.8 - Model/Configurable Process minimum requirement
+- #10 Conformance classes - A.7 - Model/Processes with Advanced Data Types minimum requirement
+- #9 Conformance classes - A.6 - Model/Physical System minimum requirement
+- #8 Conformance classes - A.5 - Model/Physical Component minimum requirement
+- #7 Conformance classes - A.4 - Model/Aggregate Process minimum requirement
+- #6 Conformance classes - A.3 - Model/Simple Process minimum requirement
+- #5 Conformance classes - A.2 - Abstract Process minimum requirement
+- #4 Conformance classes - A.1 - Core Concepts minimum requirement
 
 ## 0.3
 
