@@ -72,6 +72,33 @@ public class PhysicalComponent extends BaseFixture{
 	@Test(description = "Requirement 32" , groups  = "PhysicalComponent" , dependsOnMethods  = { "DependencyCore" })
 	public void Definition()
 	{
+		if(this.testSubject.getFirstChild().getNodeName() != "sml:PhyscialComponent")
+		{
+			throw new AssertionError("Not PhyscialComponent Procsee");
+		}
 		
+		NodeList componens = this.testSubject.getDocumentElement().getElementsByTagName("sml:components");
+		int componensCount = componens.getLength();
+		
+		if(componensCount > 0)
+		{
+			throw new AssertionError("No intent to further divide the device description into sub-­process components");
+		}
+		
+		NodeList inputs = this.testSubject.getDocumentElement().getElementsByTagName("sml:inputs");
+		int inputsCount = inputs.getLength();
+		
+		if(inputsCount == 0)
+		{
+			throw new AssertionError("No inputs");
+		}
+		
+		NodeList outputs = this.testSubject.getDocumentElement().getElementsByTagName("sml:outputs");
+		int outputsCount = outputs.getLength();
+		
+		if(outputsCount == 0)
+		{
+			throw new AssertionError("No outputs");
+		}
 	}
 }

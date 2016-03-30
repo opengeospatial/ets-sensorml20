@@ -1,7 +1,9 @@
 package org.opengis.cite.sensorml20.level1;
 
 import org.opengis.cite.sensorml20.BaseFixture;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -21,13 +23,27 @@ public class AggregateProcess extends BaseFixture{
 	@Test(description = "Requirement 24" , groups  = "AggregateProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void Definition()
 	{
-		NodeList inputList = this.testSubject.getDocumentElement().getElementsByTagName("sml:components");
+		String rootName = this.testSubject.getDocumentElement().getTagName();
 		
-		NodeList componentsList = this.testSubject.getDocumentElement().getElementsByTagName("sml:components");
-		if(componentsList.getLength() > 0)
-		{
-			Node components = componentsList.item(1);
+		if(rootName == "sml:AggregateProcess")
+		{			
+			if(this.testSubject.getElementsByTagName("sml:inputs").getLength() == 0)
+			{
+				throw new AssertionError("AggregateProcess Must Define Inputs !!");
+			}
+			
+			if(this.testSubject.getElementsByTagName("sml:outputs").getLength() == 0)
+			{
+				throw new AssertionError("AggregateProcess Must Define Outputs !!");
+			}
+			
+			if(this.testSubject.getElementsByTagName("sml:components").getLength() == 0)
+			{
+				throw new AssertionError("AggregateProcess Must Define Sub Process !!");
+			}
 		}
+
+		
 	}	
 	
 	@Test(description = "Requirement 25" , groups  = "AggregateProcess" , dependsOnMethods  = { "DependencyCore" })
@@ -35,11 +51,20 @@ public class AggregateProcess extends BaseFixture{
 	{
 		NodeList componentsList = this.testSubject.getDocumentElement().getElementsByTagName("sml:components");
 		if(componentsList.getLength() > 0)
-		{
-			NodeList subList = componentsList.item(1).getFirstChild().getChildNodes();
-			if(subList.getLength() == 0)
+		{		
+			NodeList componentList = componentsList.item(1).getChildNodes();
+			if(componentList.getLength() == 0)
 			{
-				throw new AssertionError("requires one or more components !!");
+				throw new AssertionError("requires one or more Process !!");
+			}
+			else
+			{
+				for(int i=0 ; i<componentList.getLength() ; i++)
+				{
+					Element item = (Element)componentList.item(i);
+
+				    Assert.assertTrue(item.getTagName() != "sml:SimpleProcess", "Sub Process Not SimpleProcess!!" );
+				}
 			}
 		}
 		else

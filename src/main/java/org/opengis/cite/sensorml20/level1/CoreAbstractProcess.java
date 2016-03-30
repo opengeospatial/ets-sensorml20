@@ -71,39 +71,7 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 10" , groups  = "CoreAbstractProcess" /*, dependsOnMethods  = { "DependencyCore" }*/)
 	public void ExtensionIndependence() throws ParserConfigurationException, SAXException, IOException
 	{
-		File fXmlFile = new File("C:/Users/liu/Desktop/SensorML_Sample.xml");
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder;
-	
-		dBuilder = dbFactory.newDocumentBuilder();
-		Document doc = dBuilder.parse(fXmlFile);
-		//String nn = doc.getDocumentElement();
-		//System.out.println("---------------------Output:["+nn+"]--------------------");
 
-		NodeList aaa = doc.getDocumentElement().getElementsByTagName("sml:inputs");
-		Element aaaa = (Element)aaa.item(0);
-		
-		
-		//System.out.println("---------------------Output:["+aaaa.getAttribute(name)+"]--------------------");
-		
-		//aaaa.lookupNamespaceURI("sml");
-
-		/*
-		NodeList extensionList = this.testSubject.getDocumentElement().getElementsByTagName("gml:extension");
-		int listLength = extensionList.getLength();
-		if(listLength != 0)
-		{
-			for(int i=0 ; i<listLength ; i++)
-			{
-				Node item = extensionList.item(i);
-				String namespace = item.getNamespaceURI();
-					
-			}
-			
-			
-			
-			throw new AssertionError("extension property does not exist !!");
-		}*/
 	}
 	
 	@Test(description = "Requirement 11" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
@@ -125,7 +93,11 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 13" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void AggregateData()
 	{
-			
+		Schema schema = ValidationUtils.CreateSchema("swe.xsd" , "http://schemas.opengis.net/sweCommon/2.0/");
+        Validator validator = schema.newValidator();
+        Source source = new DOMSource(this.testSubject);       
+        ETSAssert.assertSchemaValid(validator, source);
+		//用swe common的XSD驗證
 	}
 	
 	@Test(description = "Requirement 14" , groups  = "CoreAbstractProcess" )
@@ -138,13 +110,16 @@ public class CoreAbstractProcess extends BaseFixture{
 			for(int i=0 ; i<listLength ; i++)
 			{
 				Element item = (Element)typeofList.item(i);
+				
+				Assert.assertTrue(item.hasAttribute("xlink:title"), "Title does not define!!" );
+				Assert.assertTrue(item.hasAttribute("xlink:href"), "Url does not define!!" );
+				
 				String url = item.getAttribute("xlink:href");
 				
 			    String urlRegex = "\\b(https?|ftp|file|ldap)://"
 			            + "[-A-Za-z0-9+&@#/%?=~_|!:,.;]"
 			            + "*[-A-Za-z0-9+&@#/%=~_|]";
 			    
-			    //Assert.assertTrue( "TypeOf Url Error !!" , url.matches(urlRegex) );
 			    Assert.assertTrue(url.matches(urlRegex), "TypeOf Url Error !!" );
 			}
 		}
@@ -153,7 +128,7 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 15" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void SimpleInheritance()
 	{
-			
+		//檢查若有typeof屬性，檢查 xlink:title ,xlink:href(貌似不是這樣做)
 	}
 	
 	@Test(description = "Requirement 16" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })

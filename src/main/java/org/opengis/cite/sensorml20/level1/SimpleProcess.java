@@ -21,7 +21,18 @@ public class SimpleProcess extends BaseFixture{
 	@Test(description = "Requirement 20" , groups  = "SimpleProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void Definition()
 	{
-		
+		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:inputs").getLength() == 0)
+		{
+			throw new AssertionError("Inputs dose not Define !!");
+		}
+		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:outputs").getLength() == 0)
+		{
+			throw new AssertionError("Outputs dose not Define !!");
+		}
+		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:components").getLength() > 0)
+		{
+			throw new AssertionError("Components should not be Defined !!");
+		}
 	}
 	
 	@Test(description = "Requirement 21" , groups  = "SimpleProcess" , dependsOnMethods  = { "DependencyCore" })

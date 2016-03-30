@@ -47,24 +47,31 @@ public class CoreConcepts extends BaseFixture{
 	{
 		ArrayList<String> result = new ArrayList<String>();
 		
-		NodeList inputs = this.testSubject.getElementsByTagName("sml:inputs");
-		if(inputs.getLength() == 0)
+		if(this.testSubject.getElementsByTagName("sml:inputs").getLength() == 0)
 		{
 			result.add("Core Model Must Define Inputs");
 		}
 		
-		NodeList outputs = this.testSubject.getElementsByTagName("sml:outputs");
-		if(outputs.getLength() == 0)
+		if(this.testSubject.getElementsByTagName("sml:outputs").getLength() == 0)
 		{
 			result.add("Core Model Must Define Outputs");
 		}
 		
-		NodeList parameters = this.testSubject.getElementsByTagName("sml:parameters");
-		if(parameters.getLength() == 0)
+		if(this.testSubject.getElementsByTagName("sml:parameters").getLength() == 0)
 		{
 			result.add("Core Model Must Define Parameters");
 		}
-		//Assert.assertTrue( GetArrayToString(result) , result.size() == 0 );
+		
+		String documentName = this.testSubject.getDocumentElement().getNodeName();
+		if(documentName == "sml:SimpleProcess" || documentName == "sml:AggregateProcess")
+		{
+			String process = documentName.replace("sml:", "");
+			if(this.testSubject.getElementsByTagName("sml:connections").getLength() == 0)
+			{
+				result.add(process + " Must Define Methodology");
+			}
+		}
+	
 		Assert.assertTrue(result.size() == 0, GetArrayToString(result) );
 	}
 	
@@ -117,60 +124,18 @@ public class CoreConcepts extends BaseFixture{
 				result.add("Process Shall include metadata["+str.replace("sml:", "")+"]");
 			}
 	    }
-		//Assert.assertTrue( GetArrayToString(result) , result.size() == 0 );
+
 		Assert.assertTrue(result.size() == 0, GetArrayToString(result) );
 	}
 	
 	@Test(description = "Requirement 5" , groups  = "CoreConceptss" , priority = 5)
 	public void CoreConceptExecution()
 	{
-		Boolean result = true;
-		
-		NodeList configurationList = this.testSubject.getDocumentElement().getElementsByTagName("sml:configuration");
-		if(configurationList.getLength() > 0)
+		//檢查Description(3-30又覺得不太像是這樣做)
+		/*if(this.testSubject.getElementsByTagName("gml:description").getLength() == 0)
 		{
-			NodeList setList = configurationList.item(0).getFirstChild().getChildNodes();
-			for(int setIndex = 0 ; setIndex<setList.getLength() ; setIndex++)
-			{
-				Boolean tempResult = false;
-				
-				Element setNode = (Element)setList.item(setIndex);
-				String nodeRef = setNode.getAttribute("ref");
-				String[] refAry = nodeRef.split("/");
-				if(refAry.length == 3)
-				{
-					NodeList parameters = this.testSubject.getDocumentElement().getElementsByTagName("sml:"+refAry[0]);
-					if(parameters.getLength() > 0)
-					{
-						NodeList parameterList = parameters.item(0).getFirstChild().getChildNodes();
-						for(int parameteIndex = 0 ; parameteIndex < parameterList.getLength() ; parameteIndex++)
-						{
-							Element paramererNode = (Element)parameterList.item(parameteIndex);
-							if(paramererNode.getAttribute("name") == refAry[1])
-							{
-								NodeList paramererDataRecords = paramererNode.getFirstChild().getChildNodes();
-								for(int dataRecordIndex = 0;dataRecordIndex < paramererDataRecords.getLength(); dataRecordIndex++)
-								{
-									Element dataRecordNode = (Element)paramererDataRecords.item(dataRecordIndex);
-									if(dataRecordNode.getAttribute("name") == refAry[2])
-									{
-										tempResult = true;
-									}
-								}
-							}
-						}
-					}	
-				}	
-				if(!tempResult)
-				{
-					result = false;
-				}
-			}
-		}
-		
-		//還想不到錯誤名稱怎麼訂，先這樣吧!!
-		//Assert.assertTrue( "Execution Verify Error !!" , result );
-		Assert.assertTrue(result, "Execution Verify Error !!" );
+			throw new AssertionError("Description undefined !!");
+		}*/
 	}
 }
 
