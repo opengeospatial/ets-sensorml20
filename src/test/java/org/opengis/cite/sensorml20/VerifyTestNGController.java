@@ -51,7 +51,7 @@ public class VerifyTestNGController {
                 "/test-run-props.xml"));
     }
 
-    @Test
+    //@Test
     public void doTestRun() throws Exception {
         URL testSubject = getClass().getResource("/atom-feed-2.xml");
         this.testRunProps.setProperty(TestRunArg.IUT.toString(), testSubject

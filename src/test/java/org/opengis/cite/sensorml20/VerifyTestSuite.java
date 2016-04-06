@@ -23,7 +23,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
-
+/*
 import com.occamlab.te.Engine;
 import com.occamlab.te.Generator;
 import com.occamlab.te.RuntimeOptions;
@@ -32,7 +32,7 @@ import com.occamlab.te.TEClassLoader;
 import com.occamlab.te.TECore;
 import com.occamlab.te.index.Index;
 import com.occamlab.te.util.DocumentationHelper;
-
+*/
 /**
  * Verifies the results of executing a CTL test suite. The test suite parameters
  * are read from a properties file located at ${user.home}/sut.properties; if
@@ -49,8 +49,8 @@ public class VerifyTestSuite {
     private static String previousTEBase;
     private static DocumentBuilder docBuilder;
     private static final String ETS_NS = "http://www.opengis.net/...";
-    private RuntimeOptions runOpts;
-    private SetupOptions setupOpts;
+    //private RuntimeOptions runOpts;
+    //private SetupOptions setupOpts;
     private File sessionDir;
 
 
@@ -99,6 +99,7 @@ public class VerifyTestSuite {
         }
     }
 
+    /*
     @Before
     public void initTestSession() {
         this.setupOpts = new SetupOptions();
@@ -154,4 +155,5 @@ public class VerifyTestSuite {
               Integer.parseInt(result));
 
     }
+    */
 }
