@@ -1,14 +1,5 @@
 package org.opengis.cite.sensorml20;
-
-import java.io.File;
 import java.io.IOException;
-
-import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.validation.SchemaFactory;
-
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.w3c.dom.Document;

@@ -131,6 +131,29 @@ public class CoreConcepts extends BaseFixture{
 	@Test(description = "Requirement 5" , groups  = "CoreConceptss" , priority = 5)
 	public void CoreConceptExecution()
 	{
+		ArrayList<String> result = new ArrayList<String>();
+		
+		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:input").getLength() == 0)
+		{
+			result.add("Core Model Must Define Inputs");
+		}
+		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:output").getLength() == 0)
+		{
+			result.add("Core Model Must Define Output");
+		}
+		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:parameter").getLength() == 0)
+		{
+			result.add("Core Model Must Define Parameter");
+		}
+		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:method").getLength() == 0)
+		{
+			result.add("Core Model Must Define Method");
+		}		
+		Assert.assertTrue(result.size() == 0, GetArrayToString(result) );
+		
+		//必須檢查input . output . parameter . method這四個Tag --2016/05/17
+		
+		
 		//檢查Description(3-30又覺得不太像是這樣做)
 		/*if(this.testSubject.getElementsByTagName("gml:description").getLength() == 0)
 		{

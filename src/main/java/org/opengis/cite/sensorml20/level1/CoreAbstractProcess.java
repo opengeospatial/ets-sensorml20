@@ -44,6 +44,7 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 8" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void GmlDependency()
 	{
+		
 	}
 	
 	@Test(description = "Requirement 9" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
@@ -71,13 +72,13 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 10" , groups  = "CoreAbstractProcess" /*, dependsOnMethods  = { "DependencyCore" }*/)
 	public void ExtensionIndependence() throws ParserConfigurationException, SAXException, IOException
 	{
-
+		//先找到extension這個element，然後去檢查他所屬的prefix，而這個prefix所屬的namespace需在最上方有定義，並且由別於基本的sml、gml、swe
 	}
 	
 	@Test(description = "Requirement 11" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void ExtensionRestrictions()
 	{
-			
+		
 	}
 	
 	@Test(description = "Requirement 12" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
@@ -128,7 +129,7 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 15" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void SimpleInheritance()
 	{
-		//檢查若有typeof屬性，檢查 xlink:title ,xlink:href(貌似不是這樣做)
+		//發一個request過去看看，把typeof裡的href連結的內容抓回來，去檢查裡面不能有configuration這個屬性
 	}
 	
 	@Test(description = "Requirement 16" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
@@ -150,6 +151,9 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 17" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void SWECommonDependency()
 	{
+		//去檢查swe這個prefix的以下元素:Dataarray,DataRecord,DataStream,DataChioce,Vctor,Matrix，並將裡面內容抓出來組成一個完整的swe的xml並且用record_components.xsd來驗證
+		
+		
 		Schema schema = ValidationUtils.CreateSchema("record_components.xsd" , "http://schemas.opengis.net/sweCommon/2.0/");
 		
         Validator validator = schema.newValidator();

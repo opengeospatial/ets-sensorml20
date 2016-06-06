@@ -1,5 +1,8 @@
 package org.opengis.cite.sensorml20.level1;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -23,7 +26,7 @@ public class AggregateProcess extends BaseFixture{
 	@Test(description = "Requirement 24" , groups  = "AggregateProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void Definition()
 	{
-		String rootName = this.testSubject.getDocumentElement().getTagName();
+		String rootName = this.testSubject.getDocumentElement().getNodeName();
 		
 		if(rootName == "sml:AggregateProcess")
 		{			
@@ -42,34 +45,62 @@ public class AggregateProcess extends BaseFixture{
 				throw new AssertionError("AggregateProcess Must Define Sub Process !!");
 			}
 		}
-
-		
 	}	
 	
 	@Test(description = "Requirement 25" , groups  = "AggregateProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void Components()
 	{
-		NodeList componentsList = this.testSubject.getDocumentElement().getElementsByTagName("sml:components");
-		if(componentsList.getLength() > 0)
-		{		
-			NodeList componentList = componentsList.item(1).getChildNodes();
-			if(componentList.getLength() == 0)
+		NodeList components = this.testSubject.getDocumentElement().getElementsByTagName("sml:components");
+		if(components.getLength() > 0)
+		{
+			ArrayList<Element> componentsList = new ArrayList<Element>();
+
+			NodeList tempList = components.item(0).getChildNodes();
+			for(int i=0 ; i<tempList.getLength() ; i++)
 			{
-				throw new AssertionError("requires one or more Process !!");
+				Element item = (Element)tempList.item(i);
+				if(item.getNodeName() == "sml:ComponentsList")
+				{
+					componentsList.add(item);
+				}
+			}
+
+			if(componentsList.size() > 1)
+			{	
+				NodeList component = componentsList.get(0).getChildNodes();
+				if(component.getLength() == 0)
+				{
+					throw new AssertionError("requires one or more Process !!");
+				}
+				else
+				{
+					Boolean checkComponent = false;
+					
+					for(int i=0 ; i<component.getLength() ; i++)
+					{
+						Element item = (Element)component.item(i);
+						if(item.getNodeName() == "sml:component")
+						{
+							checkComponent = true;
+						}
+					    Assert.assertTrue(checkComponent , "Sub Process Not SimpleProcess!!" );
+					}
+				}
 			}
 			else
 			{
-				for(int i=0 ; i<componentList.getLength() ; i++)
-				{
-					Element item = (Element)componentList.item(i);
-
-				    Assert.assertTrue(item.getTagName() != "sml:SimpleProcess", "Sub Process Not SimpleProcess!!" );
-				}
-			}
+				throw new AssertionError("componentsList does not exist !!");
+			}			
+			
 		}
 		else
 		{
-			throw new AssertionError("Components does not exist !!");
+			throw new AssertionError("components does not exist !!");
 		}
+		
+		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:connections").getLength() == 0)
+		{
+			throw new AssertionError("connection does not exist !!");
+		}	
 	}
 }
