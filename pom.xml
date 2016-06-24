@@ -105,6 +105,26 @@
       </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.opengis.cite.sensorml20.TestNGController</mainClass>
+            </manifest>
+          </archive>
+          <descriptors>
+            <descriptor>${basedir}/src/assembly/deps.xml</descriptor>
+            <descriptor>${basedir}/src/assembly/ctl-scripts.xml</descriptor>
+            <descriptor>${basedir}/src/assembly/aio.xml</descriptor>
+          </descriptors>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
