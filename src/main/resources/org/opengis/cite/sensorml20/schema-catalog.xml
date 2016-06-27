@@ -14,9 +14,10 @@
     <uri name="http://www.w3.org/1999/xlink" uri="./xsd/w3c/2008/06/xlink.xsd" />
   </group>
   <group id="opengis.net">
-    <system systemId="http://schemas.opengis.net/gml/3.2.1/gml.xsd"
-      uri="./xsd/opengis/gml/3.2.1/gml-3.2.1.xsd" />
+    <system systemId="http://schemas.opengis.net/gml/3.2.1/gml.xsd" uri="./xsd/opengis/gml/3.2.1/gml-3.2.1.xsd" />
     <uri name="http://www.opengis.net/gml/3.2" uri="./xsd/opengis/gml/3.2.1/gml-3.2.1.xsd" />
+    <system systemId="http://www.opengis.net/sensorml/2.0/sensorML.xsd" uri="./xsd/opengis/sensorml/2.0/sensorML.xsd" />
+    <uri name="http://www.opengis.net/sensorml/2.0" uri="./xsd/opengis/sensorml/2.0/sensorML.xsd" />
   </group>
   <group id="isotc211.org">
     <system systemId="http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd"

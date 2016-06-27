@@ -34,7 +34,7 @@ import javax.xml.validation.Schema;
  */
 public class ValidationUtils {
 
-    static final String ROOT_PKG = "/org/opengis/cite/alpha10/";
+    static final String ROOT_PKG = "/org/opengis/cite/sensorml20/";
     private static final XMLCatalogResolver SCH_RESOLVER = initCatalogResolver();
 
     private static XMLCatalogResolver initCatalogResolver() {
