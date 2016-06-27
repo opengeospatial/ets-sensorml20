@@ -11,8 +11,10 @@ for more information, including the API documentation.
 #### 1. via IDE (Eclipse, Netbeans, etc.)
 Clone this project into the IDE.
 Set the instance location in the config file which located at the user home folder by default:
+
  `${user.home}/test-run-props.xml`
-You can modify the value of the element with the key "iut" to locate the testing instance, like:
+
+You can modify the value of the "entry" element with the key "iut" to locate the testing instance, like:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
@@ -24,6 +26,7 @@ You can modify the value of the element with the key "iut" to locate the testing
 ```
 After the configuring, set the starting class to run as java application:
 `org.opengis.cite.sensorml20.TestNGController`
+![alt text](https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/schematron/src/test/resources/main-class-to-run.png "the starting class to run")
 
 The TestNG results file (`testng-results.xml`) will be written to a subdirectory
 in `${user.home}/testng/` having a UUID value as its name.
