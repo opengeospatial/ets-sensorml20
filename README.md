@@ -21,7 +21,7 @@ You can modify the value of the "entry" element with the key "iut" to locate the
 <properties version="1.0">
   <comment>Test run arguments</comment>
   <!--Modify the instance location here-->
-  <entry key="iut">https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/main/example/SensorML2_1.xml</entry>
+  <entry key="iut">https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/SimpleProcess.xml</entry>
 </properties>
 ```
 After the configuring, set the starting class to run as java application:
