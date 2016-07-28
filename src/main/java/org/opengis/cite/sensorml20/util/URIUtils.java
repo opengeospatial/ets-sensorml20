@@ -13,6 +13,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.opengis.cite.sensorml20.util.TestSuiteLogger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -133,5 +134,46 @@ public class URIUtils {
                     "Base URI has no scheme component: " + baseURI);
         }
         return uri.resolve(uriRef);
+    }
+    
+    /**
+     * Resolves the given URI and stores the resulting resource representation
+     * in a local file. The file will be located in the default temporary file
+     * directory.
+     * 
+     * @param uriRef
+     *            An absolute URI specifying the location of some resource.
+     * @return A File containing the content of the resource; it may be empty if
+     *         resolution failed for any reason.
+     * @throws IOException
+     *             If an IO error occurs.
+     */
+    public static File resolveURIAsFile(URI uriRef) throws IOException {
+        if ((null == uriRef) || !uriRef.isAbsolute()) {
+            throw new IllegalArgumentException(
+                    "Absolute URI is required, but received " + uriRef);
+        }
+        if (uriRef.getScheme().equalsIgnoreCase("file")) {
+            return new File(uriRef);
+        }
+        Client client = Client.create();
+        WebResource webRes = client.resource(uriRef);
+        ClientResponse rsp = webRes.get(ClientResponse.class);
+        File destFile = File.createTempFile("entity-", ".xml");
+        if (rsp.hasEntity()) {
+            InputStream is = rsp.getEntityInputStream();
+            OutputStream os = new FileOutputStream(destFile);
+            byte[] buffer = new byte[8 * 1024];
+            int bytesRead;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+            is.close();
+            os.flush();
+            os.close();
+        }
+        TestSuiteLogger.log(Level.FINE, "Wrote " + destFile.length()
+                + " bytes to file at " + destFile.getAbsolutePath());
+        return destFile;
     }
 }

@@ -1,5 +1,8 @@
 package org.opengis.cite.sensorml20.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
@@ -12,12 +15,15 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.events.StartElement;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -42,6 +48,7 @@ import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
 
+import org.opengis.cite.sensorml20.util.TestSuiteLogger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -350,4 +357,40 @@ public class XMLUtils {
         }
         return str;
     }
+    
+    /**
+	 * Determines if the content of the given file represents an XML Schema. The
+	 * document element must be {"http://www.w3.org/2001/XMLSchema"}schema.
+	 * 
+	 * @param file
+	 *            A File object.
+	 * @return {@code true} if the file contains an XML Schema; {@code false}
+	 *         otherwise.
+	 */
+	public static boolean isXMLSchema(File file) {
+		if (!file.exists() || (file.length() == 0)) {
+			return false;
+		}
+		QName docElemName = QName.valueOf("");
+		InputStream inStream = null;
+		XMLEventReader reader = null;
+		try {
+			inStream = new FileInputStream(file);
+			XMLInputFactory factory = XMLInputFactory.newInstance();
+			reader = factory.createXMLEventReader(inStream);
+			StartElement docElem = reader.nextTag().asStartElement();
+			docElemName = docElem.getName();
+		} catch (Exception e1) {
+			return false;
+		} finally {
+			try {
+				reader.close();
+				inStream.close();
+			} catch (Exception e2) {
+				TestSuiteLogger.log(Level.INFO, "Error closing resource.", e2);
+			}
+		}
+		return docElemName.getNamespaceURI().equals(
+				XMLConstants.W3C_XML_SCHEMA_NS_URI);
+	}
 }

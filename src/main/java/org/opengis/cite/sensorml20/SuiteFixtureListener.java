@@ -4,8 +4,17 @@ import com.sun.jersey.api.client.Client;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
+
+import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.stream.StreamSource;
+
+import org.opengis.cite.sensorml20.SuiteAttribute;
+import org.opengis.cite.sensorml20.util.ValidationUtils;
+import org.opengis.cite.sensorml20.TestRunArg;
 import org.opengis.cite.sensorml20.util.ClientUtils;
 import org.opengis.cite.sensorml20.util.XMLUtils;
 import org.opengis.cite.sensorml20.util.TestSuiteLogger;
@@ -31,7 +40,9 @@ public class SuiteFixtureListener implements ISuiteListener {
 
     @Override
     public void onStart(ISuite suite) {
-        processSuiteParameters(suite);
+        processIUTParameter(suite);
+        processXmlReference(suite);
+        processSchematronSchema(suite);
         registerClientComponent(suite);
     }
 
@@ -48,8 +59,26 @@ public class SuiteFixtureListener implements ISuiteListener {
      * @param suite
      *            An ISuite object representing a TestNG test suite.
      */
-    void processSuiteParameters(ISuite suite) {
-        Map<String, String> params = suite.getXmlSuite().getParameters();
+    void processIUTParameter(ISuite suite) {
+    	Map<String, String> params = suite.getXmlSuite().getParameters();
+		String iutRef = params.get(TestRunArg.IUT.toString());
+		if (null == iutRef || iutRef.isEmpty()) {
+			return;
+		}
+		try {
+			File iutFile = URIUtils.resolveURIAsFile(URI.create(iutRef));
+			if (XMLUtils.isXMLSchema(iutFile)) {
+				params.put(TestRunArg.XSD.toString(), iutRef);
+			} else {
+				params.put(TestRunArg.XML.toString(), iutRef);				
+			}
+		} catch (Exception x) {
+			throw new RuntimeException(
+					"Failed to read resource from " + iutRef, x);
+		}
+		params.remove(TestRunArg.IUT.toString());
+		
+        /*Map<String, String> params = suite.getXmlSuite().getParameters();
         TestSuiteLogger.log(Level.CONFIG,
                 "Suite parameters\n" + params.toString());
         String iutParam = params.get(TestRunArg.IUT.toString());
@@ -80,9 +109,90 @@ public class SuiteFixtureListener implements ISuiteListener {
             logMsg.append(iutRef).append("\n");
             logMsg.append(XMLUtils.writeNodeToString(iutDoc));
             TestSuiteLogger.log(Level.FINE, logMsg.toString());
-        }
+        }*/
     }
 
+    /**
+	 * Extracts schema references from the XML resource identified by the
+	 * supplied test run argument. If this is a XML instance document, the value
+	 * of the standard xsi:schemaLocation attribute is used to locate the
+	 * application schema(s). The schema references are added as the suite
+	 * attribute {@link SuiteAttribute#SCHEMA_LOC_SET SCHEMA_LOC_SET} (of type
+	 * Set&lt;URI&gt;).
+	 * 
+	 * @param suite
+	 *            An ISuite object representing a TestNG test suite.
+	 */
+	void processXmlReference(ISuite suite) {
+		Map<String, String> params = suite.getXmlSuite().getParameters();
+		TestSuiteLogger.log(Level.CONFIG,
+				String.format("Suite parameters:\n %s", params));
+		Set<URI> schemaURIs = new HashSet<URI>();
+		String xsdURI = params.get(TestRunArg.XSD.toString());
+		if (null != xsdURI && !xsdURI.isEmpty()) {
+			// was submitted as iut argument value via POST
+			schemaURIs.add(URI.create(xsdURI));
+			suite.setAttribute(SuiteAttribute.SCHEMA_LOC_SET.getName(),
+					schemaURIs);
+			return;
+		}
+		String xmlURI = params.get(TestRunArg.XML.toString());
+		if (null == xmlURI || xmlURI.isEmpty()) {
+			throw new IllegalArgumentException(
+					"Missing XML resource (document or application schema).");
+		}
+		File xmlFile = null;
+		try {
+			xmlFile = URIUtils.resolveURIAsFile(URI.create(xmlURI));
+			if (null == xmlFile || !xmlFile.exists()) {
+				throw new IllegalArgumentException(
+						"Failed to dereference URI: " + xmlURI);
+			}
+			if (XMLUtils.isXMLSchema(xmlFile)) {
+				params.put(TestRunArg.XSD.toString(), xmlURI);
+				schemaURIs.add(URI.create(xmlURI));
+			} else {
+				schemaURIs.addAll(ValidationUtils.extractSchemaReferences(
+						new StreamSource(xmlFile), xmlURI));
+				suite.setAttribute(SuiteAttribute.XML.getName(), xmlFile);
+				
+				Document iutDoc = null;
+		        try {
+		            iutDoc = URIUtils.parseURI(xmlFile.toURI());
+		        } catch (Exception x) {
+		            throw new RuntimeException("Failed to parse resource retrieved from "
+		                    + xmlURI, x);
+		        }
+		        suite.setAttribute(SuiteAttribute.TEST_SUBJECT.getName(), iutDoc);
+		        TestSuiteLogger.log(Level.FINE, "Wrote XML document to "
+						+ xmlFile.getAbsolutePath());
+			}
+		} catch (IOException iox) {
+			throw new RuntimeException("Failed to read resource obtained from "
+					+ xmlURI, iox);
+		} catch (XMLStreamException xse) {
+			throw new RuntimeException(
+					"Failed to find schema reference in source: "
+							+ xmlFile.getAbsolutePath(), xse);
+		}
+		suite.setAttribute(SuiteAttribute.SCHEMA_LOC_SET.getName(), schemaURIs);
+		TestSuiteLogger.log(Level.FINE,
+				String.format("Schema references: %s", schemaURIs));
+	}
+	/**
+	 * Adds a URI reference specifying the location of a Schematron schema.
+	 * 
+	 * @param suite
+	 *            An ISuite object representing a TestNG test suite.
+	 */
+	void processSchematronSchema(ISuite suite) {
+		Map<String, String> params = suite.getXmlSuite().getParameters();
+		String schRef = params.get(TestRunArg.SCH.toString());
+		if ((schRef != null) && !schRef.isEmpty()) {
+			URI schURI = URI.create(params.get(TestRunArg.SCH.toString()));
+			suite.setAttribute(SuiteAttribute.SCHEMATRON.getName(), schURI);
+		}
+	}
     /**
      * A client component is added to the suite fixture as the value of the
      * {@link SuiteAttribute#CLIENT} attribute; it may be subsequently accessed

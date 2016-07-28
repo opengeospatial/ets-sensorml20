@@ -10,6 +10,7 @@
     <sch:ns uri="http://www.opengis.net/sensorML/2.0" prefix="sml"/>
     <sch:ns uri="http://www.opengis.net/swe/2.0" prefix="swe"/>
     <sch:ns uri="http://www.opengis.net/gml/3.2" prefix="gml"/>
+    <!--<sch:ns uri="http://www.opengis.net/gml/2.0" prefix="swe"/>-->
     <sch:ns uri="http://www.w3.org/1999/xlink" prefix="xlink"/>
     
     <!-- gml:identifier property -->

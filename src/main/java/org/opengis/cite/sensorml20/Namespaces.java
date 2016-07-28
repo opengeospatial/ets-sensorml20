@@ -21,6 +21,8 @@ public class Namespaces {
     public static final String OWS = "http://www.opengis.net/ows/1.1";
     /** ISO 19136 (GML 3.2) */
     public static final String GML = "http://www.opengis.net/gml/3.2";
+    /** Sensorml 2.0 **/
+    public static final String SML = "http://www.opengis.net/sensorml/2.0";
     /** W3C XML Schema namespace */
     public static final URI XSD = URI
             .create("http://www.w3.org/2001/XMLSchema");

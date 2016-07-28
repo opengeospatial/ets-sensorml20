@@ -2,7 +2,8 @@
 <suite name="${ets-code}-${version}" verbose="0" configfailurepolicy="continue">
   <parameter name="iut"  value=""/>
   <parameter name="ics"  value=""/>
-
+  <parameter name="sch"  value=""/>
+  
   <listeners>
     <listener class-name="org.opengis.cite.sensorml20.TestRunListener" />
     <listener class-name="org.opengis.cite.sensorml20.SuiteFixtureListener" />
