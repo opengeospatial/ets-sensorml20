@@ -37,17 +37,7 @@ public class DataFixture {
 
     /**
      * A configuration method ({@code BeforeClass}) that initializes the test
-     * fixture as follows:
-     * <ol>
-     * <li>Obtain the GML data set from the test context. The suite attribute
-     * {@link org.opengis.cite.iso19136.SuiteAttribute#GML} should evaluate to a
-     * {@code File} object containing the GML data. If no such file reference
-     * exists the tests are skipped.</li>
-     * <li>Obtain the schema model from the test context. The suite attribute
-     * {@link org.opengis.cite.iso19136.SuiteAttribute#XSMODEL model} should
-     * evaluate to an {@code XSModel} object representing the GML application
-     * schema.</li>
-     * </ol>
+     * fixture 
      * 
      * @param testContext
      *            The test (group) context.

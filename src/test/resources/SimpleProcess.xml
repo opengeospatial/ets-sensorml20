@@ -12,7 +12,17 @@
     <!-- ============================= -->
     <gml:description>A linear interpolator based on equation y = mx + b </gml:description>
     <gml:identifier codeSpace="uid">urn:net:swe:process:linearEquation01</gml:identifier>
-    <gml:name>Linear Equation 01</gml:name>
+    <gml:name>Linear Equation 01</gml:name> 
+    <sml:keywords></sml:keywords>    
+    <sml:identification></sml:identification>
+    <sml:classification></sml:classification>
+    <sml:validTime>        
+        <gml:TimeInstant gml:id="ID139"> 
+            <gml:timePosition>2006-05-04</gml:timePosition>
+        </gml:TimeInstant>
+    </sml:validTime>
+    <sml:characteristics name="ln_character"></sml:characteristics>
+    <sml:capabilities name="ln_capabilities"></sml:capabilities>
     <!-- ============================= -->
     <!--             Inputs            -->
     <!-- ============================= -->
@@ -58,4 +68,9 @@
             </sml:parameter>
         </sml:ParameterList>       
     </sml:parameters>
+    <sml:method>
+        <sml:ProcessMethod>
+            <swe:description>A linear interpolator based on equation y = mx + b </swe:description>
+        </sml:ProcessMethod>
+    </sml:method>
 </sml:SimpleProcess>

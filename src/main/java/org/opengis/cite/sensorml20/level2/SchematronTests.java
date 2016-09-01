@@ -270,7 +270,6 @@ public class SchematronTests extends DataFixture {
 	 * @param piData
 	 *            A Map containing PI data (pseudo-attributes).
 	 * @return {@code true} if the "schematypens" pseudo-attribute has the value
-	 *         {@value org.opengis.cite.iso19136.Namespaces#SCH}; {@code false}
 	 *         otherwise;
 	 */
 	boolean isSchematronReference(Map<String, String> piData) {
