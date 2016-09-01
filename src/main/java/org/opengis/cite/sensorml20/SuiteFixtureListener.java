@@ -76,7 +76,7 @@ public class SuiteFixtureListener implements ISuiteListener {
 			throw new RuntimeException(
 					"Failed to read resource from " + iutRef, x);
 		}
-		params.remove(TestRunArg.IUT.toString());		
+		params.remove(TestRunArg.IUT.toString());
     }
 
     /**
@@ -103,7 +103,7 @@ public class SuiteFixtureListener implements ISuiteListener {
 					schemaURIs);
 			return;
 		}
-		String	 xmlURI = params.get(TestRunArg.XML.toString());
+		String xmlURI = params.get(TestRunArg.XML.toString());
 		if (null == xmlURI || xmlURI.isEmpty()) {
 			throw new IllegalArgumentException(
 					"Missing XML resource (document or application schema).");

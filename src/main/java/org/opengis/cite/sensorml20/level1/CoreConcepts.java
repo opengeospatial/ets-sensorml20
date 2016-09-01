@@ -63,7 +63,7 @@ public class CoreConcepts extends BaseFixture{
 		}
 		
 		String documentName = this.testSubject.getDocumentElement().getNodeName();
-		if(documentName == "sml:SimpleProcess" || documentName == "sml:AggregateProcess")
+		if(documentName == "sml:PhysicalSystem" || documentName == "sml:AggregateProcess")
 		{
 			String process = documentName.replace("sml:", "");
 			if(this.testSubject.getElementsByTagName("sml:connections").getLength() == 0)
@@ -118,13 +118,26 @@ public class CoreConcepts extends BaseFixture{
 		ArrayList<String> result = new ArrayList<String>();
 		String[] metadataName = new String[]{"sml:keywords","sml:identification","sml:classification","sml:characteristics","sml:capabilities"};
 		for (String str:metadataName) {
-			NodeList list = this.testSubject.getDocumentElement().getElementsByTagName("sml:identification");
+			NodeList list = this.testSubject.getDocumentElement().getElementsByTagName(str);
 			if(list.getLength() == 0)
 			{
 				result.add("Process Shall include metadata["+str.replace("sml:", "")+"]");
 			}
 	    }
-
+		//check to meet one of the qualifications
+		metadataName = new String[]{ "sml:validTime", "sml:securityConstraints", "sml:legalConstraints"};
+		boolean isAny = false;
+		for (String str:metadataName) {
+			NodeList list = this.testSubject.getDocumentElement().getElementsByTagName(str);
+			
+			if(list.getLength() != 0)
+			{
+				isAny = true;
+				break;
+			}
+	    }
+		
+		Assert.assertTrue(isAny, "Process Shall include qualification metadata (one of the following elements: validTime, securityConstraints, legalConstraints) " );
 		Assert.assertTrue(result.size() == 0, GetArrayToString(result) );
 	}
 	
