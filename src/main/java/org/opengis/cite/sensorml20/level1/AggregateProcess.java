@@ -1,13 +1,10 @@
 package org.opengis.cite.sensorml20.level1;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class AggregateProcess extends BaseFixture{

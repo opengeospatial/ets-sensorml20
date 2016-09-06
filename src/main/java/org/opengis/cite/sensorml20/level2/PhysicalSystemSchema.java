@@ -3,12 +3,8 @@ package org.opengis.cite.sensorml20.level2;
 import java.net.URL;
 
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.Validator;
-
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.ETSAssert;
-import org.opengis.cite.sensorml20.util.ValidationUtils;
 import org.testng.annotations.Test;
 
 public class PhysicalSystemSchema extends BaseFixture{
