@@ -336,7 +336,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 		{
 			if(!ValidateSWEDataComponent(inputNodes.item(i)))
 			{
-				throw new AssertionError("Input shall be surrounded by an appropriate aggregate data component");
+				throw new AssertionError("Input shall be either simple types or surrounded by an appropriate aggregate data component");
 			}
 		}
 		
@@ -345,7 +345,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 		{
 			if(!ValidateSWEDataComponent(onputNodes.item(i)))
 			{
-				throw new AssertionError("Output shall be surrounded by an appropriate aggregate data component");
+				throw new AssertionError("Output shall be either simple types or surrounded by an appropriate aggregate data component");
 			}
 		}
 		
@@ -367,7 +367,10 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			String localName = childNodes.item(i).getLocalName();
 			if(localName != null)
 			{
-				if(localName != "DataRecord" && localName != "DataArray" && localName != "Vector" && localName != "Matrix")
+				if(//simple data types
+						localName != "Quantity" && localName != "Count" && localName != "Boolean" && localName != "Category" && localName != "Time"
+					//Aggregate data types
+					&&	localName != "DataRecord" && localName != "DataArray" && localName != "Vector" && localName != "Matrix")
 				{
 					return false;
 				}
