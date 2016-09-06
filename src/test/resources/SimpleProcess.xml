@@ -4,7 +4,7 @@
     xmlns:swe="http://www.opengis.net/swe/2.0"
     xmlns:gml="http://www.opengis.net/gml/3.2"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:xyz="http://www.opengis.net/xyz/3.2"
+	xmlns:xyz="http://random-namespace/xyz" 
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xsi:schemaLocation="http://www.opengis.net/sensorml/2.0 http://schemas.opengis.net/sensorML/2.0/sensorML.xsd"
     definition="http://sensors.ws/process/linearInterpolator">
@@ -14,9 +14,10 @@
     <gml:description>A linear interpolator based on equation y = mx + b </gml:description>
     <gml:identifier codeSpace="uid">urn:net:swe:process:linearEquation01</gml:identifier>
     <gml:name>Linear Equation 01</gml:name> 
-    <sml:extension>
-        <xyz:extension>fewfwfwf</xyz:extension>
-    </sml:extension>
+    <!--<sml:extension>
+        <xyz:test>abc</xyz:test>
+        <!-\-<sml:Link><sml:source ref="aaa"/><sml:destination ref="bbb"/></sml:Link>-\->
+    </sml:extension>-->
     <sml:keywords>
         <sml:KeywordList>            
             <sml:keyword>Linear Equation</sml:keyword>

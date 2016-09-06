@@ -63,16 +63,28 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 10" , groups  = "CoreAbstractProcess" /*, dependsOnMethods  = { "DependencyCore" }*/)
 	public void ExtensionIndependence() throws ParserConfigurationException, SAXException, IOException
 	{
-		ArrayList<Node> extensionNodes = DocumentTools.GetElementByLocalName(this.testSubject.getDocumentElement(), "extension");
+		//ArrayList<Node> extensionNodes = DocumentTools.GetElementByLocalName(this.testSubject.getDocumentElement(), "extension");
+		NodeList extensionNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:extension");
 		
-		if (extensionNodes != null && !extensionNodes.isEmpty()){
-		    for (Node item : extensionNodes) 
+		if (extensionNodes != null && extensionNodes.getLength() > 0){
+		    //for (Node item : extensionNodes)
+			for(int i = 0; i < extensionNodes.getLength(); i++)
 		    {
-		    	Boolean result = DocumentTools.ValidateNewNameSpace(item.getFirstChild().getPrefix());
-		    	if(!result)
-		    	{
-		    		throw new AssertionError("extsnsion property shall within a separate namespace.");
-		    	}   	
+				Node item = extensionNodes.item(i);
+				NodeList childs = item.getChildNodes();
+				for (int j = 0; j < childs.getLength(); j++){					
+			    	Node firstChild = childs.item(j);
+			    	if (firstChild.getLocalName() == null)
+			    		continue;
+			    	String pref = firstChild.getPrefix();
+			    	if (pref == null)
+			    		continue;
+			    	Boolean result = DocumentTools.ValidateNewNameSpace(pref);
+			    	if(!result)
+			    	{
+			    		throw new AssertionError("extsnsion property shall within a separate namespace. (other than sml)");
+			    	}   	
+				}
 		    }	
 		}
 	}
