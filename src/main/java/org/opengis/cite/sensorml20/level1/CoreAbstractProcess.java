@@ -79,14 +79,16 @@ public class CoreAbstractProcess extends BaseFixture{
 	{
 		ArrayList<Node> extensionNodes = DocumentTools.GetElementByLocalName(this.testSubject.getDocumentElement(), "extension");
 		
-	    for (Node item : extensionNodes) 
-	    {
-	    	Boolean result = DocumentTools.ValidateNewNameSpace(item.getPrefix());
-	    	if(!result)
-	    	{
-	    		throw new AssertionError("extsnsion property shall within a separate namespace.");
-	    	}   	
-	    }	
+		if (extensionNodes != null && !extensionNodes.isEmpty()){
+		    for (Node item : extensionNodes) 
+		    {
+		    	Boolean result = DocumentTools.ValidateNewNameSpace(item.getFirstChild().getPrefix());
+		    	if(!result)
+		    	{
+		    		throw new AssertionError("extsnsion property shall within a separate namespace.");
+		    	}   	
+		    }	
+		}
 	}
 	
 	@Test(description = "Requirement 11" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })

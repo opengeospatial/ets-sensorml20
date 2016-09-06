@@ -14,6 +14,9 @@
     <gml:description>A linear interpolator based on equation y = mx + b </gml:description>
     <gml:identifier codeSpace="uid">urn:net:swe:process:linearEquation01</gml:identifier>
     <gml:name>Linear Equation 01</gml:name> 
+    <sml:extension>
+        <xyz:extension>fewfwfwf</xyz:extension>
+    </sml:extension>
     <sml:keywords>
         <sml:KeywordList>            
             <sml:keyword>Linear Equation</sml:keyword>
@@ -96,5 +99,5 @@
             <swe:description>A linear interpolator based on equation y = mx + b </swe:description>
         </sml:ProcessMethod>
     </sml:method>
-	<xyz:extension>fewfwfwf</xyz:extension>
+	
 </sml:SimpleProcess>
