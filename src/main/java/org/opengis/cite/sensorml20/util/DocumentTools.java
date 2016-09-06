@@ -52,4 +52,36 @@ public class DocumentTools {
 			}
 		}
 	}
+	
+	public static ArrayList<Node> GetElementByLocalName(Node node , String localName)
+	{
+		ArrayList<Node> nodes = getAllNode(node);
+		ArrayList<Node> rets = new ArrayList<Node>();
+		
+	    for (Node item : nodes) 
+	    {
+	    	if(item.getLocalName().equals(localName))
+	    	{
+	    		rets.add(item);
+	    	}
+	    }
+	    return rets;
+	}
+	
+	public static Boolean ValidateNewNameSpace(String pre)
+	{
+		if(pre.equals("sml"))
+		{
+			return false;
+		}
+		if(pre.equals("gml"))
+		{
+			return false;
+		}
+		if(pre.equals("swe"))
+		{
+			return false;
+		}
+		return true;
+	}
 }

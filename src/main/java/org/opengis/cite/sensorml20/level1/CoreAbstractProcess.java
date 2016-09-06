@@ -10,6 +10,8 @@ import javax.xml.validation.Validator;
 //import org.junit.Assert;
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.ETSAssert;
+import org.opengis.cite.sensorml20.util.DocumentTools;
+import org.opengis.cite.sensorml20.util.URIUtils;
 import org.opengis.cite.sensorml20.util.ValidationUtils;
 import org.testng.Assert;
 import org.testng.SkipException;
@@ -26,6 +28,8 @@ import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class CoreAbstractProcess extends BaseFixture{
 
@@ -73,7 +77,16 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 10" , groups  = "CoreAbstractProcess" /*, dependsOnMethods  = { "DependencyCore" }*/)
 	public void ExtensionIndependence() throws ParserConfigurationException, SAXException, IOException
 	{
-		//先找到extension這個element，然後去檢查他所屬的prefix，而這個prefix所屬的namespace需在最上方有定義，並且由別於基本的sml、gml、swe
+		ArrayList<Node> extensionNodes = DocumentTools.GetElementByLocalName(this.testSubject.getDocumentElement(), "extension");
+		
+	    for (Node item : extensionNodes) 
+	    {
+	    	Boolean result = DocumentTools.ValidateNewNameSpace(item.getPrefix());
+	    	if(!result)
+	    	{
+	    		throw new AssertionError("extsnsion property shall within a separate namespace.");
+	    	}   	
+	    }	
 	}
 	
 	@Test(description = "Requirement 11" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
@@ -129,10 +142,29 @@ public class CoreAbstractProcess extends BaseFixture{
 		}
 	}
 	
-	@Test(description = "Requirement 15" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
-	public void SimpleInheritance()
+	@Test(description = "Requirement 15" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" , "TypeOf" })
+	public void SimpleInheritance() throws SAXException, IOException
 	{
-		//發一個request過去看看，把typeof裡的href連結的內容抓回來，去檢查裡面不能有configuration這個屬性
+		NodeList typeNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:typeOf");
+		
+		for(int typeCount = 0 ; typeCount < typeNodes.getLength() ; typeCount++)
+		{
+			Element typeNode = (Element)typeNodes.item(typeCount);
+			
+			String url = typeNode.getAttribute("xlink:href");
+
+			try {
+				URI uri = new URI(url);
+				Document doc = URIUtils.parseURI(uri); 
+				
+				NodeList configurationNodes = doc.getDocumentElement().getElementsByTagName("sml:configuration");
+				
+				Assert.assertTrue((configurationNodes.getLength() > 0), "Shall not include the configuration property of referenced process" );
+				
+			} catch (URISyntaxException e) {
+				throw new AssertionError(e.toString());
+			}
+		}
 	}
 	
 	@Test(description = "Requirement 16" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })

@@ -97,7 +97,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 						Node extensionProcess = extensionProcessList.item(epCount);
 						if(extensionProcess.getLocalName() != null)
 						{
-							Boolean result = ValidateNewNameSpace(extensionProcess.getPrefix());
+							Boolean result = DocumentTools.ValidateNewNameSpace(extensionProcess.getPrefix());
 							Assert.assertTrue(result, "extension property shall be not element of sensorml20" );
 						}
 					}
@@ -203,7 +203,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			{
 				Node sChild = securityConstraintsNodes.get(i);
 				String childPrefix = sChild.getPrefix();
-				if(ValidateNewNameSpace(childPrefix))
+				if(DocumentTools.ValidateNewNameSpace(childPrefix))
 				{
 					result = "securityConstraints property shall be defined in a new unique namespace";
 				}
@@ -212,22 +212,6 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 		Assert.assertTrue(result.length() == 0, result );
 	}	
 	
-	private Boolean ValidateNewNameSpace(String pre)
-	{
-		if(pre.equals("sml"))
-		{
-			return false;
-		}
-		if(pre.equals("gml"))
-		{
-			return false;
-		}
-		if(pre.equals("swe"))
-		{
-			return false;
-		}
-		return true;
-	}
 	
 	@Test(description = "Requirement 54")
 	public void IndividualSecurityTags()

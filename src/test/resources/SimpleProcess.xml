@@ -4,6 +4,7 @@
     xmlns:swe="http://www.opengis.net/swe/2.0"
     xmlns:gml="http://www.opengis.net/gml/3.2"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xyz="http://www.opengis.net/xyz/3.2"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xsi:schemaLocation="http://www.opengis.net/sensorml/2.0 http://schemas.opengis.net/sensorML/2.0/sensorML.xsd"
     definition="http://sensors.ws/process/linearInterpolator">
@@ -95,4 +96,5 @@
             <swe:description>A linear interpolator based on equation y = mx + b </swe:description>
         </sml:ProcessMethod>
     </sml:method>
+	<xyz:extension>fewfwfwf</xyz:extension>
 </sml:SimpleProcess>
