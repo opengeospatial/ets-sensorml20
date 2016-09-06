@@ -27,9 +27,9 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 	{
 		DOMSource source = new DOMSource(this.testSubject);
 		      
-		Schema schema = ValidationUtils.CreateSchema("core.xsd" , "http://schemas.opengis.net/sensorML/2.0/");
+/*		Schema schema = ValidationUtils.CreateSchema("core.xsd" , "http://schemas.opengis.net/sensorML/2.0/");
         Validator validator = schema.newValidator();
-        ETSAssert.assertSchemaValid(validator, source);
+        ETSAssert.assertSchemaValid(validator, source);*/
 				
 		URL schRef = this.getClass().getResource(
 				"/org/opengis/cite/sensorml20/sch/core.sch");

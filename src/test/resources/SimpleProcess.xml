@@ -13,9 +13,31 @@
     <gml:description>A linear interpolator based on equation y = mx + b </gml:description>
     <gml:identifier codeSpace="uid">urn:net:swe:process:linearEquation01</gml:identifier>
     <gml:name>Linear Equation 01</gml:name> 
-    <sml:keywords></sml:keywords>    
-    <sml:identification></sml:identification>
-    <sml:classification></sml:classification>
+    <sml:keywords>
+        <sml:KeywordList>            
+            <sml:keyword>Linear Equation</sml:keyword>
+        </sml:KeywordList>
+    </sml:keywords>    
+    <sml:identification>
+        <sml:IdentifierList>
+            <sml:identifier>
+                <sml:Term>
+                    <sml:label>linearEquation01</sml:label>
+                    <sml:value>urn:net:swe:process:linearEquation01</sml:value>
+                </sml:Term>
+            </sml:identifier>
+        </sml:IdentifierList>
+    </sml:identification>
+    <sml:classification>
+        <sml:ClassifierList>
+            <sml:classifier>
+                <sml:Term definition="http://sensorml.com/ont/swe/property/SensorType">
+                    <sml:label>Sensor Type</sml:label>
+                    <sml:value>Math Component</sml:value>
+                </sml:Term>
+            </sml:classifier>
+        </sml:ClassifierList>
+    </sml:classification>
     <sml:validTime>        
         <gml:TimeInstant gml:id="ID139"> 
             <gml:timePosition>2006-05-04</gml:timePosition>
