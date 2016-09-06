@@ -2,7 +2,6 @@ package org.opengis.cite.sensorml20.level1;
 
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.testng.annotations.Test;
-import org.w3c.dom.NodeList;
 
 public class PhysicalSystem extends BaseFixture{
 	@Test(description = "Requirement 33" , groups  = "PhysicalSystem" , dependsOnMethods  = { "Definition" , "DependencyCore" })

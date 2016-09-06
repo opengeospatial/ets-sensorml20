@@ -5,13 +5,11 @@ import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
-//import org.junit.Assert;
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.ETSAssert;
 import org.opengis.cite.sensorml20.util.ValidationUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 

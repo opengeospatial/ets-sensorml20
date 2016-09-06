@@ -1,32 +1,18 @@
 package org.opengis.cite.sensorml20.level1;
 
 import java.util.ArrayList;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.Validator;
-
-//import org.junit.Assert;
 import org.opengis.cite.sensorml20.BaseFixture;
-import org.opengis.cite.sensorml20.ETSAssert;
 import org.opengis.cite.sensorml20.util.DocumentTools;
 import org.opengis.cite.sensorml20.util.URIUtils;
-import org.opengis.cite.sensorml20.util.ValidationUtils;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
