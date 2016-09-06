@@ -2,6 +2,7 @@ package org.opengis.cite.sensorml20.level2;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -365,12 +366,12 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 		for(int i=0;i<childNodes.getLength();i++)
 		{
 			String localName = childNodes.item(i).getLocalName();
+			String[] simpleTypes = new String[]{"Quantity", "Count", "Boolean", "Category", "Time"};
+			String[] aggregateTypes = new String[]{"DataRecord", "DataArray", "Vector", "Matrix"};
 			if(localName != null)
 			{
-				if(//simple data types
-						localName != "Quantity" && localName != "Count" && localName != "Boolean" && localName != "Category" && localName != "Time"
-					//Aggregate data types
-					&&	localName != "DataRecord" && localName != "DataArray" && localName != "Vector" && localName != "Matrix")
+				if(!Arrays.asList(simpleTypes).contains(localName)
+					&&	!Arrays.asList(aggregateTypes).contains(localName))
 				{
 					return false;
 				}
