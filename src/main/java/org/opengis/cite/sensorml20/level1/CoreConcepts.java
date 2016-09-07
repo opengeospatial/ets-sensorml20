@@ -27,7 +27,7 @@ public class CoreConcepts extends BaseFixture{
 			schema = ValidationUtils.CreateSchema("simple_process.xsd" , null);
 		}else if(documentName.equals("sml:PhysicalComponent"))
 		{
-			schema = ValidationUtils.CreateSchema("simple_process.xsd" , null);
+			schema = ValidationUtils.CreateSchema("physical_component.xsd" , null);
 		}else if(documentName.equals("sml:AggregateProcess"))
 		{
 			schema = ValidationUtils.CreateSchema("aggregate_process.xsd" , null);
