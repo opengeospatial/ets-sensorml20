@@ -167,7 +167,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			if(identifier.hasAttribute("codeSpace"))
 			{
 				String codeSpace = identifier.getAttributeNode("codeSpace").getValue();
-				if(!codeSpace.equals("uid"))
+				if(!codeSpace.toLowerCase().equals("uid"))
 				{
 					resultMessage += " codeSpace value error. ";
 				}
@@ -340,16 +340,45 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 	
 	private Boolean ValidateSWEDataComponent(Node node)
 	{
+		String nodeLocalName = node.getNodeName();
+		
+		String[] simpleTypes = new String[]{"Quantity", "Count", "Boolean", "Category", "Time"};
+		String[] aggregateTypes = new String[]{"DataRecord", "DataArray", "Vector", "Matrix"};
+
 		NodeList childNodes = node.getChildNodes();
 		for(int i=0;i<childNodes.getLength();i++)
 		{
 			String localName = childNodes.item(i).getLocalName();
-			String[] simpleTypes = new String[]{"Quantity", "Count", "Boolean", "Category", "Time"};
-			String[] aggregateTypes = new String[]{"DataRecord", "DataArray", "Vector", "Matrix"};
+			String ElementName = childNodes.item(i).getNodeName();
+			
 			if(localName != null)
 			{
+				Boolean abstractDataComponentResult = true;
+				
 				if(!Arrays.asList(simpleTypes).contains(localName)
 					&&	!Arrays.asList(aggregateTypes).contains(localName))
+				{
+					abstractDataComponentResult = false;
+				}
+				
+				Boolean observablePropertyResult = true;
+
+				if(nodeLocalName.equals("output") || nodeLocalName.equals("output"))
+				{
+					if(!ElementName.equals("sml:ObservableProperty"))
+					{
+						observablePropertyResult = false;
+					}
+				}
+				
+				Boolean dataInterfaceResult = true;
+				if(!ElementName.equals("sml:DataInterface"))
+				{
+					dataInterfaceResult = false;
+				}			
+				
+				
+				if( !(abstractDataComponentResult || observablePropertyResult || dataInterfaceResult) )
 				{
 					return false;
 				}
