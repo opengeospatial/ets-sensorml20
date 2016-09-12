@@ -47,57 +47,62 @@ public class AggregateProcess extends BaseFixture{
 	@Test(description = "Requirement 25" , groups  = "AggregateProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void Components()
 	{
-		NodeList components = this.testSubject.getDocumentElement().getElementsByTagName("sml:components");
-		if(components.getLength() > 0)
-		{
-			ArrayList<Element> componentsList = new ArrayList<Element>();
-
-			NodeList tempList = components.item(0).getChildNodes();
-			for(int i=0 ; i<tempList.getLength() ; i++)
+		String rootName = this.testSubject.getDocumentElement().getNodeName();
+		
+		if(rootName == "sml:AggregateProcess")
+		{			
+			NodeList components = this.testSubject.getDocumentElement().getElementsByTagName("sml:components");
+			if(components.getLength() > 0)
 			{
-				Element item = (Element)tempList.item(i);
-				if(item.getNodeName() == "sml:ComponentsList")
-				{
-					componentsList.add(item);
-				}
-			}
+				ArrayList<Element> componentsList = new ArrayList<Element>();
 
-			if(componentsList.size() > 1)
-			{	
-				NodeList component = componentsList.get(0).getChildNodes();
-				if(component.getLength() == 0)
+				NodeList tempList = components.item(0).getChildNodes();
+				for(int i=0 ; i<tempList.getLength() ; i++)
 				{
-					throw new AssertionError("requires one or more Process !!");
+					Element item = (Element)tempList.item(i);
+					if(item.getNodeName() == "sml:ComponentsList")
+					{
+						componentsList.add(item);
+					}
+				}
+
+				if(componentsList.size() > 1)
+				{	
+					NodeList component = componentsList.get(0).getChildNodes();
+					if(component.getLength() == 0)
+					{
+						throw new AssertionError("requires one or more Process !!");
+					}
+					else
+					{
+						Boolean checkComponent = false;
+						
+						for(int i=0 ; i<component.getLength() ; i++)
+						{
+							Element item = (Element)component.item(i);
+							if(item.getNodeName() == "sml:component")
+							{
+								checkComponent = true;
+							}
+						    Assert.assertTrue(checkComponent , "Sub Process Not SimpleProcess!!" );
+						}
+					}
 				}
 				else
 				{
-					Boolean checkComponent = false;
-					
-					for(int i=0 ; i<component.getLength() ; i++)
-					{
-						Element item = (Element)component.item(i);
-						if(item.getNodeName() == "sml:component")
-						{
-							checkComponent = true;
-						}
-					    Assert.assertTrue(checkComponent , "Sub Process Not SimpleProcess!!" );
-					}
-				}
+					throw new AssertionError("componentsList does not exist !!");
+				}			
+				
 			}
 			else
 			{
-				throw new AssertionError("componentsList does not exist !!");
-			}			
+				throw new AssertionError("components does not exist !!");
+			}
 			
-		}
-		else
-		{
-			throw new AssertionError("components does not exist !!");
-		}
-		
-		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:connections").getLength() == 0)
-		{
-			throw new AssertionError("connection does not exist !!");
+			if(this.testSubject.getDocumentElement().getElementsByTagName("sml:connections").getLength() == 0)
+			{
+				throw new AssertionError("connection does not exist !!");
+			}
 		}	
 	}
 }

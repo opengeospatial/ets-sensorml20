@@ -60,7 +60,7 @@ public class CoreAbstractProcess extends BaseFixture{
 		}
 	}
 	
-	@Test(description = "Requirement 10" , groups  = "CoreAbstractProcess" /*, dependsOnMethods  = { "DependencyCore" }*/)
+	@Test(description = "Requirement 10" , groups  = "CoreAbstractProcess"/*, dependsOnMethods  = { "DependencyCore" }*/)
 	public void ExtensionIndependence() throws ParserConfigurationException, SAXException, IOException
 	{
 		//ArrayList<Node> extensionNodes = DocumentTools.GetElementByLocalName(this.testSubject.getDocumentElement(), "extension");
@@ -117,7 +117,7 @@ public class CoreAbstractProcess extends BaseFixture{
 //        ETSAssert.assertSchemaValid(validator, source);		
 	}
 	
-	@Test(description = "Requirement 14" , groups  = "CoreAbstractProcess" )
+	@Test(description = "Requirement 14" , groups  = "CoreAbstractProcess")
 	public void TypeOf()
 	{
 		NodeList typeofList = this.testSubject.getDocumentElement().getElementsByTagName("sml:typeOf");
@@ -170,7 +170,7 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 16" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
 	public void Configuration()
 	{
-		throw new SkipException("TODO: when a process is defined typeOf property, one should check its configuration element is existed.");
+		//throw new SkipException("TODO: when a process is defined typeOf property, one should check its configuration element is existed.");
 		/*NodeList configurationList = this.testSubject.getDocumentElement().getElementsByTagName("sml:configuration");
 		int listLength = configurationList.getLength();
 		if(listLength == 0)
