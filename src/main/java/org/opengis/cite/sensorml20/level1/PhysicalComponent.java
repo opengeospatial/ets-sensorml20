@@ -1,7 +1,10 @@
 package org.opengis.cite.sensorml20.level1;
+import org.testng.Assert;
 import org.testng.SkipException;
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.testng.annotations.Test;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class PhysicalComponent extends BaseFixture{
@@ -24,65 +27,100 @@ public class PhysicalComponent extends BaseFixture{
 		}
 	}
 	
+	private Boolean ValidateSpatialRule(Element node)
+	{
+		String[] ruleNames = new String[]{"swe:Text", "gml:Point", "swe:Vector", "swe:DataRecord", "swe:DataArray" , "sml:AbstractProcess"};
+		for(int ruleCount = 0 ; ruleCount < ruleNames.length ; ruleCount++)
+		{
+			String ruleName = ruleNames[ruleCount];
+			NodeList list = node.getElementsByTagName(ruleName);
+			if(list.getLength() > 0)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Test(description = "Requirement 28" , groups  = "PhysicalComponent" , dependsOnMethods  = { "DependencyCore" })
 	public void ByPointOrLocation()
 	{
-		NodeList pointList = this.testSubject.getDocumentElement().getElementsByTagName("sml:byPoint");
-		int pointCount = pointList.getLength();
+		NodeList positionList = this.testSubject.getDocumentElement().getElementsByTagName("sml:position");
 		
-		NodeList locationList = this.testSubject.getDocumentElement().getElementsByTagName("sml:byLocation");
-		int locationCount = locationList.getLength();
-		
-		if(pointCount == 0 && locationCount == 0)
+		for(int positionCount = 0 ; positionCount < positionList.getLength();positionCount++)
 		{
-			throw new AssertionError("location or point does not define !!");
+			Element positionNode = (Element)positionList.item(positionCount);
+			
+			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall defind content" );
+			
+			NodeList pointList = positionNode.getElementsByTagName("gml:Point");
+			if(pointList.getLength() == 0)
+			{
+				throw new SkipException("location or point does not define");
+			}
 		}
 	}
 	
 	@Test(description = "Requirement 29" , groups  = "PhysicalComponent" , dependsOnMethods  = { "DependencyCore" })
 	public void ByPostion()
 	{
-		NodeList postionList = this.testSubject.getDocumentElement().getElementsByTagName("sml:byPostion");
-		int postionCount = postionList.getLength();
+		NodeList positionList = this.testSubject.getDocumentElement().getElementsByTagName("sml:position");
 		
-		if(postionCount == 0)
+		for(int positionCount = 0 ; positionCount < positionList.getLength();positionCount++)
 		{
-			throw new AssertionError("postion does not define !!");
-		}
+			Element positionNode = (Element)positionList.item(positionCount);
+			
+			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall defind content" );
+			
+			NodeList dataList = positionNode.getElementsByTagName("swe:DataRecord");
+			if(dataList.getLength() == 0)
+			{
+				throw new SkipException("location data set does not define");
+			}
+		}	
 	}
 	
 	@Test(description = "Requirement 30" , groups  = "PhysicalComponent" , dependsOnMethods  = { "DependencyCore" })
 	public void ByTrajectory()
 	{
-		NodeList trajectoryList = this.testSubject.getDocumentElement().getElementsByTagName("sml:byTrajectory");
-		int trajectoryCount = trajectoryList.getLength();
+		NodeList positionList = this.testSubject.getDocumentElement().getElementsByTagName("sml:position");
 		
-		if(trajectoryCount == 0)
+		for(int positionCount = 0 ; positionCount < positionList.getLength();positionCount++)
 		{
-			throw new AssertionError("trajectory does not define !!");
-		}
+			Element positionNode = (Element)positionList.item(positionCount);
+			
+			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall defind content" );
+			
+			NodeList dataList = positionNode.getElementsByTagName("swe:DataArray");
+			if(dataList.getLength() == 0)
+			{
+				throw new SkipException("time-tagged dynamic state information does not define");
+			}
+		}	
 	}
 	
 	@Test(description = "Requirement 31" , groups  = "PhysicalComponent" , dependsOnMethods  = { "DependencyCore" })
 	public void ByProcess()
 	{
-		NodeList processList = this.testSubject.getDocumentElement().getElementsByTagName("sml:byProcess");
-		int processCount = processList.getLength();
+		NodeList positionList = this.testSubject.getDocumentElement().getElementsByTagName("sml:position");
 		
-		if(processCount == 0)
+		for(int positionCount = 0 ; positionCount < positionList.getLength();positionCount++)
 		{
-			throw new AssertionError("Process does not define !!");
-		}
+			Element positionNode = (Element)positionList.item(positionCount);
+			
+			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall defind content" );
+			
+			NodeList dataList = positionNode.getElementsByTagName("sml:AbstractProcess");
+			if(dataList.getLength() == 0)
+			{
+				throw new SkipException("positional information does not define");
+			}
+		}	
 	}
 	
 	@Test(description = "Requirement 32" , groups  = "PhysicalComponent" , dependsOnMethods  = { "DependencyCore" })
 	public void Definition()
 	{
-		if(this.testSubject.getFirstChild().getNodeName() != "sml:PhyscialComponent")
-		{
-			throw new AssertionError("Not PhyscialComponent Procsee");
-		}
-		
 		NodeList componens = this.testSubject.getDocumentElement().getElementsByTagName("sml:components");
 		int componensCount = componens.getLength();
 		
