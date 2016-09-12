@@ -12,6 +12,38 @@
     <gml:description>a simplet thermistor that outputs resistance as a function of temperature</gml:description>
     <gml:identifier codeSpace="UID">urn:davisweather:7817</gml:identifier>
     <gml:name>Davis_7817 Thermometer</gml:name>
+    <sml:keywords>
+        <sml:KeywordList>            
+            <sml:keyword>Linear Equation</sml:keyword>
+        </sml:KeywordList>
+    </sml:keywords>    
+    <sml:identification>
+        <sml:IdentifierList>
+            <sml:identifier>
+                <sml:Term>
+                    <sml:label>davisweather</sml:label>
+                    <sml:value>urn:davisweather:7817</sml:value>
+                </sml:Term>
+            </sml:identifier>
+        </sml:IdentifierList>
+    </sml:identification>
+    <sml:classification>
+        <sml:ClassifierList>
+            <sml:classifier>
+                <sml:Term definition="http://sensorml.com/ont/swe/property/SensorType">
+                    <sml:label>Sensor Type</sml:label>
+                    <sml:value>Weather Station</sml:value>
+                </sml:Term>
+            </sml:classifier>
+        </sml:ClassifierList>
+    </sml:classification>
+    <sml:validTime>        
+        <gml:TimeInstant gml:id="ID139"> 
+            <gml:timePosition>2016-05-04</gml:timePosition>
+        </gml:TimeInstant>
+    </sml:validTime>
+    <sml:characteristics name="ln_character"></sml:characteristics>
+    <sml:capabilities name="ln_capabilities"></sml:capabilities>
     <!-- metadata left out for brevity sake  -->
     <!--~~~~~~~~~~~~~-->
     <!-- Detector Inputs-->
@@ -21,6 +53,7 @@
     <sml:inputs>
         <sml:InputList>
             <sml:input name="temperature">
+                
                 <sml:ObservableProperty definition="http://sweet.jpl.nasa.gov/2.3/propTemperature.owl#Temperature"/>
             </sml:input>
         </sml:InputList>
