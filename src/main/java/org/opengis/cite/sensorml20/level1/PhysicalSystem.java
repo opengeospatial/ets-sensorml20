@@ -1,6 +1,7 @@
 package org.opengis.cite.sensorml20.level1;
 
 import org.opengis.cite.sensorml20.BaseFixture;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 public class PhysicalSystem extends BaseFixture{
@@ -34,7 +35,12 @@ public class PhysicalSystem extends BaseFixture{
 	@Test(description = "Requirement 35" , groups  = "PhysicalSystem" , dependsOnGroups  = { "PhysicalComponent" })
 	public void DependencyCore()
 	{
-		//Dependency PhysicalComponent
+		String rootName = this.testSubject.getDocumentElement().getNodeName();
+
+		if(!rootName.equals("sml:PhysicalSystem"))
+		{
+			throw new SkipException("TODO: Not a PhysicalSystem Process");	
+		}
 	}
 	
 	
