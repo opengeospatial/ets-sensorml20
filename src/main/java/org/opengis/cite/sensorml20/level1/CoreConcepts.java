@@ -1,5 +1,7 @@
 package org.opengis.cite.sensorml20.level1;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
@@ -7,18 +9,22 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.ETSAssert;
+import org.opengis.cite.sensorml20.util.DocumentTools;
 import org.opengis.cite.sensorml20.util.ValidationUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 public class CoreConcepts extends BaseFixture{
 
 	
 	@Test(description = "Requirement 1" ,groups  = "CoreConceptss" ,priority = 1)
-	public void CoreConceptUsed()
+	public void CoreConceptUsed() throws SAXException, IOException, URISyntaxException
 	{
+		DocumentTools.MergeReference(this.testSubject);
+        
 		Schema schema = null;
 		Node documentElement = this.testSubject.getDocumentElement();
 		String documentName = documentElement.getNodeName();
@@ -39,6 +45,7 @@ public class CoreConcepts extends BaseFixture{
         Source source = new DOMSource(this.testSubject);       
         ETSAssert.assertSchemaValid(validator, source);
 	}
+	
 	
 	@Test(description = "Requirement 2" , groups  = "CoreConceptss" , priority = 2)
 	public void CoreConceptProcesses()

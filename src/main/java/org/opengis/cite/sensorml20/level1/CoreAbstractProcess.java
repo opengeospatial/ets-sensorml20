@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.util.DocumentTools;
 import org.opengis.cite.sensorml20.util.URIUtils;
+import org.opengis.cite.sensorml20.util.UrlValidate;
 import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -19,26 +19,26 @@ import java.net.URISyntaxException;
 
 public class CoreAbstractProcess extends BaseFixture{
 
-	@Test(description = "Requirement 6" , groups  = "CoreAbstractProcess" , dependsOnGroups  = { "CoreConceptss" })
+	@Test(description = "Requirement 6" , groups  = "CoreAbstractProcess" , dependsOnGroups  = { "CoreConceptss" },priority = 1)
 	public void DependencyCore()
 	{
 		//Dependency CoreConcepts
 	}
 	
 	@Test(description = "Requirement 7" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" , "GmlDependency" , "UniqueId" , "ExtensionIndependence" , 
-			"ExtensionRestrictions" , "SweCommonDependency" , "AggregateData" , "TypeOf" , "SimpleInheritance" , "Configuration" , "SWECommonDependency"})
+			"ExtensionRestrictions" , "SweCommonDependency" , "AggregateData" , "TypeOf" , "SimpleInheritance" , "Configuration" , "SWECommonDependency"},priority = 2)
 	public void PackageFullyImplemented()
 	{	
 		//Dependency All CoreAbstractProcess Tests
 	}
 	
-	@Test(description = "Requirement 8" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
+	@Test(description = "Requirement 8" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 3)
 	public void GmlDependency()
 	{
 		
 	}
 	
-	@Test(description = "Requirement 9" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
+	@Test(description = "Requirement 9" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 4)
 	public void UniqueId()
 	{
 		NodeList identifierList = this.testSubject.getDocumentElement().getElementsByTagName("gml:identifier");
@@ -60,7 +60,7 @@ public class CoreAbstractProcess extends BaseFixture{
 		}
 	}
 	
-	@Test(description = "Requirement 10" , groups  = "CoreAbstractProcess"/*, dependsOnMethods  = { "DependencyCore" }*/)
+	@Test(description = "Requirement 10" , groups  = "CoreAbstractProcess",priority = 5, dependsOnMethods  = { "DependencyCore" })
 	public void ExtensionIndependence() throws ParserConfigurationException, SAXException, IOException
 	{
 		//ArrayList<Node> extensionNodes = DocumentTools.GetElementByLocalName(this.testSubject.getDocumentElement(), "extension");
@@ -89,13 +89,13 @@ public class CoreAbstractProcess extends BaseFixture{
 		}
 	}
 	
-	@Test(description = "Requirement 11" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
+	@Test(description = "Requirement 11" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 6)
 	public void ExtensionRestrictions()
 	{
 		
 	}
 	
-	@Test(description = "Requirement 12" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
+	@Test(description = "Requirement 12" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 7)
 	public void SweCommonDependency()
 	{
 //		Schema schema = ValidationUtils.CreateSchema("block_components.xsd" , "http://schemas.opengis.net/sweCommon/2.0/");
@@ -105,7 +105,7 @@ public class CoreAbstractProcess extends BaseFixture{
 //        ETSAssert.assertSchemaValid(validator, source);
 	}
 	
-	@Test(description = "Requirement 13" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
+	@Test(description = "Requirement 13" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 8)
 	public void AggregateData()
 	{
 		//reference sweCommon for testing
@@ -117,7 +117,7 @@ public class CoreAbstractProcess extends BaseFixture{
 //        ETSAssert.assertSchemaValid(validator, source);		
 	}
 	
-	@Test(description = "Requirement 14" , groups  = "CoreAbstractProcess")
+	@Test(description = "Requirement 14" , groups  = "CoreAbstractProcess",priority = 9)
 	public void TypeOf()
 	{
 		NodeList typeofList = this.testSubject.getDocumentElement().getElementsByTagName("sml:typeOf");
@@ -142,7 +142,7 @@ public class CoreAbstractProcess extends BaseFixture{
 		}
 	}
 	
-	@Test(description = "Requirement 15" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" , "TypeOf" })
+	@Test(description = "Requirement 15" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" , "TypeOf" },priority = 10)
 	public void SimpleInheritance() throws SAXException, IOException
 	{
 		NodeList typeNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:typeOf");
@@ -153,38 +153,29 @@ public class CoreAbstractProcess extends BaseFixture{
 			
 			String url = typeNode.getAttribute("xlink:href");
 
-			try {
-				URI uri = new URI(url);
-				Document doc = URIUtils.parseURI(uri); 
-				
-				NodeList configurationNodes = doc.getDocumentElement().getElementsByTagName("sml:configuration");
-				
-				Assert.assertTrue((configurationNodes.getLength() > 0), "Shall not include the configuration property of referenced process" );
-				
-			} catch (URISyntaxException e) {
-				throw new AssertionError(e.toString());
-			}
+			Assert.assertTrue(UrlValidate.ValidateHttpUrl(url), "referenced process error" );
+			
 		}
 	}
 	
-	@Test(description = "Requirement 16" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
-	public void Configuration()
+	@Test(description = "Requirement 16" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" , "SimpleInheritance"},priority = 11)
+	public void Configuration() throws URISyntaxException, SAXException, IOException
 	{
-		//throw new SkipException("TODO: when a process is defined typeOf property, one should check its configuration element is existed.");
-		/*NodeList configurationList = this.testSubject.getDocumentElement().getElementsByTagName("sml:configuration");
-		int listLength = configurationList.getLength();
+		NodeList typeNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:typeOf");
+		Element typeNode = (Element)typeNodes.item(0);
+		String url = typeNode.getAttribute("xlink:href");
+		URI uri = new URI(url);
+		Document doc = URIUtils.parseURI(uri); 
+		NodeList configurationNodes = doc.getDocumentElement().getElementsByTagName("sml:configuration");
+		
+		int listLength = configurationNodes.getLength();
 		if(listLength == 0)
 		{
 			throw new AssertionError("Configuration property does not exist !!");
 		}
-		else if(listLength > 1)
-		{
-			throw new AssertionError("Configuration property does not Unique !!");
-		}*/
-		
 	}
 	
-	@Test(description = "Requirement 17" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" })
+	@Test(description = "Requirement 17" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 12)
 	public void SWECommonDependency()
 	{
 		/*//去檢查swe這個prefix的以下元素:Dataarray,DataRecord,DataStream,DataChioce,Vctor,Matrix，並將裡面內容抓出來組成一個完整的swe的xml並且用record_components.xsd來驗證

@@ -1,17 +1,112 @@
 package org.opengis.cite.sensorml20.level1;
 
+import java.util.ArrayList;
+
 import org.opengis.cite.sensorml20.BaseFixture;
+import org.opengis.cite.sensorml20.util.DocumentTools;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ConfigurableProcesses extends BaseFixture{
 	@Test(description = "Requirement 38" , groups  = "ConfigurableProcesses" , dependsOnGroups  = { "CoreAbstractProcess" })
 	public void DependencyCore()
 	{
-		//Dependency CoreAbstractProcess
+		Boolean configurableNessary = true;
+		NodeList configurationList = this.testSubject.getDocumentElement().getElementsByTagName("sml:configuration");
+		if(configurationList.getLength() == 0)
+		{
+			configurableNessary = false;
+		}
+		NodeList typeofList = this.testSubject.getDocumentElement().getElementsByTagName("sml:typeOf");
+		if(typeofList.getLength() == 0)
+		{
+			configurableNessary = false;
+		}		
+		
+		Boolean configurableOptional = false;
+		
+		int valueCount = 0;
+		int allowValueCount = 0;
+		NodeList parametersList = this.testSubject.getDocumentElement().getElementsByTagName("sml:parameters");
+		for(int parametersCount = 0 ; parametersCount < parametersList.getLength() ; parametersCount++)
+		{
+			Element parametersNode = (Element)parametersList.item(parametersCount);
+			ArrayList<Node> valueNodes = DocumentTools.GetElementByLocalName(parametersNode, "value");
+			valueCount += valueNodes.size();
+			
+			NodeList allowValuesNodes = parametersNode.getElementsByTagName("swe:AllowedValues");
+			allowValueCount += allowValuesNodes.getLength();
+		}
+		
+		//Optional Test A
+		if(parametersList.getLength() > 0 && valueCount == 0)
+		{
+			configurableOptional = true;
+		}
+		//Optional Test B
+		if(parametersList.getLength() > 0 && allowValueCount > 0)
+		{
+			configurableOptional = true;
+		}	
+		//Optional Test C
+		ArrayList<String> refTurnName = new ArrayList<String>();
+		
+		NodeList configurationNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:configuration");
+		for(int configurationCount = 0 ; configurationCount < configurationNodes.getLength() ; configurationCount++)
+		{
+			Element configurationNode = (Element)configurationNodes.item(configurationCount);
+			NodeList setModeTemp = configurationNode.getElementsByTagName("sml:setMode");
+			for(int tempModeCount = 0 ; tempModeCount < setModeTemp.getLength();tempModeCount++)
+			{
+				refTurnName.add(setModeTemp.item(tempModeCount).getTextContent());
+			}
+		}		
+		
+		if(refTurnName.size() > 0)
+		{
+			ArrayList<String> targetTurnName = new ArrayList<String>();
+			NodeList modesNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:modes");
+			for(int modesCount = 0 ; modesCount < modesNodes.getLength() ; modesCount++)
+			{
+				Element modesNode = (Element)modesNodes.item(modesCount);
+				
+				NodeList modeList = modesNode.getElementsByTagName("sml:Mode");
+				
+				for(int modeCount = 0 ; modeCount < modeList.getLength() ; modeCount++)
+				{
+					Element mode = (Element)modeList.item(modeCount);
+					String gmlId = mode.getAttribute("gml:id");
+					if(gmlId != null && !gmlId.trim().isEmpty())
+					{
+						targetTurnName.add(gmlId);
+					}
+				}
+			}
+			
+			Boolean refTurnCkeck = true;
+			for(int refCount = 0 ; refCount < refTurnName.size() ; refCount++)
+			{
+				if(!targetTurnName.contains(refTurnName.get(refCount)))
+				{
+					refTurnCkeck = false;
+				}
+			}
+			if(refTurnCkeck)
+			{
+				configurableOptional = true;
+			}
+		}
+		//Optional Test D
+		
+		
+		
+		if(!(configurableNessary && configurableOptional))
+		{
+			throw new SkipException("TODO: Not a Configurable Process");	
+		}
 	}
 	
 	@Test(description = "Requirement 39" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" , "TwoModesRequired" , "SettingsProperty" , "SetValueRestriction" , "SetArrayValueRestriction" , "SetConstraintRestriction"})
@@ -23,471 +118,183 @@ public class ConfigurableProcesses extends BaseFixture{
 	@Test(description = "Requirement 40" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
 	public void TwoModesRequired()
 	{
-		NodeList modes = this.testSubject.getDocumentElement().getElementsByTagName("sml:modes");
-		if(modes.getLength() > 0)
+		NodeList modeChoiceNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:ModeChoice");
+		
+		for(int choiceCount = 0 ; choiceCount < modeChoiceNodes.getLength(); choiceCount++)
 		{
-			Element modeChoice = null;
-			
-			for(int i=0 ; i<modes.getLength() ; i++)
+			Element modeChoice = (Element)modeChoiceNodes.item(choiceCount);
+			NodeList modeNodes = modeChoice.getElementsByTagName("sml:Mode");
+			if(modeNodes.getLength() < 2)
 			{
-				Element item = (Element)modes.item(i);
-				if(item.getNodeName() == "sml:ModeChoice")
-				{
-					modeChoice = item;
-					break;
-				}
+				throw new AssertionError("requires two or more Mode !!");
 			}
-			
-			if(modeChoice != null)
-			{
-				int modeCount = 0;
-				NodeList modeChoiceChilds = modeChoice.getChildNodes();
-				for(int i=0 ; i<modeChoiceChilds.getLength() ; i++)
-				{
-					Element item = (Element)modeChoiceChilds.item(i);
-					if(item.getNodeName() == "sml:Mode")
-					{
-						modeCount++;
-					}
-				}	
-				if(modeCount < 2)
-				{
-					throw new AssertionError("requires two or more Mode !!");
-				}
-			}
-			else
-			{
-				throw new AssertionError("requires two or more ModeChoice !!");
-			}
-		}
-		else
-		{
-			throw new AssertionError("requires two or more modes !!");
 		}
 	}
 	
 	@Test(description = "Requirement 41" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
 	public void SettingsProperty()
 	{
-		NodeList modes = this.testSubject.getDocumentElement().getElementsByTagName("sml:modes");
-		if(modes.getLength() > 0)
+		NodeList configurationNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:configuration");
+		if(configurationNodes.getLength() > 0)
 		{
-			Element modeChoice = null;		
-			for(int i=0 ; i<modes.getLength() ; i++)
+			for(int configurationCount = 0 ; configurationCount < configurationNodes.getLength(); configurationCount++)
 			{
-				Element item = (Element)modes.item(i);
-				if(item.getNodeName() == "sml:ModeChoice")
+				Element configurationNode = (Element)configurationNodes.item(configurationCount);
+				NodeList modeNodes = configurationNode.getElementsByTagName("sml:Settings");
+				if(modeNodes.getLength() < 1)
 				{
-					modeChoice = item;
-					break;
+					throw new AssertionError("configuration need inclued Settings");
 				}
-			}
-			
-			if(modeChoice != null)
-			{
-				Element mode = null;
-				NodeList modeChoiceChilds = modeChoice.getChildNodes();
-				for(int i=0 ; i<modeChoiceChilds.getLength() ; i++)
-				{
-					Element item = (Element)modeChoiceChilds.item(i);
-					if(item.getNodeName() == "sml:Mode")
-					{
-						mode = item;
-						break;
-					}
-				}	
-				if(mode != null)
-				{
-					Element configuration = null;
-					NodeList modeChilds = mode.getChildNodes();
-					for(int i=0 ; i<modeChilds.getLength() ; i++)
-					{
-						Element item = (Element)modeChilds.item(i);
-						if(item.getNodeName() == "sml:configuration")
-						{
-							configuration = item;
-							break;
-						}
-					}
-					if(configuration != null)
-					{
-						Element settings = null;
-						NodeList configurationChilds = configuration.getChildNodes();
-						for(int i=0 ; i<configurationChilds.getLength() ; i++)
-						{
-							Element item = (Element)configurationChilds.item(i);
-							if(item.getNodeName() == "sml:Settings")
-							{
-								settings = item;
-								break;
-							}
-						}
-						if(settings == null)
-						{
-							throw new AssertionError("mode's configuration need inclued Settings !!");
-						}
-					}
-					else
-					{
-						throw new AssertionError("mode need inclued configuration !!");
-					}
-				}
-				else
-				{
-					throw new AssertionError("requires two or more Mode !!");
-				}
-			}
-			else
-			{
-				throw new AssertionError("requires two or more ModeChoice !!");
-			}
+			}			
 		}
 		else
 		{
-			throw new AssertionError("requires two or more modes !!");
+			throw new AssertionError("Shall inclued configuration property");
 		}		
 	}
 	
 	@Test(description = "Requirement 42" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
 	public void SetValueRestriction()
 	{
-		NodeList modes = this.testSubject.getDocumentElement().getElementsByTagName("sml:modes");
-		if(modes.getLength() > 0)
+		NodeList setValueNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:setValue");
+				
+		if(setValueNodes.getLength() > 0)
 		{
-			Element modeChoice = null;		
-			for(int i=0 ; i<modes.getLength() ; i++)
+			ArrayList<String> parameterFields = new ArrayList<String>();
+			NodeList parametersNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:parameters");
+			for(int parametersCount = 0;parametersCount < parametersNodes.getLength();parametersCount++)
 			{
-				Element item = (Element)modes.item(i);
-				if(item.getNodeName() == "sml:ModeChoice")
+				Element parameters = (Element)parametersNodes.item(parametersCount);
+				NodeList fieldNodes = parameters.getElementsByTagName("swe:field");
+				for(int fieldCount = 0 ; fieldCount < fieldNodes.getLength();fieldCount++)
 				{
-					modeChoice = item;
-					break;
+					Element field = (Element)fieldNodes.item(fieldCount);
+					String name = field.getAttribute("name");
+					if(name != null && !name.trim().isEmpty())
+					{
+						parameterFields.add(name);
+					}
 				}
 			}
 			
-			if(modeChoice != null)
+			for(int setValueCount = 0;setValueCount < setValueNodes.getLength();setValueCount++)
 			{
-				Element mode = null;
-				NodeList modeChoiceChilds = modeChoice.getChildNodes();
-				for(int i=0 ; i<modeChoiceChilds.getLength() ; i++)
+				Element setValueNode = (Element)setValueNodes.item(setValueCount);
+				String setValueRef = setValueNode.getAttribute("ref");
+				if(setValueRef != null && !setValueRef.trim().isEmpty())
 				{
-					Element item = (Element)modeChoiceChilds.item(i);
-					if(item.getNodeName() == "sml:Mode")
+					String[] refSplit = setValueRef.split("/");
+					String targetField = "";
+					if(refSplit.length > 0)
 					{
-						mode = item;
-						break;
+						targetField = refSplit[refSplit.length-1];
 					}
-				}	
-				if(mode != null)
-				{
-					Element configuration = null;
-					NodeList modeChilds = mode.getChildNodes();
-					for(int i=0 ; i<modeChilds.getLength() ; i++)
+					
+					if(!parameterFields.contains(targetField))
 					{
-						Element item = (Element)modeChilds.item(i);
-						if(item.getNodeName() == "sml:configuration")
-						{
-							configuration = item;
-							break;
-						}
-					}
-					if(configuration != null)
-					{
-						Element settings = null;
-						NodeList configurationChilds = configuration.getChildNodes();
-						for(int i=0 ; i<configurationChilds.getLength() ; i++)
-						{
-							Element item = (Element)configurationChilds.item(i);
-							if(item.getNodeName() == "sml:Settings")
-							{
-								settings = item;
-								break;
-							}
-						}
-						if(settings != null)
-						{
-							NodeList settingChilds = configuration.getChildNodes();
-							for(int i=0 ; i<settingChilds.getLength() ; i++)
-							{
-								Element item = (Element)settingChilds.item(i);
-								if(item.getNodeName() == "sml:setValue")
-								{
-									settings = item;
-									NamedNodeMap setValueAttributes = item.getAttributes();
-									for(int j=0 ; j < setValueAttributes.getLength() ; j++)
-									{
-										Attr attribute = (Attr)setValueAttributes.item(j);
-										if(attribute.getName() != "ref")
-										{
-											throw new AssertionError("setValue can not use ["+attribute.getName()+"] !!");
-										}
-									}
-								}
-								else
-								{
-									throw new AssertionError("Settings can not inclued other than setValue !!");
-								}
-							}
-						}
-						else
-						{
-							throw new AssertionError("mode's configuration need inclued Settings !!");
-						}
-					}
-					else
-					{
-						throw new AssertionError("mode need inclued configuration !!");
+						throw new AssertionError("value not defined with parameters");
 					}
 				}
-				else
-				{
-					throw new AssertionError("requires two or more Mode !!");
-				}
-			}
-			else
-			{
-				throw new AssertionError("requires two or more ModeChoice !!");
-			}
+			}		
 		}
-		else
-		{
-			throw new AssertionError("requires two or more modes !!");
-		}		
 	}
 	
 	@Test(description = "Requirement 43" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
 	public void SetArrayValueRestriction()
 	{
-		NodeList modes = this.testSubject.getDocumentElement().getElementsByTagName("sml:modes");
-		if(modes.getLength() > 0)
+		NodeList setArrayValuesNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:setArrayValues");
+		
+		if(setArrayValuesNodes.getLength() > 0)
 		{
-			Element modeChoice = null;		
-			for(int i=0 ; i<modes.getLength() ; i++)
+			ArrayList<String> parameterFields = new ArrayList<String>();
+			NodeList parametersNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:parameters");
+			for(int parametersCount = 0;parametersCount < parametersNodes.getLength();parametersCount++)
 			{
-				Element item = (Element)modes.item(i);
-				if(item.getNodeName() == "sml:ModeChoice")
+				Element parameters = (Element)parametersNodes.item(parametersCount);
+				NodeList dataArrayNodes = parameters.getElementsByTagName("swe:DataArray");
+				
+				for(int arrayCount = 0 ; arrayCount < dataArrayNodes.getLength();arrayCount++)
 				{
-					modeChoice = item;
-					break;
+					Element arrayNode = (Element)dataArrayNodes.item(arrayCount);
+					
+					NodeList fieldNodes = arrayNode.getElementsByTagName("swe:field");
+					for(int fieldCount = 0 ; fieldCount < fieldNodes.getLength();fieldCount++)
+					{
+						Element field = (Element)fieldNodes.item(fieldCount);
+						String name = field.getAttribute("name");
+						if(name != null && !name.trim().isEmpty())
+						{
+							parameterFields.add(name);
+						}
+					}
 				}
 			}
 			
-			if(modeChoice != null)
+			for(int setArrayValuesCount = 0;setArrayValuesCount < setArrayValuesNodes.getLength();setArrayValuesCount++)
 			{
-				Element mode = null;
-				NodeList modeChoiceChilds = modeChoice.getChildNodes();
-				for(int i=0 ; i<modeChoiceChilds.getLength() ; i++)
+				Element setArrayValuesNode = (Element)setArrayValuesNodes.item(setArrayValuesCount);
+				String setValueRef = setArrayValuesNode.getAttribute("ref");
+				if(setValueRef != null && !setValueRef.trim().isEmpty())
 				{
-					Element item = (Element)modeChoiceChilds.item(i);
-					if(item.getNodeName() == "sml:Mode")
+					String[] refSplit = setValueRef.split("/");
+					String targetField = "";
+					if(refSplit.length > 0)
 					{
-						mode = item;
-						break;
+						targetField = refSplit[refSplit.length-1];
 					}
-				}	
-				if(mode != null)
-				{
-					Element configuration = null;
-					NodeList modeChilds = mode.getChildNodes();
-					for(int i=0 ; i<modeChilds.getLength() ; i++)
+					
+					if(!parameterFields.contains(targetField))
 					{
-						Element item = (Element)modeChilds.item(i);
-						if(item.getNodeName() == "sml:configuration")
-						{
-							configuration = item;
-							break;
-						}
-					}
-					if(configuration != null)
-					{
-						Element settings = null;
-						NodeList configurationChilds = configuration.getChildNodes();
-						for(int i=0 ; i<configurationChilds.getLength() ; i++)
-						{
-							Element item = (Element)configurationChilds.item(i);
-							if(item.getNodeName() == "sml:Settings")
-							{
-								settings = item;
-								break;
-							}
-						}
-						if(settings != null)
-						{
-							Element setArrayValue = null;
-							NodeList settingChilds = configuration.getChildNodes();
-							for(int i=0 ; i<settingChilds.getLength() ; i++)
-							{
-								Element item = (Element)settingChilds.item(i);
-								if(item.getNodeName() == "sml:setArrayValue")
-								{
-									setArrayValue = item;
-									break;
-								}
-							}
-							if(setArrayValue != null)
-							{
-								int count = 0;
-								NodeList setArrayValueChilds = setArrayValue.getChildNodes();
-								for(int i=0 ; i<setArrayValueChilds.getLength() ; i++)
-								{
-									Element item = (Element)setArrayValueChilds.item(i);
-									if(item.getNodeName() == "sml:ArrayValues")
-									{
-										count++;
-									}
-								}
-								if(count <= 0)
-								{
-									throw new AssertionError("setArrayValue need inclued ArrayValues !!");
-								}
-							}
-							else
-							{
-								throw new AssertionError("mode's Settings need inclued setArrayValue !!");
-							}
-						}
-						else
-						{
-							throw new AssertionError("mode's configuration need inclued Settings !!");
-						}
-					}
-					else
-					{
-						throw new AssertionError("mode need inclued configuration !!");
+						throw new AssertionError("array value not defined with parameters");
 					}
 				}
-				else
-				{
-					throw new AssertionError("requires two or more Mode !!");
-				}
 			}
-			else
-			{
-				throw new AssertionError("requires two or more ModeChoice !!");
-			}
-		}
-		else
-		{
-			throw new AssertionError("requires two or more modes !!");
-		}		
+		}	
 	}
 	
 	@Test(description = "Requirement 44" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
 	public void SetConstraintRestriction()
 	{
-		//同上，檢查mode裡面有sml:configuration，包含了settings，裡面有sml:setConstraint這個元素，並且元素裡有swe:AllowedValues、swe:AllowedTokens、swe:AllowedTimes其中一種為值
+		NodeList setConstraintNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:setConstraint");
 		
-		NodeList modes = this.testSubject.getDocumentElement().getElementsByTagName("sml:modes");
-		if(modes.getLength() > 0)
+		if(setConstraintNodes.getLength() > 0)
 		{
-			Element modeChoice = null;		
-			for(int i=0 ; i<modes.getLength() ; i++)
+			ArrayList<String> parameterFields = new ArrayList<String>();
+			NodeList parametersNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:parameters");
+			for(int parametersCount = 0;parametersCount < parametersNodes.getLength();parametersCount++)
 			{
-				Element item = (Element)modes.item(i);
-				if(item.getNodeName() == "sml:ModeChoice")
+				Element parameters = (Element)parametersNodes.item(parametersCount);
+				NodeList fieldNodes = parameters.getElementsByTagName("swe:field");
+				for(int fieldCount = 0 ; fieldCount < fieldNodes.getLength();fieldCount++)
 				{
-					modeChoice = item;
-					break;
+					Element field = (Element)fieldNodes.item(fieldCount);
+					String name = field.getAttribute("name");
+					if(name != null && !name.trim().isEmpty())
+					{
+						parameterFields.add(name);
+					}
 				}
 			}
 			
-			if(modeChoice != null)
+			for(int setConstraintCount = 0;setConstraintCount < setConstraintNodes.getLength();setConstraintCount++)
 			{
-				Element mode = null;
-				NodeList modeChoiceChilds = modeChoice.getChildNodes();
-				for(int i=0 ; i<modeChoiceChilds.getLength() ; i++)
+				Element setConstraintNode = (Element)setConstraintNodes.item(setConstraintCount);
+				String setValueRef = setConstraintNode.getAttribute("ref");
+				if(setValueRef != null && !setValueRef.trim().isEmpty())
 				{
-					Element item = (Element)modeChoiceChilds.item(i);
-					if(item.getNodeName() == "sml:Mode")
+					String[] refSplit = setValueRef.split("/");
+					String targetField = "";
+					if(refSplit.length > 0)
 					{
-						mode = item;
-						break;
+						targetField = refSplit[refSplit.length-1];
 					}
-				}	
-				if(mode != null)
-				{
-					Element configuration = null;
-					NodeList modeChilds = mode.getChildNodes();
-					for(int i=0 ; i<modeChilds.getLength() ; i++)
+					
+					if(!parameterFields.contains(targetField))
 					{
-						Element item = (Element)modeChilds.item(i);
-						if(item.getNodeName() == "sml:configuration")
-						{
-							configuration = item;
-							break;
-						}
-					}
-					if(configuration != null)
-					{
-						Element settings = null;
-						NodeList configurationChilds = configuration.getChildNodes();
-						for(int i=0 ; i<configurationChilds.getLength() ; i++)
-						{
-							Element item = (Element)configurationChilds.item(i);
-							if(item.getNodeName() == "sml:Settings")
-							{
-								settings = item;
-								break;
-							}
-						}
-						if(settings != null)
-						{
-							Element setConstraint = null;
-							NodeList settingChilds = configuration.getChildNodes();
-							for(int i=0 ; i<settingChilds.getLength() ; i++)
-							{
-								Element item = (Element)settingChilds.item(i);
-								if(item.getNodeName() == "sml:setConstraint")
-								{
-									setConstraint = item;
-									break;
-								}
-							}
-							if(setConstraint != null)
-							{
-								int count = 0;
-								NodeList setArrayValueChilds = setConstraint.getChildNodes();
-								for(int i=0 ; i<setArrayValueChilds.getLength() ; i++)
-								{
-									Element item = (Element)setArrayValueChilds.item(i);
-									if(item.getNodeName() == "swe:AllowedValues" || item.getNodeName() == "swe:AllowedTokens" || item.getNodeName() == "swe:AllowedTimes")
-									{
-										count++;
-									}
-								}
-								if(count <= 0)
-								{
-									throw new AssertionError("setConstraint need set Value !!");
-								}
-							}
-							else
-							{
-								throw new AssertionError("mode's Settings need inclued setArrayValue !!");
-							}
-						}
-						else
-						{
-							throw new AssertionError("mode's configuration need inclued Settings !!");
-						}
-					}
-					else
-					{
-						throw new AssertionError("mode need inclued configuration !!");
+						throw new AssertionError("setConstraint value not defined with parameters");
 					}
 				}
-				else
-				{
-					throw new AssertionError("requires two or more Mode !!");
-				}
-			}
-			else
-			{
-				throw new AssertionError("requires two or more ModeChoice !!");
-			}
-		}
-		else
-		{
-			throw new AssertionError("requires two or more modes !!");
-		}			
+			}		
+		}		
 	}
 }
