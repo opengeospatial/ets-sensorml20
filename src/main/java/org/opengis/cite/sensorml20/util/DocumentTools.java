@@ -12,6 +12,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -90,7 +91,29 @@ public class DocumentTools {
         		Element typeofNode = (Element)typeofNodes.item(0);
         		String ref = typeofNode.getAttribute("xlink:href");
         		URI uri = new URI(ref);
-        		DocumentTools.MergeDocument(doc, URIUtils.parseURI(uri));
+        		Document merge = URIUtils.parseURI(uri);
+        		DocumentTools.MergeDocument(doc, merge);
+        		
+        		NamedNodeMap docImports = doc.getDocumentElement().getAttributes();
+        		NamedNodeMap mergeImports = merge.getDocumentElement().getAttributes();
+        		
+        		for(int mergeCount = 0 ; mergeCount < mergeImports.getLength() ; mergeCount++)
+        		{
+        			Node mergeItem = mergeImports.item(mergeCount);
+        			Boolean isAdd = true;
+        			for(int docCount = 0 ; docCount < docImports.getLength() ; docCount++)
+        			{
+        				Node docItem = docImports.item(docCount);
+            			if(docItem.getNodeName().equals(mergeItem.getNodeName()))
+            			{
+            				isAdd = false;
+            			}
+        			}
+        			if(isAdd)
+        			{
+        				doc.getDocumentElement().setAttribute(mergeItem.getNodeName(), mergeItem.getNodeValue());
+        			}
+        		}
         	}
         }
 	}

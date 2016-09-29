@@ -98,11 +98,29 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 12" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 7)
 	public void SweCommonDependency()
 	{
-//		Schema schema = ValidationUtils.CreateSchema("block_components.xsd" , "http://schemas.opengis.net/sweCommon/2.0/");
-//		
-//        Validator validator = schema.newValidator();
-//        Source source = new DOMSource(this.testSubject);       
-//        ETSAssert.assertSchemaValid(validator, source);
+		/*ArrayList<Node> appendNodes = new ArrayList<Node>();
+		
+		NodeList parametersNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:parameters");
+		for(int parametersCount = 0 ; parametersCount < parametersNodes.getLength(); parametersCount++)
+		{
+			Element parametersNode = (Element)parametersNodes.item(parametersCount);
+			NodeList parameterNodes = parametersNode.getElementsByTagName("sml:parameter");
+			for(int parameterCount = 0 ; parameterCount < parameterNodes.getLength(); parameterCount++)
+			{
+				
+			}
+			
+			
+		}
+		
+		
+		
+		
+		Schema schema = ValidationUtils.CreateSchema("block_components.xsd" , "http://schemas.opengis.net/sweCommon/2.0/");
+		
+        Validator validator = schema.newValidator();
+        Source source = new DOMSource(this.testSubject);       
+        ETSAssert.assertSchemaValid(validator, source);*/
 	}
 	
 	@Test(description = "Requirement 13" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 8)
@@ -162,17 +180,21 @@ public class CoreAbstractProcess extends BaseFixture{
 	public void Configuration() throws URISyntaxException, SAXException, IOException
 	{
 		NodeList typeNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:typeOf");
-		Element typeNode = (Element)typeNodes.item(0);
-		String url = typeNode.getAttribute("xlink:href");
-		URI uri = new URI(url);
-		Document doc = URIUtils.parseURI(uri); 
-		NodeList configurationNodes = doc.getDocumentElement().getElementsByTagName("sml:configuration");
-		
-		int listLength = configurationNodes.getLength();
-		if(listLength == 0)
+		if(typeNodes.getLength() >  0)
 		{
-			throw new AssertionError("Configuration property does not exist !!");
+			Element typeNode = (Element)typeNodes.item(0);
+			String url = typeNode.getAttribute("xlink:href");
+			URI uri = new URI(url);
+			Document doc = URIUtils.parseURI(uri); 
+			NodeList configurationNodes = doc.getDocumentElement().getElementsByTagName("sml:configuration");
+			
+			int listLength = configurationNodes.getLength();
+			if(listLength == 0)
+			{
+				throw new AssertionError("Configuration property does not exist !!");
+			}			
 		}
+
 	}
 	
 	@Test(description = "Requirement 17" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 12)

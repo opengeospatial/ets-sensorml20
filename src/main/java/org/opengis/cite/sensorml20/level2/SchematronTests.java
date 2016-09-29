@@ -85,7 +85,7 @@ public class SchematronTests extends DataFixture {
 	 * @param testContext
 	 *            The test set context.
 	 */
-	@BeforeClass
+	
 	public void createSchematronValidator(ITestContext testContext) {
 		Map<String, String> piData = getXmlModelPIData(this.dataFile);
 		String phase = "#ALL";
@@ -137,7 +137,6 @@ public class SchematronTests extends DataFixture {
 	 * Schematron constraints for conformance classes of Core in SensorML 2.0</a></li>
 	 * </ul>
 	 */
-	@Test(description = "Checks Core Schematron rules")
 	public void checkCoreConstraints() {
 		URL schRef = this.getClass().getResource(
 				"/org/opengis/cite/sensorml20/sch/core.sch");
@@ -157,7 +156,6 @@ public class SchematronTests extends DataFixture {
 	 * Schematron constraints for conformance classes of Core in SensorML 2.0</a></li>
 	 * </ul>
 	 */
-	@Test(description = "Checks SimpleProcess Schematron rules")
 	public void checkSimpleProcessConstraints() {
 		URL schRef = this.getClass().getResource(
 				"/org/opengis/cite/sensorml20/sch/simple_process.sch");
@@ -177,7 +175,6 @@ public class SchematronTests extends DataFixture {
 	 * Schematron constraints for conformance classes of Core in SensorML 2.0</a></li>
 	 * </ul>
 	 */
-	@Test(description = "Checks SimpleProcess Schematron rules")
 	public void checkAggregateProcessConstraints() {
 		URL schRef = this.getClass().getResource(
 				"/org/opengis/cite/sensorml20/sch/aggregate_process.sch");
@@ -197,7 +194,6 @@ public class SchematronTests extends DataFixture {
 	 * Schematron constraints for conformance classes of Core in SensorML 2.0</a></li>
 	 * </ul>
 	 */
-	@Test(description = "Checks PhysicalComponent Schematron rules")
 	public void checkPhysicalComponentConstraints() {
 		URL schRef = this.getClass().getResource(
 				"/org/opengis/cite/sensorml20/sch/physical_component.sch");
@@ -217,7 +213,6 @@ public class SchematronTests extends DataFixture {
 	 * Schematron constraints for conformance classes of Core in SensorML 2.0</a></li>
 	 * </ul>
 	 */
-	@Test(description = "Checks PhysicalSystem Schematron rules")
 	public void checkPhysicalSystemConstraints() {
 		URL schRef = this.getClass().getResource(
 				"/org/opengis/cite/sensorml20/sch/physical_system.sch");
@@ -237,7 +232,6 @@ public class SchematronTests extends DataFixture {
 	 * Schematron constraints for ISO 19136</a></li>
 	 * </ul>
 	 */
-	@Test(description = "Checks general Schematron rules specified in ISO 19136")
 	public void checkGMLSchematronConstraints() {
 		URL schRef = this.getClass().getResource(
 				"/org/opengis/cite/iso19136/sch/gml-3.2.1.sch");
@@ -250,7 +244,6 @@ public class SchematronTests extends DataFixture {
 	 * constraints associated with it using either the {@code xml-model}
 	 * processing instruction or the {@code sch} test run argument.
 	 */
-	@Test(description = "Checks application-specific Schematron rules")
 	public void checkSchematronConstraints() {
 		if (null == this.dataValidator) {
 			throw new SkipException("Schematron schema reference not found.");

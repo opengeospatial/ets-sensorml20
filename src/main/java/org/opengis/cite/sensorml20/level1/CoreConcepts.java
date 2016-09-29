@@ -24,7 +24,8 @@ public class CoreConcepts extends BaseFixture{
 	public void CoreConceptUsed() throws SAXException, IOException, URISyntaxException
 	{
 		DocumentTools.MergeReference(this.testSubject);
-        
+		//System.out.println(DocumentTools.DocumentToString(this.testSubject));
+		
 		Schema schema = null;
 		Node documentElement = this.testSubject.getDocumentElement();
 		String documentName = documentElement.getNodeName();

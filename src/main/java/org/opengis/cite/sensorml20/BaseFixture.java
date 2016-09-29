@@ -1,15 +1,9 @@
 package org.opengis.cite.sensorml20;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import org.opengis.cite.sensorml20.util.DocumentTools;
-import org.opengis.cite.sensorml20.util.URIUtils;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class BaseFixture {
