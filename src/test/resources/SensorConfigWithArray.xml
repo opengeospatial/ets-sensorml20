@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sml:PhysicalComponent gml:id="MY_MODEL_INSTANCE"
+    xmlns:sml="http://www.opengis.net/sensorml/2.0"
+    xmlns:gml="http://www.opengis.net/gml/3.2"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.opengis.net/sensorml/2.0 http://schemas.opengis.net/sensorML/2.0/sensorML.xsd">
+    <gml:description>
+        An example of an instance in which one sets the active mode during installation
+    </gml:description>
+    <!-- reference to the base sensor -->
+    <sml:typeOf xlink:title="urn:net:swe:process:sensorWithModes_ex456"
+        xlink:href="OEM_Sensor.xml"/>
+    <!-- configuration settings for mode -->
+    <sml:configuration>        
+        <sml:Settings>
+            <!-- use mode gml:id as the value -->
+            <!--<sml:setMode ref="modes/threatLevel">lowThreat</sml:setMode>-->
+            <!--<sml:setArrayValues ref="base/components/raingauge/parameters/steady-state-response">
+                1,2,3,4,5 2,4,6,8,10
+            </sml:setArrayValues>-->
+            <sml:setArrayValues ref="text">
+                <sml:ArrayValues>
+                    <sml:encoding><TextEncoding xmlns="http://www.opengis.net/swe/2.0" tokenSeparator="," blockSeparator=" "></TextEncoding></sml:encoding>
+                    <sml:value>1,2 2,4</sml:value>
+                </sml:ArrayValues>                
+            </sml:setArrayValues>
+            <!--<sml:setArrayValues ref="xml">
+                <sml:ArrayValues>
+                    <sml:encoding><XMLEncoding xmlns="http://www.opengis.net/swe/2.0"></XMLEncoding></sml:encoding>
+                    <sml:value></sml:value>
+                </sml:ArrayValues>
+            </sml:setArrayValues>
+            <sml:setArrayValues ref="binary">
+                <sml:ArrayValues>
+                    <sml:encoding><BinaryEncoding xmlns="http://www.opengis.net/swe/2.0" byteOrder="bigEndian" byteEncoding="base64">
+                        <member>
+                            <!-\-<Component dataType="#MY_MODEL_INSTANCE" ref=""></Component>-\->
+                            <Block ref="binary_block"></Block>
+                        </member>
+                    </BinaryEncoding></sml:encoding>
+                    <sml:value></sml:value>
+                </sml:ArrayValues>
+            </sml:setArrayValues>-->
+        </sml:Settings>
+    </sml:configuration>
+</sml:PhysicalComponent>

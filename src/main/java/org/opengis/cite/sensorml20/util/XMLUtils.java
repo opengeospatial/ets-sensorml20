@@ -2,6 +2,7 @@ package org.opengis.cite.sensorml20.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
+//import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLEventReader;
@@ -33,11 +35,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import net.sf.saxon.s9api.DOMDestination;
-import net.sf.saxon.s9api.DocumentBuilder;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XPathCompiler;
@@ -47,6 +49,7 @@ import net.sf.saxon.s9api.XdmValue;
 import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
+import net.sf.saxon.s9api.DocumentBuilder;
 
 import org.opengis.cite.sensorml20.util.TestSuiteLogger;
 import org.w3c.dom.Document;
@@ -393,4 +396,34 @@ public class XMLUtils {
 		return docElemName.getNamespaceURI().equals(
 				XMLConstants.W3C_XML_SCHEMA_NS_URI);
 	}
+	
+	private static Document merge(XPathExpression baseExpression, XPathExpression childExpression, File... files) throws Exception {
+		    DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
+		        .newInstance();
+		    docBuilderFactory
+		        .setIgnoringElementContentWhitespace(true);
+		    javax.xml.parsers.DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+		    Document base = docBuilder.parse(files[0]);
+
+		    Node results = (Node) baseExpression.evaluate(base,
+		        XPathConstants.NODE);
+		    if (results == null) {
+		      throw new IOException(files[0]
+		          + ": expression does not evaluate to node");
+		    }
+
+		    for (int i = 1; i < files.length; i++) {
+		      Document merge = docBuilder.parse(files[i]);
+		      Node nextResults = (Node) childExpression.evaluate(merge,
+		          XPathConstants.NODE);
+		      while (nextResults.hasChildNodes()) {
+		        Node kid = nextResults.getFirstChild();
+		        nextResults.removeChild(kid);
+		        kid = base.importNode(kid, true);
+		        results.appendChild(kid);
+		      }
+		    }
+
+		    return base;
+		  }
 }
