@@ -35,7 +35,8 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 8" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 3)
 	public void GmlDependency()
 	{
-		
+		/** this requirement is fulfill in the very beginning XSD validation. 
+		 *  We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
 	}
 	
 	@Test(description = "Requirement 9" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 4)
@@ -92,7 +93,8 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 11" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 6)
 	public void ExtensionRestrictions()
 	{
-		
+		/** this requirement is fulfill in the very beginning XSD validation. 
+		 *  We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
 	}
 	
 	@Test(description = "Requirement 12" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 7)
@@ -126,13 +128,8 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 13" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 8)
 	public void AggregateData()
 	{
-		//reference sweCommon for testing
-		//ERROR Message: cvc-elt.1.a: Cannot find the declaration of element 'sml:SimpleProcess'. 
-		//Location: expected [false] but found [true]
-//		Schema schema = ValidationUtils.CreateSchema("swe.xsd" , "http://schemas.opengis.net/sweCommon/2.0/");
-//        Validator validator = schema.newValidator();
-//        Source source = new DOMSource(this.testSubject);       
-//        ETSAssert.assertSchemaValid(validator, source);		
+		/** this requirement is fulfill in the very beginning XSD validation. 
+		 *  We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
 	}
 	
 	@Test(description = "Requirement 14" , groups  = "CoreAbstractProcess",priority = 9)
@@ -200,12 +197,7 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 17" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 12)
 	public void SWECommonDependency()
 	{
-		/*//去檢查swe這個prefix的以下元素:Dataarray,DataRecord,DataStream,DataChioce,Vctor,Matrix，並將裡面內容抓出來組成一個完整的swe的xml並且用record_components.xsd來驗證
-				
-		Schema schema = ValidationUtils.CreateSchema("record_components.xsd" , "http://schemas.opengis.net/sweCommon/2.0/");
-		
-        Validator validator = schema.newValidator();
-        Source source = new DOMSource(this.testSubject);       
-        ETSAssert.assertSchemaValid(validator, source);*/
+		/** this requirement is fulfill in the very beginning XSD validation. 
+		 *  We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
 	}
 }
