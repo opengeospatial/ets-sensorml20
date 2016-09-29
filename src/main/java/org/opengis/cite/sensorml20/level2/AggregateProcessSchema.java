@@ -355,7 +355,17 @@ public class AggregateProcessSchema extends BaseFixture{
 	
 	@Test(description = "Requirement 71")
 	public void DesignatingLinkPaths()
-	{/*
+	{
+		/** TODO:
+		 * 找出所有sml:Link 
+		 * 檢查 source 及 destination elements 是否有使用 ref 的方式參考本文其他元素；
+		 * 若有參考，則判斷是否符合以下規則：
+		 * 1) 路徑相對於本文開始 (即元素的相對路徑)
+		 * 2) 只包含 property element (lowerCamelCase 開頭的元素)
+		 * 3) 若元素包含了 name 屬性，則以name 裡定義的名稱當作path 的一部分，否則以元性名稱為準
+		 * 4) byReference , 檢查 source 及 destination elements 是否有使用 ref 的方式參考本文其他元素 
+		 */
+		/*
 		NodeList sourceNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:source");
 		for(int sourceCount = 0 ; sourceCount < sourceNodes.getLength() ; sourceCount++)
 		{

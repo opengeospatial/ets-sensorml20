@@ -109,7 +109,9 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 	@Test(description = "Requirement 49")
 	public void ExtensionProcessExecution()
 	{
-
+		/** TODO: Verify that the process execution does not require information to be 
+		 * retrieved from the extension element.
+		 */
 	}	
 	
 	@Test(description = "Requirement 50")

@@ -36,7 +36,7 @@ public class CoreAbstractProcess extends BaseFixture{
 	public void GmlDependency()
 	{
 		/** this requirement is fulfill in the very beginning XSD validation. 
-		 *  We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
+		 *  TODO: We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
 	}
 	
 	@Test(description = "Requirement 9" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 4)
@@ -94,7 +94,7 @@ public class CoreAbstractProcess extends BaseFixture{
 	public void ExtensionRestrictions()
 	{
 		/** this requirement is fulfill in the very beginning XSD validation. 
-		 *  We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
+		 *  TODO: We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
 	}
 	
 	@Test(description = "Requirement 12" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 7)
@@ -129,7 +129,7 @@ public class CoreAbstractProcess extends BaseFixture{
 	public void AggregateData()
 	{
 		/** this requirement is fulfill in the very beginning XSD validation. 
-		 *  We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
+		 *  TODO: We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
 	}
 	
 	@Test(description = "Requirement 14" , groups  = "CoreAbstractProcess",priority = 9)
@@ -197,7 +197,7 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 17" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 12)
 	public void SWECommonDependency()
 	{
-		/** this requirement is fulfill in the very beginning XSD validation. 
-		 *  We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
+		/**  this requirement is fulfill in the very beginning XSD validation. 
+		 *  TODO: We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
 	}
 }
