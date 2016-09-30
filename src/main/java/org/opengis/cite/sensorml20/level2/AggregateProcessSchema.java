@@ -356,116 +356,124 @@ public class AggregateProcessSchema extends BaseFixture{
 	@Test(description = "Requirement 71")
 	public void DesignatingLinkPaths()
 	{
-		/** TODO:
-		 * 找出所有sml:Link 
-		 * 檢查 source 及 destination elements 是否有使用 ref 的方式參考本文其他元素；
-		 * 若有參考，則判斷是否符合以下規則：
-		 * 1) 路徑相對於本文開始 (即元素的相對路徑)
-		 * 2) 只包含 property element (lowerCamelCase 開頭的元素)
-		 * 3) 若元素包含了 name 屬性，則以name 裡定義的名稱當作path 的一部分，否則以元性名稱為準
-		 * 4) byReference , 檢查 source 及 destination elements 是否有使用 ref 的方式參考本文其他元素 
-		 */
-		/*
-		NodeList sourceNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:source");
-		for(int sourceCount = 0 ; sourceCount < sourceNodes.getLength() ; sourceCount++)
+		NodeList linkNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:Link");
+		for(int linkCount = 0 ; linkCount < linkNodes.getLength() ; linkCount++)
 		{
-			String validateResult = ValidateLikePath(sourceNodes.item(sourceCount));
-			Assert.assertTrue( (validateResult.length() == 0) , validateResult );
+			Element link = (Element)linkNodes.item(linkCount);
+			NodeList sourceNodes = link.getElementsByTagName("sml:source");
+			for(int sourceCount = 0 ; sourceCount < sourceNodes.getLength(); sourceCount++)
+			{
+				Element source = (Element)sourceNodes.item(sourceCount);
+				if(source.hasAttribute("ref"))
+				{
+					String sourceRef = source.getAttribute("ref");
+					Boolean validateResult = ValidateLinkRef((Element)this.testSubject.getDocumentElement().cloneNode(true),  sourceRef);
+					Assert.assertTrue(validateResult, "path rule error" );
+					
+					
+				}
+				else
+				{
+					throw new AssertionError("destinations shall be a impit , output or parameter");
+				}
+			}
+			
+			NodeList destinationNodes = link.getElementsByTagName("sml:destination");
+			for(int destinationCount = 0 ; destinationCount < destinationNodes.getLength(); destinationCount++)
+			{
+				Element destination = (Element)destinationNodes.item(destinationCount);
+				if(destination.hasAttribute("ref"))
+				{
+					String destinationRef = destination.getAttribute("ref");
+					Boolean validateResult = ValidateLinkRef((Element)this.testSubject.getDocumentElement().cloneNode(true),  destinationRef);
+					Assert.assertTrue(validateResult, "path rule error" );
+				}
+				else
+				{
+					throw new AssertionError("destinations shall be a impit , output or parameter");
+				}
+			}
 		}
-		
-		NodeList destinationNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:destination");
-		for(int destinationCount = 0 ; destinationCount < destinationNodes.getLength() ; destinationCount++)
-		{
-			String validateResult = ValidateLikePath(destinationNodes.item(destinationCount));
-			Assert.assertTrue((validateResult.length() == 0), validateResult );
-		}*/
 	}
 	
-	/*
-	private String ValidateLikePath(Node node)
+	private Boolean ValidateLinkRef(Element node , String ref)
 	{
-		ArrayList<String> pathList = new ArrayList<String>();
+		String[] refSplite = ref.split("/");
 		
-		Element validateNode = (Element)node;
-		if(validateNode.hasAttribute("ref"))
+		if(refSplite.length == 0)
 		{
-			String[] pathAry =  validateNode.getAttribute("ref").split("/");
-			if(pathAry.length > 0)
+			return false;
+		}
+
+		//Base Test
+		NodeList baseElements = node.getChildNodes();
+		Boolean isBase = false;
+		for(int baseCount = 0 ; baseCount < baseElements.getLength() ; baseCount++)
+		{
+			if(baseElements.item(baseCount).getLocalName() != null)
 			{
-				String type = pathAry[0];
-				
-				NodeList linkTargetList = this.testSubject.getDocumentElement().getElementsByTagName("sml:" + type );
-				
-				for(int linkTargetCount = 0 ; linkTargetCount < linkTargetList.getLength() ;linkTargetCount++)
+				if(baseElements.item(baseCount).getLocalName().equals(refSplite[0]))
 				{
-					if( linkTargetList.item(linkTargetCount).getLocalName() != null )
+					isBase = true;
+				}			
+			}
+		}
+		if(!isBase)
+		{
+			return false;
+		}
+
+		ArrayList<Node> pathNodes = new ArrayList<Node>();
+		
+		for(int refCount = 0 ; refCount < refSplite.length ; refCount++)
+		{
+			String name = refSplite[refCount];
+			if(refCount == 0)
+			{
+				NodeList targetNodes = node.getElementsByTagName("sml:" + name);
+				if(targetNodes.getLength() > 0)
+				{
+					for(int targetCount = 0 ; targetCount < targetNodes.getLength() ; targetCount++)
 					{
-						NodeList linkTargetChildList = linkTargetList.item(linkTargetCount).getChildNodes();
-						
-						for(int targetChildCount = 0 ; targetChildCount < linkTargetChildList.getLength();targetChildCount++)
-						{
-							String result = CombinePath(linkTargetChildList.item(targetChildCount));
-							if(result.length() > 0)
-							{
-								result = type + "/" + result;
-								System.out.println(result);
-								pathList.add(result);
-							}
-						}	
+						pathNodes.add(targetNodes.item(targetCount));
 					}
+				}
+				else
+				{
+					return false;
 				}
 			}
 			else
 			{
-				return "Reference Can not be Empty";
-			}
-		}
-		else
-		{
-			return "Link Element shall have a reference";
-		}
-		
-		return "";
-	}
-	*/
-	/*
-	private String CombinePath(Node node)
-	{
-		String result = "";
-		
-		if(node.getLocalName() != null)
-		{
-			Element element = (Element)node;
-			String localName = node.getLocalName();
-			if(localName.substring(0, 1).equals(localName.substring(0, 1).toLowerCase()) && element.getPrefix().equals("sml"))
-			{
-				if(element.hasAttribute("name"))
+				ArrayList<Node> newPathNodes = new ArrayList<Node>();
+				
+				for(int pathNodeCount = 0; pathNodeCount < pathNodes.size() ; pathNodeCount++)
 				{
-					result += element.getAttribute("name");
+					Element pathNode = (Element)pathNodes.get(pathNodeCount);
+					ArrayList<Node> tempNodes = DocumentTools.getAllNode(pathNode);
+					for(int tempCount = 0 ; tempCount < tempNodes.size() ; tempCount++)
+					{
+						if(tempNodes.get(tempCount) != null)
+						{
+							Element tempNode = (Element)tempNodes.get(tempCount);
+							if(tempNode.getLocalName().equals(name) || tempNode.getAttribute("name").equals(name))
+							{
+								newPathNodes.add(tempNode);
+							}
+						}
+					}
+				}
+				if(newPathNodes.size() > 0)
+				{
+					pathNodes = newPathNodes;
 				}
 				else
 				{
-					result += localName;
+					return false;
 				}
-			}
-			
-			String childStr = "";
-			NodeList nodeList = node.getChildNodes();
-			for(int childCount = 0 ; childCount < nodeList.getLength() ; childCount++)
-			{
-				childStr += CombinePath(nodeList.item(childCount));
-				if(childStr.length() > 0)
-				{
-					break;
-				}
-			}
-			
-			if(childStr.length() > 0)
-			{
-				result = result + "/" +  childStr;
 			}
 		}
 		
-		return result;
-	}*/
+		return true;
+	}
 }

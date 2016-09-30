@@ -1,6 +1,7 @@
 package org.opengis.cite.sensorml20.level1;
 
 import org.opengis.cite.sensorml20.BaseFixture;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.w3c.dom.NodeList;
 
@@ -9,7 +10,12 @@ public class SimpleProcess extends BaseFixture{
 	@Test(description = "Requirement 18" , groups  = "SimpleProcess" , dependsOnGroups  = { "CoreAbstractProcess" })
 	public void DependencyCore()
 	{
-		//Dependency SimpleProcess
+		String rootName = this.testSubject.getDocumentElement().getNodeName();
+
+		if(!rootName.equals("sml:SimpleProcess"))
+		{
+			throw new SkipException("Not a Simple Process");	
+		}
 	}
 	
 	@Test(description = "Requirement 19" , groups  = "SimpleProcess" , dependsOnMethods  = { "DependencyCore" , "Definition" , "Method" })
