@@ -100,29 +100,8 @@ public class CoreAbstractProcess extends BaseFixture{
 	@Test(description = "Requirement 12" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 7)
 	public void SweCommonDependency()
 	{
-		/*ArrayList<Node> appendNodes = new ArrayList<Node>();
-		
-		NodeList parametersNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:parameters");
-		for(int parametersCount = 0 ; parametersCount < parametersNodes.getLength(); parametersCount++)
-		{
-			Element parametersNode = (Element)parametersNodes.item(parametersCount);
-			NodeList parameterNodes = parametersNode.getElementsByTagName("sml:parameter");
-			for(int parameterCount = 0 ; parameterCount < parameterNodes.getLength(); parameterCount++)
-			{
-				
-			}
-			
-			
-		}
-		
-		
-		
-		
-		Schema schema = ValidationUtils.CreateSchema("block_components.xsd" , "http://schemas.opengis.net/sweCommon/2.0/");
-		
-        Validator validator = schema.newValidator();
-        Source source = new DOMSource(this.testSubject);       
-        ETSAssert.assertSchemaValid(validator, source);*/
+		/** this requirement is fulfill in the very beginning XSD validation. 
+		 *  TODO: We are still looking for better implementation way to show more precise messages if the XSD error was caused by this dependency.  **/
 	}
 	
 	@Test(description = "Requirement 13" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" },priority = 8)
