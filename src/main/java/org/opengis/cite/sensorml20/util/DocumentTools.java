@@ -89,6 +89,7 @@ public class DocumentTools {
         	if(typeofNodes.getLength() > 0)
         	{
         		Element typeofNode = (Element)typeofNodes.item(0);
+        		//TODO: the href attribute should allow relative URL
         		String ref = typeofNode.getAttribute("xlink:href");
         		URI uri = new URI(ref);
         		Document merge = URIUtils.parseURI(uri);

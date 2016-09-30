@@ -10,7 +10,7 @@
     </gml:description>
     <!-- reference to the base sensor -->
     <sml:typeOf xlink:title="urn:net:swe:process:sensorWithModes_ex456"
-        xlink:href="OEM_Sensor.xml"/>
+        xlink:href="https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/OEM_Sensor.xml"/>
     <!-- configuration settings for mode -->
     <sml:configuration>        
         <sml:Settings>
