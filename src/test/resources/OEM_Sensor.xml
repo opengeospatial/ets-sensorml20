@@ -12,6 +12,18 @@
     <gml:description>
         Sensor with Modes: example where sensor modes can be changed externally and reported in the output
     </gml:description>
+    <sml:classification>
+        <sml:ClassifierList>
+            <sml:classifier>
+                <sml:Term definition="http://sensorml.com/ont/swe/property/SensorType">
+                    <sml:label>Sensor Type</sml:label>
+                    <sml:value>Weather Station</sml:value>
+                </sml:Term>
+            </sml:classifier>
+        </sml:ClassifierList>
+    </sml:classification>
+    <sml:characteristics name="sml_character"></sml:characteristics>
+    <sml:capabilities name="ln_capabilities"></sml:capabilities>
     <!-- ==================================== -->
     <!--                 Inputs               -->
     <!-- ==================================== -->

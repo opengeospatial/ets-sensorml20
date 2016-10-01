@@ -6,8 +6,24 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.opengis.net/sensorml/2.0 http://schemas.opengis.net/sensorML/2.0/sensorML.xsd">
     <gml:description>
-        An example of an instance in which one sets the active mode during installation
+        An example of an instance in which one sets the array settings during installation
     </gml:description>
+    <gml:identifier codeSpace="UID">urn:sml:7818</gml:identifier>
+    <sml:identification>
+        <sml:IdentifierList>
+            <sml:identifier>
+                <sml:Term>
+                    <sml:label>domo of sensor config with array</sml:label>
+                    <sml:value>urn:sml:7818</sml:value>
+                </sml:Term>
+            </sml:identifier>
+        </sml:IdentifierList>
+    </sml:identification>
+    <sml:validTime>        
+        <gml:TimeInstant gml:id="ID140"> 
+            <gml:timePosition>2016-09-30</gml:timePosition>
+        </gml:TimeInstant>
+    </sml:validTime>    
     <!-- reference to the base sensor -->
     <sml:typeOf xlink:title="urn:net:swe:process:sensorWithModes_ex456"
         xlink:href="https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/OEM_Sensor.xml"/>

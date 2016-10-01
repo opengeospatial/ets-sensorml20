@@ -96,7 +96,7 @@
     </sml:parameters>
     <sml:method>
         <sml:ProcessMethod>
-            <swe:description>A linear interpolator based on equation y = mx + b </swe:description>
+            <swe:description>A linear interpolator based on equation y = mx + b </swe:description>            
         </sml:ProcessMethod>
     </sml:method>
 	

@@ -5,7 +5,7 @@
     xmlns:gml="http://www.opengis.net/gml/3.2"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xlink="http://www.w3.org/1999/xlink"
-    xsi:schemaLocation="http://www.opengis.net/sensorml/2.0 http://schemas.opengis.net/sensorml/2.0/sensorML.xsd"
+    xsi:schemaLocation="http://www.opengis.net/sensorml/2.0 http://schemas.opengis.net/sensorML/2.0/sensorML.xsd"
     definition="http://sensors.ws/process/linearInterpolator">
     <!-- ============================= -->
     <!--       Descriptions            -->
@@ -140,6 +140,11 @@
                             </sml:parameter>
                         </sml:ParameterList>       
                     </sml:parameters>
+                    <sml:method>
+                        <sml:ProcessMethod>
+                            <swe:description>A linear interpolator based on equation y = mx + b </swe:description>            
+                        </sml:ProcessMethod>
+                    </sml:method>
                 </sml:SimpleProcess>        
             </sml:component>
              
@@ -241,9 +246,5 @@
  
         </sml:ConnectionList>
     </sml:connections>
-     <sml:method>
-        <sml:ProcessMethod>
-            <swe:description>A linear interpolator based on equation y = mx + b </swe:description>
-        </sml:ProcessMethod>
-    </sml:method>
+     
 </sml:AggregateProcess>
