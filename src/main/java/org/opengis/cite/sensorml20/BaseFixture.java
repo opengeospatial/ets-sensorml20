@@ -17,9 +17,6 @@ public class BaseFixture {
      * 
      * @param testContext
      *            The test (group) context.
-     * @throws IOException IOException
-     * @throws SAXException SAXException
-     * @throws URISyntaxException 
      */
     @BeforeClass(alwaysRun = true)
     public void obtainTestSubject(ITestContext testContext){
