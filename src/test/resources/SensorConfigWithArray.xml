@@ -8,56 +8,39 @@
     <gml:description>
         An example of an instance in which one sets the array settings during installation
     </gml:description>
-    <gml:identifier codeSpace="UID">urn:sml:7818</gml:identifier>
+    <gml:identifier codeSpace="UID">urn:sml:demo:sensorConfigWithArray</gml:identifier>
+    <sml:keywords>
+        <sml:KeywordList>            
+            <sml:keyword>sensor config array</sml:keyword>
+        </sml:KeywordList>
+    </sml:keywords>
     <sml:identification>
         <sml:IdentifierList>
             <sml:identifier>
                 <sml:Term>
                     <sml:label>domo of sensor config with array</sml:label>
-                    <sml:value>urn:sml:7818</sml:value>
+                    <sml:value>urn:sml:demo:sensorConfigWithArray</sml:value>
                 </sml:Term>
             </sml:identifier>
         </sml:IdentifierList>
-    </sml:identification>
+    </sml:identification>    
     <sml:validTime>        
         <gml:TimeInstant gml:id="ID140"> 
             <gml:timePosition>2016-09-30</gml:timePosition>
         </gml:TimeInstant>
-    </sml:validTime>    
+    </sml:validTime>        
     <!-- reference to the base sensor -->
-    <sml:typeOf xlink:title="urn:net:swe:process:sensorWithModes_ex456"
+    <sml:typeOf xlink:title="urn:net:swe:process:sensorWithArrary"
         xlink:href="https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/OEM_Sensor.xml"/>
     <!-- configuration settings for mode -->
     <sml:configuration>        
         <sml:Settings>
-            <!-- use mode gml:id as the value -->
-            <!--<sml:setMode ref="modes/threatLevel">lowThreat</sml:setMode>-->
-            <!--<sml:setArrayValues ref="base/components/raingauge/parameters/steady-state-response">
-                1,2,3,4,5 2,4,6,8,10
-            </sml:setArrayValues>-->
             <sml:setArrayValues ref="text">
                 <sml:ArrayValues>
                     <sml:encoding><TextEncoding xmlns="http://www.opengis.net/swe/2.0" tokenSeparator="," blockSeparator=" "></TextEncoding></sml:encoding>
                     <sml:value>1,2 2,4</sml:value>
                 </sml:ArrayValues>                
             </sml:setArrayValues>
-            <!--<sml:setArrayValues ref="xml">
-                <sml:ArrayValues>
-                    <sml:encoding><XMLEncoding xmlns="http://www.opengis.net/swe/2.0"></XMLEncoding></sml:encoding>
-                    <sml:value></sml:value>
-                </sml:ArrayValues>
-            </sml:setArrayValues>
-            <sml:setArrayValues ref="binary">
-                <sml:ArrayValues>
-                    <sml:encoding><BinaryEncoding xmlns="http://www.opengis.net/swe/2.0" byteOrder="bigEndian" byteEncoding="base64">
-                        <member>
-                            <!-\-<Component dataType="#MY_MODEL_INSTANCE" ref=""></Component>-\->
-                            <Block ref="binary_block"></Block>
-                        </member>
-                    </BinaryEncoding></sml:encoding>
-                    <sml:value></sml:value>
-                </sml:ArrayValues>
-            </sml:setArrayValues>-->
         </sml:Settings>
     </sml:configuration>
 </sml:PhysicalComponent>

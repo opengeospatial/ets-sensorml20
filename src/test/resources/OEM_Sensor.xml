@@ -83,6 +83,7 @@
             </sml:parameter>    
         </sml:ParameterList>
     </sml:parameters>    
+    
     <!-- ==================================== -->
     <!--                 Modes                -->
     <!-- ==================================== -->
@@ -114,4 +115,9 @@
             </sml:mode>            
         </sml:ModeChoice>          
     </sml:modes>
+    <sml:method>
+        <sml:ProcessMethod>
+            <swe:description>an quation or method description should be defined here. </swe:description>            
+        </sml:ProcessMethod>
+    </sml:method>
 </sml:PhysicalComponent>
