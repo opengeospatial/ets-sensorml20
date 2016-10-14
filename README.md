@@ -42,6 +42,11 @@ Execute the build artifact under the target folder:
 #### 3. OGC test harness
 
 Use [TEAM Engine](https://github.com/opengeospatial/teamengine), the official OGC test harness.
+### Files Tested
+* [SimpleProcess](https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/SimpleProcess.xml)
+* [PhysicalComponent](https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/PhysicalComponent.xml)
+* [AggregateProcess](https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/AggregateProcess.xml)
+* [ConfigurableProcess; config with array values](https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/SensorConfigWithArray.xml)
 
 ### How to contribute
 
