@@ -11,6 +11,7 @@ import org.opengis.cite.sensorml20.ETSAssert;
 import org.opengis.cite.sensorml20.util.DocumentTools;
 import org.opengis.cite.sensorml20.util.UrlValidate;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Document;
@@ -176,7 +177,8 @@ public class PhysicalComponentSchema extends BaseFixture{
 				Node child = positionChilds.item(childCount);
 				if(!child.getNodeName().equals("swe:DataArray") && !child.getNodeName().equals("sml:AbstractProcess"))
 				{
-					throw new AssertionError("dynamic state shall be described using a swe:DataArray or a sml:AbstractProcess.");
+					//throw new AssertionError("dynamic state shall be described using a swe:DataArray or a sml:AbstractProcess.");
+					throw new SkipException("dynamic state shall be described using a swe:DataArray or a sml:AbstractProcess.");
 				}
 			}
 		}
