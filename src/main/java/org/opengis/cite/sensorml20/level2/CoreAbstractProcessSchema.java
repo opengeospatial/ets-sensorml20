@@ -169,7 +169,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			if(identifier.hasAttribute("codeSpace"))
 			{
 				String codeSpace = identifier.getAttributeNode("codeSpace").getValue();
-				if(!codeSpace.toLowerCase().equals("uid"))
+				if(!codeSpace.toLowerCase().equals("uid") && !codeSpace.toLowerCase().equals("uniqueid"))
 				{
 					resultMessage += " codeSpace value error. ";
 				}
