@@ -113,6 +113,10 @@ public class PhysicalComponentSchema extends BaseFixture{
 	@Test(description = "Requirement 75")
 	public void PositionByPosition()
 	{
+		/*
+		 * When the position element takes a swe:DataRecord as its value, 
+		 * validate that the DataRecord contains two swe:Vector elements as its fields.
+		 */
 		NodeList positionNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:position");
 		for(int positionCount = 0 ; positionCount < positionNodes.getLength() ; positionCount++)
 		{
@@ -161,7 +165,7 @@ public class PhysicalComponentSchema extends BaseFixture{
 					}
 				}
 			}
-			Assert.assertTrue(useDataRecord, "The position property shall take a swe:DataRecord as its value" );
+			//Assert.assertTrue(useDataRecord, "The position property shall take a swe:DataRecord as its value" );
 		}
 	}
 	
