@@ -118,7 +118,7 @@ public class CoreConcepts extends BaseFixture{
 		}
 	}
 	
-	@Test(description = "Requirement 4" , groups  = "CoreConceptss" , priority = 4)
+	@Test(description = "Requirement 4"  , priority = 4)
 	public void CoreConceptMetadata()
 	{
 		ArrayList<String> result = new ArrayList<String>();
