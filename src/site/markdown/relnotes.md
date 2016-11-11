@@ -1,5 +1,10 @@
 # SensorML 2.0 Release Notes
 
+## 0.5
+- Fix Req 4 by removing this reqirement from the test group of CoreConcepts. The qualification metadata should not fail the entire test suite. 
+- Fix Req 75, 76 for position issues.
+- Fix namespace issues in schematron files.
+
 ## 0.4
 - [#22](https://github.com/opengeospatial/ets-sensorml20/issues/22) Process with Advanced Data Types. Req 36 ~ 37
 - [#21](https://github.com/opengeospatial/ets-sensorml20/issues/21) Physical System: Req 33~35

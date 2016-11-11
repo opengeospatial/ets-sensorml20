@@ -45,6 +45,7 @@ Use [TEAM Engine](https://github.com/opengeospatial/teamengine), the official OG
 ### Files Tested
 * [SimpleProcess](https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/SimpleProcess.xml)
 * [PhysicalComponent](https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/PhysicalComponent.xml)
+* [PhysicalSystem](https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/PhysicalSystem.xml)
 * [AggregateProcess](https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/AggregateProcess.xml)
 * [ConfigurableProcess; config with array values](https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/SensorConfigWithArray.xml)
 
