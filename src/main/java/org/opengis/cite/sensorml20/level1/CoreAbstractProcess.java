@@ -160,7 +160,7 @@ public class CoreAbstractProcess extends BaseFixture{
 		{
 			Element typeNode = (Element)typeNodes.item(0);
 			String url = typeNode.getAttribute("xlink:href");
-			URI uri = new URI(url);
+			URI uri = URIUtils.getAbsoluteUri(url, this.testSubjectUri);
 			Document doc = URIUtils.parseURI(uri); 
 			NodeList configurationNodes = doc.getDocumentElement().getElementsByTagName("sml:configuration");
 			

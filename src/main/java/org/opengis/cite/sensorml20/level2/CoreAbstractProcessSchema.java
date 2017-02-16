@@ -1,5 +1,7 @@
 package org.opengis.cite.sensorml20.level2;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +9,7 @@ import javax.xml.transform.dom.DOMSource;
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.ETSAssert;
 import org.opengis.cite.sensorml20.util.DocumentTools;
+import org.opengis.cite.sensorml20.util.URIUtils;
 import org.opengis.cite.sensorml20.util.UrlValidate;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -233,7 +236,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 	}	
 	
 	@Test(description = "Requirement 56")
-	public void TypeOfReference()
+	public void TypeOfReference() throws URISyntaxException
 	{
 		NodeList typeofNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:typeOf");
 		ArrayList<String> uids = new ArrayList<String>();
@@ -264,7 +267,9 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			
 			if(typeofNode.hasAttribute("xlink:href"))
 			{
-				if(!UrlValidate.ValidateHttpUrl(typeofNode.getAttribute("xlink:href")))
+				String url = typeofNode.getAttribute("xlink:href");
+				URI uri = URIUtils.getAbsoluteUri(url, this.testSubjectUri);
+				if(!UrlValidate.ValidateHttpUrl(uri.toString()))
 				{
 					throw new AssertionError("value of xlink:href attribute shall be a resolvable URL");
 				}				
