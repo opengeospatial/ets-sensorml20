@@ -88,28 +88,21 @@ public class DocumentTools {
 		
 	public static void MergeReference(Document doc, URI docUri) throws URISyntaxException, SAXException, IOException
 	{
-		System.out.println("Starting Merge");
+		System.out.println("Start Merging");
         if(doc != null)
         {
-        	System.out.println("Document is not null");
+        	//System.out.println("Document is not null");
         	NodeList typeofNodes = doc.getElementsByTagName("sml:typeOf");
         	if(typeofNodes.getLength() > 0)
         	{
         		Element typeofNode = (Element)typeofNodes.item(0);
         		//TODO: the href attribute should allow relative URL
         		String ref = typeofNode.getAttribute("xlink:href");
-        		URI uri = new URI(ref);
-        		System.out.println(uri.toString() + " is " + (uri.isAbsolute() ? "" : " not ") + " absolute uri");
-        		if (!uri.isAbsolute()){
-        			
-        			uri = URIUtils.resolveRelativeURI(docUri.toString(), ref);
-        			System.out.println("typeOf Relative URI  to absolute:" + uri.toString());
-        		}
-        		else
-        			uri = new URI(ref);
+        		URI uri = URIUtils.getAbsoluteUri(ref, docUri);
         		Document merge = URIUtils.parseURI(uri);
         		DocumentTools.MergeDocument(doc, merge);
-        		
+//        		System.out.println("Merged result: ");
+//        		System.out.println(DocumentTools.DocumentToString(doc));
         		NamedNodeMap docImports = doc.getDocumentElement().getAttributes();
         		NamedNodeMap mergeImports = merge.getDocumentElement().getAttributes();
         		

@@ -22,10 +22,8 @@ public class CoreConcepts extends BaseFixture{
 	
 	@Test(description = "Requirement 1" ,groups  = "CoreConceptss" ,priority = 1)
 	public void CoreConceptUsed() throws SAXException, IOException, URISyntaxException
-	{
-		System.out.println("TestSubjectUri in CoreConceptUsed: " + this.testSubjectUri);
+	{		
 		DocumentTools.MergeReference(this.testSubject, this.testSubjectUri);
-		
 		
 		Schema schema = null;
 		Node documentElement = this.testSubject.getDocumentElement();

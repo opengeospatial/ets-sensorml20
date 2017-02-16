@@ -35,7 +35,7 @@ public class BaseFixture {
                 SuiteAttribute.TEST_SUBJECT_URI.getName());
         if ((null != uriObj)){        	
             this.testSubjectUri = URI.class.cast(uriObj);
-            System.out.println(this.testSubjectUri.toString());        	
+            //System.out.println(this.testSubjectUri.toString());        	
         }
     }
 

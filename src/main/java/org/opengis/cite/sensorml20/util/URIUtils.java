@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
 
@@ -210,4 +211,14 @@ public class URIUtils {
         }
         return result;
     }
+
+	public static URI getAbsoluteUri(String relativeUrl, URI referenceBaseUri) throws URISyntaxException {
+		URI uri = new URI(relativeUrl);
+		if (!uri.isAbsolute()){			
+			uri = URIUtils.resolveRelativeURI(referenceBaseUri.toString(), relativeUrl);
+		}
+		else
+			uri = new URI(relativeUrl);
+		return uri;
+	}
 }

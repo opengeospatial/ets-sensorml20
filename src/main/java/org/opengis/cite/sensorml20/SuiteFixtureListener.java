@@ -136,7 +136,7 @@ public class SuiteFixtureListener implements ISuiteListener {
 						+ xmlFile.getAbsolutePath());
 		        
 				suite.setAttribute(SuiteAttribute.TEST_SUBJECT_URI.getName(), URI.create(xmlURI));
-				System.out.println("XML URI was saed into SuiteAttribute: " + xmlURI.toString());
+				//System.out.println("XML URI was saed into SuiteAttribute: " + xmlURI.toString());
 			}
 		} catch (IOException iox) {
 			throw new RuntimeException("Failed to read resource obtained from "

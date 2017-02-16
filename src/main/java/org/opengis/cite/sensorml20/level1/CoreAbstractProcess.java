@@ -137,7 +137,7 @@ public class CoreAbstractProcess extends BaseFixture{
 	}
 	
 	@Test(description = "Requirement 15" , groups  = "CoreAbstractProcess" , dependsOnMethods  = { "DependencyCore" , "TypeOf" },priority = 10)
-	public void SimpleInheritance() throws SAXException, IOException
+	public void SimpleInheritance() throws SAXException, IOException, URISyntaxException
 	{
 		NodeList typeNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:typeOf");
 		
@@ -146,8 +146,8 @@ public class CoreAbstractProcess extends BaseFixture{
 			Element typeNode = (Element)typeNodes.item(typeCount);
 			
 			String url = typeNode.getAttribute("xlink:href");
-
-			Assert.assertTrue(UrlValidate.ValidateHttpUrl(url), "referenced process error" );
+			URI absoluteUri = URIUtils.getAbsoluteUri(url, this.testSubjectUri);
+			Assert.assertTrue(UrlValidate.ValidateHttpUrl(absoluteUri.toString()), "referenced process error" );
 			
 		}
 	}
