@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.util.logging.Level;
 
 import javax.ws.rs.core.HttpHeaders;
@@ -24,6 +26,14 @@ import com.sun.jersey.api.client.WebResource;
 /**
  * Provides a collection of utility methods for manipulating or resolving URI
  * references.
+ */
+/**
+ * @author ricky
+ *
+ */
+/**
+ * @author ricky
+ *
  */
 public class URIUtils {
 
@@ -175,5 +185,29 @@ public class URIUtils {
         TestSuiteLogger.log(Level.FINE, "Wrote " + destFile.length()
                 + " bytes to file at " + destFile.getAbsolutePath());
         return destFile;
+    }
+    
+    
+    /**
+     * Check if a string is absolute URL
+     * 
+     * @param urlString
+     * @return
+     */
+    public static boolean isAbsoluteURL(String urlString)
+    {
+        boolean result = false;
+        try
+        {
+            URL url = new URL(urlString);
+            String protocol = url.getProtocol();
+            if (protocol != null && protocol.trim().length() > 0)
+                result = true;
+        }
+        catch (MalformedURLException e)
+        {
+            return false;
+        }
+        return result;
     }
 }

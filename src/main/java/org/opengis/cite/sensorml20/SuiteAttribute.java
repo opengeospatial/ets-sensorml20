@@ -39,8 +39,13 @@ public enum SuiteAttribute {
     /**
      * A DOM Document representation of the test subject or metadata about it.
      */
-    TEST_SUBJECT("testSubject", Document.class);
+    TEST_SUBJECT("testSubject", Document.class),
 	
+	/**
+     * An absolute URI referring to a DOM Document schema.
+     */
+	TEST_SUBJECT_URI("testSubjectUri", URI.class);
+    
     private final Class attrType;
     private final String attrName;
 

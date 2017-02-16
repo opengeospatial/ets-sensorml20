@@ -124,6 +124,7 @@ public class SuiteFixtureListener implements ISuiteListener {
 				suite.setAttribute(SuiteAttribute.XML.getName(), xmlFile);
 				
 				Document iutDoc = null;
+				
 		        try {
 		            iutDoc = URIUtils.parseURI(xmlFile.toURI());
 		        } catch (Exception x) {
@@ -133,6 +134,9 @@ public class SuiteFixtureListener implements ISuiteListener {
 		        suite.setAttribute(SuiteAttribute.TEST_SUBJECT.getName(), iutDoc);
 		        TestSuiteLogger.log(Level.FINE, "Wrote XML document to "
 						+ xmlFile.getAbsolutePath());
+		        
+				suite.setAttribute(SuiteAttribute.TEST_SUBJECT_URI.getName(), URI.create(xmlURI));
+				System.out.println("XML URI was saed into SuiteAttribute: " + xmlURI.toString());
 			}
 		} catch (IOException iox) {
 			throw new RuntimeException("Failed to read resource obtained from "

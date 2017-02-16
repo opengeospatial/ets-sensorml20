@@ -1,10 +1,13 @@
 package org.opengis.cite.sensorml20;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+
+import com.thaiopensource.util.Uri;
 
 public class BaseFixture {
 	
@@ -12,6 +15,7 @@ public class BaseFixture {
 	
 	protected Document originalSubject;
     protected Document testSubject;
+    protected URI testSubjectUri;
 
     /**
      * 
@@ -25,6 +29,13 @@ public class BaseFixture {
         if ((null != obj) && Document.class.isAssignableFrom(obj.getClass())) {
             this.testSubject = Document.class.cast(obj);
             originalSubject = Document.class.cast(obj);
+        }
+        
+        Object uriObj = testContext.getSuite().getAttribute(
+                SuiteAttribute.TEST_SUBJECT_URI.getName());
+        if ((null != uriObj)){        	
+            this.testSubjectUri = URI.class.cast(uriObj);
+            System.out.println(this.testSubjectUri.toString());        	
         }
     }
 

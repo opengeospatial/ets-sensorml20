@@ -10,12 +10,17 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+import org.opengis.cite.sensorml20.SuiteAttribute;
+import org.opengis.cite.sensorml20.level1.PhysicalSystem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import com.beust.jcommander.internal.Console;
 
 public class DocumentTools {	
 	
@@ -81,10 +86,12 @@ public class DocumentTools {
 	    return rets;
 	}
 		
-	public static void MergeReference(Document doc) throws URISyntaxException, SAXException, IOException
+	public static void MergeReference(Document doc, URI docUri) throws URISyntaxException, SAXException, IOException
 	{
+		System.out.println("Starting Merge");
         if(doc != null)
         {
+        	System.out.println("Document is not null");
         	NodeList typeofNodes = doc.getElementsByTagName("sml:typeOf");
         	if(typeofNodes.getLength() > 0)
         	{
@@ -92,6 +99,14 @@ public class DocumentTools {
         		//TODO: the href attribute should allow relative URL
         		String ref = typeofNode.getAttribute("xlink:href");
         		URI uri = new URI(ref);
+        		System.out.println(uri.toString() + " is " + (uri.isAbsolute() ? "" : " not ") + " absolute uri");
+        		if (!uri.isAbsolute()){
+        			
+        			uri = URIUtils.resolveRelativeURI(docUri.toString(), ref);
+        			System.out.println("typeOf Relative URI  to absolute:" + uri.toString());
+        		}
+        		else
+        			uri = new URI(ref);
         		Document merge = URIUtils.parseURI(uri);
         		DocumentTools.MergeDocument(doc, merge);
         		
