@@ -1,5 +1,10 @@
 # SensorML 2.0 Release Notes
 
+## 0.6 
+- [#30](https://github.com/opengeospatial/ets-sensorml20/issues/30) typeOf elements should accept relative URL as its source reference. 
+- [#31](https://github.com/opengeospatial/ets-sensorml20/issues/31) ConfigurableProcess might lose some base elements while using typeOf reference.   
+- [#32](https://github.com/opengeospatial/ets-sensorml20/issues/32) requirement 45 - schematron validation always fail on core concepts 
+
 ## 0.5
 - Fix Req 4 by removing this reqirement from the test group of CoreConcepts. The qualification metadata should not fail the entire test suite. 
 - Fix Req 75, 76 for position issues.
