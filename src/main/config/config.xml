@@ -12,6 +12,9 @@
 	<local-name>suite</local-name>
 	<title>SensorML 2.0 Conformance Test Suite</title>
 	<description>Checks SensorML instances for conformance to OGC 12-000.</description>
+	<BasicConformanceClasses>
+	  <conformanceClass>org.opengis.cite.sensorml20.level1.CoreConcept</conformanceClass>
+	</BasicConformanceClasses>
   </suite>
   <revision>
 	<name>${project.version}</name>
