@@ -14,6 +14,12 @@
 	<description>Checks SensorML instances for conformance to OGC 12-000.</description>
 	<BasicConformanceClasses>
 	  <conformanceClass>org.opengis.cite.sensorml20.level1.CoreConcept</conformanceClass>
+	  <!-- <conformanceClass>org.opengis.cite.sensorml20.level1.PhysicalComponent</conformanceClass>
+	  <conformanceClass>org.opengis.cite.sensorml20.level1.PhysicalSystem</conformanceClass>
+	  <conformanceClass>org.opengis.cite.sensorml20.level1.CoreAbstractProcess</conformanceClass>
+	  <conformanceClass>org.opengis.cite.sensorml20.level1.SimpleProcess</conformanceClass>
+	  <conformanceClass>org.opengis.cite.sensorml20.level1.AggregateProcess</conformanceClass>
+	  <conformanceClass>org.opengis.cite.sensorml20.level1.ConfigurableProcesses</conformanceClass> -->
 	</BasicConformanceClasses>
   </suite>
   <revision>
