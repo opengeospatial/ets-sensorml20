@@ -1,4 +1,6 @@
 # SensorML 2.0 Release Notes
+## 0.7
+- [#33](https://github.com/opengeospatial/ets-sensorml20/issues/33) Add conformance class configuration into the sensorml20 test. 
 
 ## 0.6 
 - [#30](https://github.com/opengeospatial/ets-sensorml20/issues/30) typeOf elements should accept relative URL as its source reference. 
