@@ -4,7 +4,7 @@
 <organization>
   <name>OGC</name>
   <standard>
-    <name>OGC SensorML</name>
+    <name>Sensor Model Language (SensorML)</name>
     <version>
       <name>${spec-version}</name>
       <suite>
