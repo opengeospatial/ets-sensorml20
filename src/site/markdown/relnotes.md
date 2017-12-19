@@ -1,4 +1,7 @@
 # SensorML 2.0 Release Notes
+## 0.8
+- [#35](https://github.com/opengeospatial/ets-sensorml20/issues/35) Version displayed on start page of beta environment is not correct
+- [#36](https://github.com/opengeospatial/ets-sensorml20/issues/36) Improve name of test suite
 ## 0.7
 - [#33](https://github.com/opengeospatial/ets-sensorml20/issues/33) Add conformance class configuration into the sensorml20 test. 
 
