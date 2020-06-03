@@ -265,7 +265,7 @@ public class PhysicalComponentSchema extends BaseFixture{
 				for(int oChildCount = 0 ; oChildCount < outputChilds.size() ; oChildCount++)
 				{
 					Node oChild = outputChilds.get(oChildCount);
-					if(oChild.getNodeName().equals("we:DataArray") || oChild.getNodeName().equals("swe:DataRecord"))
+					if(oChild.getNodeName().equals("swe:DataArray") || oChild.getNodeName().equals("swe:DataRecord"))
 					{
 						useSweData = true;
 						break;

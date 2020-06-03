@@ -112,10 +112,39 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 	@Test(description = "Requirement 49")
 	public void ExtensionProcessExecution()
 	{
-		/** TODO: Verify that the process execution does not require information to be 
-		 * retrieved from the extension element.
-		 */
-	}	
+		Node node = this.testSubject.getDocumentElement();
+		Assert.assertTrue(validateAllNodesDefinition(node), "The value of the definition attribute shall be a resolvable URI" );
+	}
+	
+	private Boolean validateAllNodesDefinition(Node node)
+	{
+		for(int i=0 ; i<node.getChildNodes().getLength() ; i++)
+		{
+			Node tempNode = node.getChildNodes().item(i);
+			if(tempNode.getLocalName() != null)
+			{
+				String value = "";
+				Element subNode = (Element)node.getChildNodes().item(i);
+				if(subNode.hasAttribute("definition"))
+				{
+					value = subNode.getAttribute("definition");
+					
+					if(UrlValidate.ValidateHttpUrl(value)) 
+					{
+						return false;
+					}
+				}
+					
+				
+				Boolean tempResult = validateAllNodesDefinition(subNode);
+				if(!tempResult)
+				{
+					return false;
+				}						
+			}
+		}
+		return true;
+	}
 	
 	@Test(description = "Requirement 50")
 	public void GmlDependency()
@@ -215,7 +244,15 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 	@Test(description = "Requirement 54")
 	public void IndividualSecurityTags()
 	{
-
+		String result = "";
+		
+		NodeList list_ext_sml = this.testSubject.getDocumentElement().getElementsByTagName("sml:extension");
+		NodeList list_ext_swe = this.testSubject.getDocumentElement().getElementsByTagName("swe:extension");
+		if(list_ext_sml.getLength() > 0 || list_ext_swe.getLength() > 0)
+		{
+			result = "Extension property shall utilize SensorML or SWECommon data elements";
+		}
+		Assert.assertTrue(result.length() == 0, result );
 	}	
 	
 	@Test(description = "Requirement 55")
@@ -310,6 +347,11 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			if(!observable.hasAttribute("definition"))
 			{
 				throw new AssertionError("the ObservableProperty element shall include the definition attribute");
+			}
+			
+			String url = observable.getAttribute("definition");
+			if(!UrlValidate.ValidateHttpUrl(url)) {
+				throw new AssertionError("the definition attribute in the ObservableProperty element shall include a resolvable url");
 			}
 		}	
 	}	

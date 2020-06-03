@@ -16,19 +16,19 @@ public class PhysicalSystem extends BaseFixture{
 	{
 		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:inputs").getLength() == 0)
 		{
-			throw new AssertionError("Inputs dose not Define !!");
+			throw new AssertionError("Inputs is not defined !!");
 		}
 		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:outputs").getLength() == 0)
 		{
-			throw new AssertionError("Outputs dose not Define !!");
+			throw new AssertionError("Outputs is not defined !!");
 		}
 		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:position").getLength() == 0)
 		{
-			throw new AssertionError("Location dose not Define !!");
+			throw new AssertionError("Location is not defined !!");
 		}
 		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:components").getLength() == 0)
 		{
-			throw new AssertionError("Components dose not Define !!");
+			throw new AssertionError("Components is not defined !!");
 		}
 	}
 	
@@ -39,7 +39,7 @@ public class PhysicalSystem extends BaseFixture{
 
 		if(!rootName.equals("sml:PhysicalSystem"))
 		{
-			throw new SkipException("TODO: Not a PhysicalSystem Process");	
+			throw new SkipException("Not a PhysicalSystem Process");	
 		}
 	}
 	

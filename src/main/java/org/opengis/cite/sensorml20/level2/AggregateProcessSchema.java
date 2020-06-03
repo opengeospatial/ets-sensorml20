@@ -342,7 +342,7 @@ public class AggregateProcessSchema extends BaseFixture{
 									
 									if(connectRef.indexOf("input") == -1 && connectRef.indexOf("output") == -1 && connectRef.indexOf("parameter") == -1)
 									{
-										throw new AssertionError("destinations shall be a impit , output or parameter");
+										throw new AssertionError("destinations shall be a input , output or parameter");
 									}
 								}
 							}
@@ -374,7 +374,7 @@ public class AggregateProcessSchema extends BaseFixture{
 				}
 				else
 				{
-					throw new AssertionError("destinations shall be a impit , output or parameter");
+					throw new AssertionError("destinations shall be a input , output or parameter");
 				}
 			}
 			
@@ -385,12 +385,18 @@ public class AggregateProcessSchema extends BaseFixture{
 				if(destination.hasAttribute("ref"))
 				{
 					String destinationRef = destination.getAttribute("ref");
+					String[] paths = destinationRef.split("/");
+					for (String path:paths) {
+						Boolean lowerCamelCaseCheckResult = Character.isLowerCase(path.charAt(0));
+						Assert.assertTrue(lowerCamelCaseCheckResult, "path rule error" );
+					}
+					
 					Boolean validateResult = ValidateLinkRef((Element)this.testSubject.getDocumentElement().cloneNode(true),  destinationRef);
 					Assert.assertTrue(validateResult, "path rule error" );
 				}
 				else
 				{
-					throw new AssertionError("destinations shall be a impit , output or parameter");
+					throw new AssertionError("destinations shall be a input , output or parameter");
 				}
 			}
 		}

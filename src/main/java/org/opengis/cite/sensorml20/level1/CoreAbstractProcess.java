@@ -122,8 +122,8 @@ public class CoreAbstractProcess extends BaseFixture{
 			{
 				Element item = (Element)typeofList.item(i);
 				
-				Assert.assertTrue(item.hasAttribute("xlink:title"), "Title does not define!!" );
-				Assert.assertTrue(item.hasAttribute("xlink:href"), "Url does not define!!" );
+				Assert.assertTrue(item.hasAttribute("xlink:title"), "Title is not defined!!" );
+				Assert.assertTrue(item.hasAttribute("xlink:href"), "Url is not defined!!" );
 				
 				String url = item.getAttribute("xlink:href");
 				

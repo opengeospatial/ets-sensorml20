@@ -68,7 +68,7 @@ public class CoreConcepts extends BaseFixture{
 		}
 		
 		String documentName = this.testSubject.getDocumentElement().getNodeName();
-		if(documentName == "sml:PhysicalSystem" || documentName == "sml:AggregateProcess")
+		if(documentName == "sml:AggregateProcess")
 		{
 			String process = documentName.replace("sml:", "");
 			if(this.testSubject.getElementsByTagName("sml:connections").getLength() == 0)
@@ -104,7 +104,7 @@ public class CoreConcepts extends BaseFixture{
 			for(int i=0 ; i<listLength ; i++)
 			{
 				Node item = identifierList.item(i);
-				String id = item.getNodeValue();
+				String id = item.getTextContent();
 				if(idList.contains(id))
 				{
 					throw new AssertionError("ID is not unique !!");
@@ -120,30 +120,41 @@ public class CoreConcepts extends BaseFixture{
 	@Test(description = "Requirement 4"  , priority = 4)
 	public void CoreConceptMetadata()
 	{
-		ArrayList<String> result = new ArrayList<String>();
-		String[] metadataName = new String[]{"sml:keywords","sml:identification","sml:classification","sml:characteristics","sml:capabilities"};
+		//check element identification is included
+		NodeList idList = this.testSubject.getDocumentElement().getElementsByTagName("sml:identification");
+		boolean isIdIncluded = false;
+		if(idList.getLength() != 0) {
+			isIdIncluded = true;
+		}
+		Assert.assertTrue(isIdIncluded, "Process Shall include identification metadata element " );
+		
+		//check to meet one of the discovery
+		boolean isAnyDiscoveryGroup = false;
+		String[] metadataName = new String[]{"sml:keywords","sml:classification"};
 		for (String str:metadataName) {
 			NodeList list = this.testSubject.getDocumentElement().getElementsByTagName(str);
-			if(list.getLength() == 0)
+			if(list.getLength() != 0)
 			{
-				result.add("Process Shall include metadata["+str.replace("sml:", "")+"]");
+				isAnyDiscoveryGroup = true;
+				break;
 			}
 	    }
+		Assert.assertTrue(isAnyDiscoveryGroup, "Process Shall include discovery metadata (one of the following elements: keywords, classification) " );
+		
 		//check to meet one of the qualifications
-		metadataName = new String[]{ "sml:validTime", "sml:securityConstraints", "sml:legalConstraints"};
-		boolean isAny = false;
+		metadataName = new String[]{ "sml:characteristics", "sml:capabilities"};
+		boolean isAnyQualificationGroup = false;
 		for (String str:metadataName) {
 			NodeList list = this.testSubject.getDocumentElement().getElementsByTagName(str);
 			
 			if(list.getLength() != 0)
 			{
-				isAny = true;
+				isAnyQualificationGroup = true;
 				break;
 			}
 	    }
+		Assert.assertTrue(isAnyQualificationGroup, "Process Shall include qualification metadata (one of the following elements: characteristics, capabilities) " );
 		
-		Assert.assertTrue(isAny, "Process Shall include qualification metadata (one of the following elements: validTime, securityConstraints, legalConstraints) " );
-		Assert.assertTrue(result.size() == 0, GetArrayToString(result) );
 	}
 	
 	@Test(description = "Requirement 5" , groups  = "CoreConceptss" , priority = 5)

@@ -22,7 +22,7 @@ public class PhysicalComponent extends BaseFixture{
 
 		if(!rootName.equals("sml:PhysicalComponent"))
 		{
-			throw new SkipException("TODO: Not a PhysicalComponent Process");	
+			throw new SkipException("Not a PhysicalComponent Process");	
 		}
 	}
 	
@@ -50,12 +50,12 @@ public class PhysicalComponent extends BaseFixture{
 		{
 			Element positionNode = (Element)positionList.item(positionCount);
 			
-			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall defind content" );
+			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall define content" );
 			
 			NodeList pointList = positionNode.getElementsByTagName("gml:Point");
 			if(pointList.getLength() == 0)
 			{
-				throw new SkipException("location or point does not define");
+				throw new SkipException("location or point is not defined");
 			}
 		}
 	}
@@ -69,12 +69,12 @@ public class PhysicalComponent extends BaseFixture{
 		{
 			Element positionNode = (Element)positionList.item(positionCount);
 			
-			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall defind content" );
+			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall define content" );
 			
 			NodeList dataList = positionNode.getElementsByTagName("swe:DataRecord");
 			if(dataList.getLength() == 0)
 			{
-				throw new SkipException("location data set does not define");
+				throw new SkipException("location data set is not defined");
 			}
 		}	
 	}
@@ -88,12 +88,12 @@ public class PhysicalComponent extends BaseFixture{
 		{
 			Element positionNode = (Element)positionList.item(positionCount);
 			
-			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall defind content" );
+			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall define content" );
 			
 			NodeList dataList = positionNode.getElementsByTagName("swe:DataArray");
 			if(dataList.getLength() == 0)
 			{
-				throw new SkipException("time-tagged dynamic state information does not define");
+				throw new SkipException("time-tagged dynamic state information is not defined");
 			}
 		}	
 	}
@@ -107,12 +107,12 @@ public class PhysicalComponent extends BaseFixture{
 		{
 			Element positionNode = (Element)positionList.item(positionCount);
 			
-			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall defind content" );
+			Assert.assertTrue(ValidateSpatialRule(positionNode), "position element shall define content" );
 			
 			NodeList dataList = positionNode.getElementsByTagName("sml:AbstractProcess");
 			if(dataList.getLength() == 0)
 			{
-				throw new SkipException("positional information does not define");
+				throw new SkipException("positional information is not defined");
 			}
 		}	
 	}
