@@ -112,38 +112,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 	@Test(description = "Requirement 49")
 	public void ExtensionProcessExecution()
 	{
-		Node node = this.testSubject.getDocumentElement();
-		Assert.assertTrue(validateAllNodesDefinition(node), "The value of the definition attribute shall be a resolvable URI" );
-	}
-	
-	private Boolean validateAllNodesDefinition(Node node)
-	{
-		for(int i=0 ; i<node.getChildNodes().getLength() ; i++)
-		{
-			Node tempNode = node.getChildNodes().item(i);
-			if(tempNode.getLocalName() != null)
-			{
-				String value = "";
-				Element subNode = (Element)node.getChildNodes().item(i);
-				if(subNode.hasAttribute("definition"))
-				{
-					value = subNode.getAttribute("definition");
-					
-					if(UrlValidate.ValidateHttpUrl(value)) 
-					{
-						return false;
-					}
-				}
-					
-				
-				Boolean tempResult = validateAllNodesDefinition(subNode);
-				if(!tempResult)
-				{
-					return false;
-				}						
-			}
-		}
-		return true;
+		//This test cannot be run automatically as the meaning the extension shall be known and thus is not required to be implemented in the Executable Test Suite.
 	}
 	
 	@Test(description = "Requirement 50")
@@ -231,7 +200,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			{
 				Node sChild = securityConstraintsNodes.get(i);
 				String childPrefix = sChild.getPrefix();
-				if(DocumentTools.ValidateNewNameSpace(childPrefix))
+				if(!DocumentTools.ValidateNewNameSpace(childPrefix))
 				{
 					result = "securityConstraints property shall be defined in a new unique namespace";
 				}
@@ -244,15 +213,33 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 	@Test(description = "Requirement 54")
 	public void IndividualSecurityTags()
 	{
-		String result = "";
+		String rootTagName = this.testSubject.getDocumentElement().getNodeName();
 		
-		NodeList list_ext_sml = this.testSubject.getDocumentElement().getElementsByTagName("sml:extension");
-		NodeList list_ext_swe = this.testSubject.getDocumentElement().getElementsByTagName("swe:extension");
-		if(list_ext_sml.getLength() > 0 || list_ext_swe.getLength() > 0)
+		NodeList smlSecurityNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:securityConstraints");
+		NodeList sweSecurityNodes = this.testSubject.getDocumentElement().getElementsByTagName("swe:securityConstraints");
+		
+		for(int i=0 ; i<smlSecurityNodes.getLength() ; i++)
 		{
-			result = "Extension property shall utilize SensorML or SWECommon data elements";
+			Node sParent = smlSecurityNodes.item(i).getParentNode();
+			String parentTagName = sParent.getNodeName();
+			
+			if(!(parentTagName.equals("sml:extension") || parentTagName.equals(rootTagName)))
+			{
+				throw new AssertionError("Security tagging shall utilize the extension element within SensorML or SWECommon data elements");
+			}
 		}
-		Assert.assertTrue(result.length() == 0, result );
+		
+		for(int i=0 ; i<sweSecurityNodes.getLength() ; i++)
+		{
+			Node sParent = sweSecurityNodes.item(i).getParentNode();
+			String parentTagName = sParent.getNodeName();
+			
+			if(!parentTagName.equals("swe:extension"))
+			{
+				throw new AssertionError("Security tagging shall utilize the extension element within SensorML or SWECommon data elements");
+			}
+		}
+		
 	}	
 	
 	@Test(description = "Requirement 55")
