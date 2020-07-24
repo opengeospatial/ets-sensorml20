@@ -51,9 +51,9 @@ public class VerifyTestNGController {
                 "/test-run-props.xml"));
     }
 
-    //@Test
+    @Test
     public void doTestRun() throws Exception {
-        URL testSubject = getClass().getResource("/atom-feed-2.xml");
+        URL testSubject = getClass().getResource("/SimpleProcess.xml");
         this.testRunProps.setProperty(TestRunArg.IUT.toString(), testSubject
                 .toURI().toString());
         ByteArrayOutputStream outStream = new ByteArrayOutputStream(1024);
@@ -66,6 +66,6 @@ public class VerifyTestNGController {
         XdmValue failed = XMLUtils.evaluateXPath2(results, xpath, null);
         int numFailed = Integer.parseInt(failed.getUnderlyingValue()
                 .getStringValue());
-        assertEquals("Unexpected number of fail verdicts.", 3, numFailed);
+        assertEquals("Unexpected number of fail verdicts.", 0, numFailed);
     }
 }
