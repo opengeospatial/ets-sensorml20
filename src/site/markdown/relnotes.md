@@ -1,4 +1,17 @@
 # SensorML 2.0 Release Notes
+## 0.9
+- [#38](https://github.com/opengeospatial/ets-sensorml20/issues/38) Create unit tests for each test
+- [#39](https://github.com/opengeospatial/ets-sensorml20/issues/39) Introduce Dockerfile and Maven Docker plugin
+- [#41](https://github.com/opengeospatial/ets-sensorml20/issues/41) Minor typo in AssertionError message of AggregateProcessSchema.PropertyConnectionrestrictions()
+- [#42](https://github.com/opengeospatial/ets-sensorml20/issues/42) Minor typos in PhysicalComponent.ByPointOrLocation() method
+- [#43](https://github.com/opengeospatial/ets-sensorml20/issues/43) Remove PhysicalSystem from Line 71 of CoreConcepts class
+- [#43](https://github.com/opengeospatial/ets-sensorml20/issues/43) Remove PhysicalSystem from Line 71 of CoreConcepts class
+- [#44](https://github.com/opengeospatial/ets-sensorml20/issues/44) Replace item.getNodeValue() with item.getTextContent() on Line 107 of CoreConcepts
+- [#45](https://github.com/opengeospatial/ets-sensorml20/issues/45) Revise the test for Requirement 4 to be consistent with Core Metadata listed in Section 7.2.2
+- [#46](https://github.com/opengeospatial/ets-sensorml20/issues/46) Req 49 test cannot be run automatically
+- [#47](https://github.com/opengeospatial/ets-sensorml20/issues/47) Req 54 added in commit #69b1328
+- [SecurityConstraints example added](https://github.com/opengeospatial/ets-sensorml20/blob/master/src/test/resources/OEM_Sensor_SecurityConstraints.xml)
+
 ## 0.8
 - [#35](https://github.com/opengeospatial/ets-sensorml20/issues/35) Version displayed on start page of beta environment is not correct
 - [#36](https://github.com/opengeospatial/ets-sensorml20/issues/36) Improve name of test suite
