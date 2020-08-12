@@ -2,7 +2,7 @@
 
 ### Scope
 
-This test suite validates the instances of SenorML 2.0.
+This test suite validates the instances of SensorML 2.0.
 
 Visit the [project documentation website](http://opengeospatial.github.io/ets-sensorml20/)
 for more information, including the API documentation.
