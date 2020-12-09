@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.opengis.cite</groupId>
     <artifactId>ets-common</artifactId>
-    <version>4</version>
+    <version>9</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opengis.cite</groupId>
@@ -73,16 +73,11 @@
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>6.8.8</version>
+      <version>6.9.10</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.saxon</groupId>
+      <groupId>org.opengis.cite.saxon</groupId>
       <artifactId>saxon9</artifactId>
-      <version>9.0.0.8</version>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.saxon</groupId>
-      <artifactId>saxon9-s9api</artifactId>
       <version>9.0.0.8</version>
     </dependency>
     <dependency>
@@ -303,14 +298,4 @@
     </site>
   </distributionManagement>
 
-  <repositories>
-    <repository>
-      <id>opengeospatial-cite</id>
-      <name>OGC CITE Repository</name>
-      <url>https://svn.opengeospatial.org/ogc-projects/cite/maven</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
 </project>
