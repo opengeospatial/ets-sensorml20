@@ -53,13 +53,13 @@
 	</sml:inputs>
 	<sml:outputs>
 		<sml:OutputList>
-			<sml:output name="r">
+			<sml:output name="row">
 				<swe:Quantity
 					definition="http://www.opengis.net/def/ogc/Row">
 					<swe:uom code="pixel" />
 				</swe:Quantity>
 			</sml:output>
-			<sml:output name="c">
+			<sml:output name="column">
 				<swe:Quantity
 					definition="http://www.opengis.net/def/ogc/Column">
 					<swe:uom code="pixel" />
