@@ -14,14 +14,8 @@
         <title>OGC SensorML 2.0 Validator</title>
         <description>Validates the structure and content of standard SnesorML 2.0 documents.</description>
         <BasicConformanceClasses>
-		  <conformanceClass>org.opengis.cite.sensorml20.level1.CoreConcept</conformanceClass>
-		  <!-- <conformanceClass>org.opengis.cite.sensorml20.level1.PhysicalComponent</conformanceClass>
-		  <conformanceClass>org.opengis.cite.sensorml20.level1.PhysicalSystem</conformanceClass>
-		  <conformanceClass>org.opengis.cite.sensorml20.level1.CoreAbstractProcess</conformanceClass>
-		  <conformanceClass>org.opengis.cite.sensorml20.level1.SimpleProcess</conformanceClass>
-		  <conformanceClass>org.opengis.cite.sensorml20.level1.AggregateProcess</conformanceClass>
-		  <conformanceClass>org.opengis.cite.sensorml20.level1.ConfigurableProcesses</conformanceClass> -->
-		</BasicConformanceClasses>
+		       <conformanceClass>Conformance Level 1</conformanceClass>
+		    </BasicConformanceClasses>
       </suite>
       <revision>
         <name>${version}</name>

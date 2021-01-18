@@ -8,15 +8,15 @@ import org.opengis.cite.sensorml20.ETSAssert;
 import org.testng.annotations.Test;
 
 public class PhysicalSystemSchema extends BaseFixture{
-	@Test(description = "Requirement 79")
+	@Test(description = "B.5.1 - Requirement 79")
 	public void AggregateProcessSchemaValid()
 	{
 		DOMSource source = new DOMSource(this.testSubject);
-		      
+
 /*		Schema schema = ValidationUtils.CreateSchema("physical_system.xsd" , "http://schemas.opengis.net/sensorML/2.0/");
         Validator validator = schema.newValidator();
         ETSAssert.assertSchemaValid(validator, source);*/
-				
+
 		URL schRef = this.getClass().getResource(
 				"/org/opengis/cite/sensorml20/sch/physical_system.sch");
 		ETSAssert.assertSchematronValid(schRef, source);

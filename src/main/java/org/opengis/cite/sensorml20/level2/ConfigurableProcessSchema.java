@@ -13,36 +13,36 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ConfigurableProcessSchema extends BaseFixture{
-	@Test(description = "Requirement 80")
+	@Test(description = "B.6.1 - Requirement 80")
 	public void AggregateProcessSchemaValid()
 	{
 		DOMSource source = new DOMSource(this.testSubject);
-		      
+
 /*		Schema schema = ValidationUtils.CreateSchema("configuration.xsd" , "http://schemas.opengis.net/sensorML/2.0/");
         Validator validator = schema.newValidator();
         ETSAssert.assertSchemaValid(validator, source);*/
-				
+
 		URL schRef = this.getClass().getResource(
 				"/org/opengis/cite/sensorml20/sch/configuration.sch");
 		ETSAssert.assertSchematronValid(schRef, source);
 	}
-	
-	@Test(description = "Requirement 81")
+
+	@Test(description = "B.6.2 - Requirement 81")
 	public void ModeRestriction()
 	{
 		NodeList parameterNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:parameters");
-		
+
 		ArrayList<Node> parameterAllChilds = new ArrayList<Node>();
-		
+
 		for(int parametersCount = 0 ; parametersCount < parameterNodes.getLength() ; parametersCount++)
 		{
 			ArrayList<Node> tempChilds = DocumentTools.getAllNode(parameterNodes.item(parametersCount));
 			tempChilds.remove(0);
 			parameterAllChilds.addAll(tempChilds);
 		}
-		
+
 		NodeList setValueNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:setValue");
-		
+
 		for(int setValueCount = 0 ; setValueCount < setValueNodes.getLength() ; setValueCount++)
 		{
 			Element setValue = (Element)setValueNodes.item(setValueCount);
@@ -51,9 +51,9 @@ public class ConfigurableProcessSchema extends BaseFixture{
 			{
 				String[] refSplits = setValueReference.split("/");
 				String parameterName = refSplits[refSplits.length-1];
-				
+
 				Boolean isLocalParameter = false;
-				
+
 				for(int allParameterChildCount = 0 ; allParameterChildCount < parameterAllChilds.size() ; allParameterChildCount++)
 				{
 					Element pChild = (Element)parameterAllChilds.get(allParameterChildCount);
@@ -63,7 +63,7 @@ public class ConfigurableProcessSchema extends BaseFixture{
 						isLocalParameter = true;
 					}
 				}
-				
+
 				Assert.assertTrue(isLocalParameter, "setValue references only parameter properties within the current process or parent process" );
 			}
 			else
@@ -72,23 +72,23 @@ public class ConfigurableProcessSchema extends BaseFixture{
 			}
 		}
 	}
-	
-	@Test(description = "Requirement 82")
+
+	@Test(description = "B.6.3 - Requirement 82")
 	public void ParameterValues()
 	{
 		NodeList parameterNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:parameters");
-		
+
 		ArrayList<Node> parameterAllChilds = new ArrayList<Node>();
-		
+
 		for(int parametersCount = 0 ; parametersCount < parameterNodes.getLength() ; parametersCount++)
 		{
 			ArrayList<Node> tempChilds = DocumentTools.getAllNode(parameterNodes.item(parametersCount));
 			tempChilds.remove(0);
 			parameterAllChilds.addAll(tempChilds);
 		}
-		
+
 		NodeList setValueNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:setValue");
-		
+
 		for(int setValueCount = 0 ; setValueCount < setValueNodes.getLength() ; setValueCount++)
 		{
 			Element setValue = (Element)setValueNodes.item(setValueCount);
@@ -97,7 +97,7 @@ public class ConfigurableProcessSchema extends BaseFixture{
 			{
 				String[] refSplits = setValueReference.split("/");
 				String parameterName = refSplits[refSplits.length-1];
-				
+
 				for(int allParameterChildCount = 0 ; allParameterChildCount < parameterAllChilds.size() ; allParameterChildCount++)
 				{
 					Element pChild = (Element)parameterAllChilds.get(allParameterChildCount);
@@ -106,7 +106,7 @@ public class ConfigurableProcessSchema extends BaseFixture{
 					{
 						ArrayList<Node> fieldChilds = DocumentTools.getAllNode(parameterAllChilds.get(allParameterChildCount));
 						fieldChilds.remove(0);
-						
+
 						for(int fieldChildCount = 0 ; fieldChildCount < fieldChilds.size() ; fieldChildCount++)
 						{
 							Node filedChild = fieldChilds.get(fieldChildCount);
@@ -117,9 +117,9 @@ public class ConfigurableProcessSchema extends BaseFixture{
 								{
 									Double minNum = Double.parseDouble(intervalSplits[0]);
 									Double maxNum = Double.parseDouble(intervalSplits[1]);
-									
+
 									Double setValueNum = Double.parseDouble(setValue.getTextContent());
-									
+
 									if(setValueNum < minNum || setValueNum > maxNum)
 									{
 										throw new AssertionError("The parameter values set by a Mode cannot be outside of the allow values");
@@ -132,7 +132,7 @@ public class ConfigurableProcessSchema extends BaseFixture{
 							}
 						}
 					}
-				}	
+				}
 			}
 			else
 			{

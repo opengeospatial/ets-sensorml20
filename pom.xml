@@ -174,7 +174,7 @@
         <artifactId>buildnumber-maven-plugin</artifactId>
       </plugin>
     </plugins>
-    
+
     <pluginManagement>
       <plugins>
         <plugin>
@@ -252,7 +252,7 @@
       </plugins>
     </pluginManagement>
   </build>
-  
+
   <profiles>
     <profile>
       <id>docker</id>

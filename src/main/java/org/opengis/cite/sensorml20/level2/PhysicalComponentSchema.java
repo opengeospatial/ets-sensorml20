@@ -19,28 +19,28 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class PhysicalComponentSchema extends BaseFixture{
-	@Test(description = "Requirement 72")
+	@Test(description = "B.4.1 - Requirement 72")
 	public void AggregateProcessSchemaValid()
 	{
 		DOMSource source = new DOMSource(this.testSubject);
-		      
+
 /*		Schema schema = ValidationUtils.CreateSchema("physical_component.xsd" , "http://schemas.opengis.net/sensorML/2.0/");
         Validator validator = schema.newValidator();
         ETSAssert.assertSchemaValid(validator, source);*/
-				
+
 		URL schRef = this.getClass().getResource(
 				"/org/opengis/cite/sensorml20/sch/physical_component.sch");
 		ETSAssert.assertSchematronValid(schRef, source);
 	}
-	
-	@Test(description = "Requirement 73")
+
+	@Test(description = "B.4.2 - Requirement 73")
 	public void AttachedToTarget()
 	{
 		NodeList attachedTotNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:attachedTo");
 		for(int attachCount = 0 ; attachCount < attachedTotNodes.getLength() ; attachCount++)
 		{
 			Element attachedTo = (Element)attachedTotNodes.item(attachCount);
-			
+
 			if(attachedTo.hasAttribute("xlink:href"))
 			{
 				try{
@@ -52,7 +52,7 @@ public class PhysicalComponentSchema extends BaseFixture{
 					if(!ProcessName.equals("sml:PhysicalComponent") && !ProcessName.equals("sml:PhysicalSystem"))
 					{
 						throw new AssertionError("reference is not PhysicalSystem or PhysicalComponent");
-					}	
+					}
 				}
 				catch(Exception ex)
 				{
@@ -65,27 +65,27 @@ public class PhysicalComponentSchema extends BaseFixture{
 			}
 		}
 	}
-	
-	@Test(description = "Requirement 74")
+
+	@Test(description = "B.4.3 - Requirement 74")
 	public void AttachedToReference()
 	{
 		NodeList attachedToNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:attachedTo");
 		for(int attachedToCount = 0 ; attachedToCount < attachedToNodes.getLength() ; attachedToCount++)
 		{
 			Element attachedTo = (Element)attachedToNodes.item(attachedToCount);
-			
+
 			ArrayList<String> uids = new ArrayList<String>();
-		
+
 			NodeList identifiers = this.testSubject.getDocumentElement().getElementsByTagName("gml:identifier");
 			for(int identifiersCount=0;identifiersCount<identifiers.getLength();identifiersCount++)
 			{
 				uids.add(identifiers.item(identifiersCount).getTextContent());
 			}
-				
+
 			if(attachedTo.hasAttribute("xlink:title"))
 			{
 				String titleAttribute = attachedTo.getAttribute("xlink:title");
-					
+
 				if(uids.contains(titleAttribute))
 				{
 					throw new AssertionError("value of xlink:title attribute shall be a uniqueID");
@@ -95,13 +95,13 @@ public class PhysicalComponentSchema extends BaseFixture{
 			{
 				throw new AssertionError("attachedTo property shall require meaningful values for the xlink:title");
 			}
-				
+
 			if(attachedTo.hasAttribute("xlink:href"))
 			{
 				if(!UrlValidate.ValidateHttpUrl(attachedTo.getAttribute("xlink:href")))
 				{
 					throw new AssertionError("attachedTo shall define a resolvable URL for reference");
-				}				
+				}
 			}
 				else
 			{
@@ -109,12 +109,12 @@ public class PhysicalComponentSchema extends BaseFixture{
 			}
 		}
 	}
-	
-	@Test(description = "Requirement 75")
+
+	@Test(description = "B.4.4 - Requirement 75")
 	public void PositionByPosition()
 	{
 		/*
-		 * When the position element takes a swe:DataRecord as its value, 
+		 * When the position element takes a swe:DataRecord as its value,
 		 * validate that the DataRecord contains two swe:Vector elements as its fields.
 		 */
 		NodeList positionNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:position");
@@ -122,9 +122,9 @@ public class PhysicalComponentSchema extends BaseFixture{
 		{
 			Element position = (Element)positionNodes.item(positionCount);
 			NodeList positionChilds = position.getChildNodes();
-			
+
 			Boolean useDataRecord = false;
-			
+
 			for(int pchildCount = 0 ; pchildCount < positionChilds.getLength() ; pchildCount++)
 			{
 				Node pChild = positionChilds.item(pchildCount);
@@ -143,12 +143,12 @@ public class PhysicalComponentSchema extends BaseFixture{
 								fieldList.add(recodeChild);
 							}
 						}
-						
+
 						if(fieldList.size() == 2)
 						{
 							Element firstField = (Element)fieldList.get(0);
 							Element secondField = (Element)fieldList.get(1);
-							
+
 							if(!firstField.getAttribute("name").equals("location"))
 							{
 								throw new AssertionError("First field name is not location");
@@ -168,8 +168,8 @@ public class PhysicalComponentSchema extends BaseFixture{
 			//Assert.assertTrue(useDataRecord, "The position property shall take a swe:DataRecord as its value" );
 		}
 	}
-	
-	@Test(description = "Requirement 76")
+
+	@Test(description = "B.4.5 - Requirement 76")
 	public void DynamicState()
 	{
 		NodeList positionNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:position");
@@ -187,8 +187,8 @@ public class PhysicalComponentSchema extends BaseFixture{
 			}
 		}
 	}
-	
-	@Test(description = "Requirement 77")
+
+	@Test(description = "B.4.6 - Requirement 77")
 	public void PositionByTrajectory()
 	{
 		NodeList positionNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:position");
@@ -203,7 +203,7 @@ public class PhysicalComponentSchema extends BaseFixture{
 					NodeList dataArrayChilds = positionChild.getChildNodes();
 					for(int dataArrayCount = 0 ; dataArrayCount < dataArrayChilds.getLength();dataArrayCount++)
 					{
-						
+
 						if(dataArrayChilds.item(dataArrayCount).getLocalName() != null)
 						{
 							Element dataArrayChild = (Element)dataArrayChilds.item(dataArrayCount);
@@ -211,7 +211,7 @@ public class PhysicalComponentSchema extends BaseFixture{
 							{
 								Boolean useSweTime = false;
 								Boolean useVector = false;
-								
+
 								ArrayList<Node> trajectoryChilds = DocumentTools.getAllNode(dataArrayChild);
 								for(int trajectoryChildCount = 0 ; trajectoryChildCount < trajectoryChilds.size() ; trajectoryChildCount++)
 								{
@@ -225,10 +225,10 @@ public class PhysicalComponentSchema extends BaseFixture{
 										if(trajectoryChild.getNodeName().equals("swe:Vector"))
 										{
 											useVector = true;
-										}	
+										}
 									}
 								}
-								
+
 								Assert.assertTrue((useSweTime && useVector), "DataArray Shall contains a time field and one or more swe:Vector elements as its fields" );
 							}
 						}
@@ -237,12 +237,12 @@ public class PhysicalComponentSchema extends BaseFixture{
 			}
 		}
 	}
-	
-	@Test(description = "Requirement 78")
+
+	@Test(description = "B.4.7 - Requirement 78")
 	public void PositionByProcess()
 	{
 		Boolean useSmlAbstractProcess = false;
-		
+
 		NodeList positionNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:position");
 		for(int positinCount = 0 ; positinCount < positionNodes.getLength() ; positinCount++)
 		{
@@ -253,11 +253,11 @@ public class PhysicalComponentSchema extends BaseFixture{
 				break;
 			}
 		}
-		
+
 		if(useSmlAbstractProcess)
 		{
 			Boolean useSweData = false;
-			
+
 			NodeList outputNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:outputs");
 			for(int outCount = 0 ; outCount < outputNodes.getLength() ; outCount++)
 			{

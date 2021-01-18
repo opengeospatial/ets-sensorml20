@@ -5,13 +5,13 @@ import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 public class PhysicalSystem extends BaseFixture{
-	@Test(description = "Requirement 33" , groups  = "PhysicalSystem" , dependsOnMethods  = { "Definition" , "DependencyCore" })
+	@Test(description = "A.6.1 - Requirement 33" , groups  = "PhysicalSystem" , dependsOnMethods  = { "Definition" , "DependencyCore" })
 	public void PackageFullyImplemented()
 	{
 		//Dependency All PhysicalSystem Tests
 	}
-	
-	@Test(description = "Requirement 34" , groups  = "PhysicalSystem" , dependsOnMethods  = { "DependencyCore" })
+
+	@Test(description = "A.6.2 - Requirement 34" , groups  = "PhysicalSystem" , dependsOnMethods  = { "DependencyCore" })
 	public void Definition()
 	{
 		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:inputs").getLength() == 0)
@@ -31,17 +31,17 @@ public class PhysicalSystem extends BaseFixture{
 			throw new AssertionError("Components is not defined !!");
 		}
 	}
-	
-	@Test(description = "Requirement 35" , groups  = "PhysicalSystem" , dependsOnGroups  = { "PhysicalComponent" })
+
+	@Test(description = "A.6.3 - Requirement 35" , groups  = "PhysicalSystem" , dependsOnGroups  = { "PhysicalComponent" })
 	public void DependencyCore()
 	{
 		String rootName = this.testSubject.getDocumentElement().getNodeName();
 
 		if(!rootName.equals("sml:PhysicalSystem"))
 		{
-			throw new SkipException("Not a PhysicalSystem Process");	
+			throw new SkipException("Not a PhysicalSystem Process");
 		}
 	}
-	
-	
+
+
 }

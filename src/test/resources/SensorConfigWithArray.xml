@@ -10,7 +10,7 @@
     </gml:description>
     <gml:identifier codeSpace="UID">urn:sml:demo:sensorConfigWithArray</gml:identifier>
     <sml:keywords>
-        <sml:KeywordList>            
+        <sml:KeywordList>
             <sml:keyword>sensor config array</sml:keyword>
         </sml:KeywordList>
     </sml:keywords>
@@ -23,23 +23,23 @@
                 </sml:Term>
             </sml:identifier>
         </sml:IdentifierList>
-    </sml:identification>    
-    <sml:validTime>        
-        <gml:TimeInstant gml:id="ID140"> 
+    </sml:identification>
+    <sml:validTime>
+        <gml:TimeInstant gml:id="ID140">
             <gml:timePosition>2016-09-30</gml:timePosition>
         </gml:TimeInstant>
-    </sml:validTime>        
+    </sml:validTime>
     <!-- reference to the base sensor -->
-    <sml:typeOf xlink:title="urn:net:swe:process:sensorWithArrary"
+    <sml:typeOf xlink:title="urn:net:swe:process:sensorWithArray"
         xlink:href="https://raw.githubusercontent.com/opengeospatial/ets-sensorml20/master/src/test/resources/OEM_Sensor.xml"/>
     <!-- configuration settings for mode -->
-    <sml:configuration>        
+    <sml:configuration>
         <sml:Settings>
-            <sml:setArrayValues ref="text">
+            <sml:setArrayValues ref="parameters/settings">
                 <sml:ArrayValues>
                     <sml:encoding><TextEncoding xmlns="http://www.opengis.net/swe/2.0" tokenSeparator="," blockSeparator=" "></TextEncoding></sml:encoding>
                     <sml:value>1,2 2,4</sml:value>
-                </sml:ArrayValues>                
+                </sml:ArrayValues>
             </sml:setArrayValues>
         </sml:Settings>
     </sml:configuration>

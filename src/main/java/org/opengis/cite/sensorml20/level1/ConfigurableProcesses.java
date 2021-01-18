@@ -11,7 +11,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ConfigurableProcesses extends BaseFixture{
-	@Test(description = "Requirement 38" , groups  = "ConfigurableProcesses" , dependsOnGroups  = { "CoreAbstractProcess" })
+	@Test(description = "A.8.1 - Requirement 38" , groups  = "ConfigurableProcesses" , dependsOnGroups  = { "CoreAbstractProcess" })
 	public void DependencyCore()
 	{
 		Boolean configurableNessary = true;
@@ -24,10 +24,10 @@ public class ConfigurableProcesses extends BaseFixture{
 		if(typeofList.getLength() == 0)
 		{
 			configurableNessary = false;
-		}		
-		
+		}
+
 		Boolean configurableOptional = false;
-		
+
 		int valueCount = 0;
 		int allowValueCount = 0;
 		NodeList parametersList = this.testSubject.getDocumentElement().getElementsByTagName("sml:parameters");
@@ -36,11 +36,11 @@ public class ConfigurableProcesses extends BaseFixture{
 			Element parametersNode = (Element)parametersList.item(parametersCount);
 			ArrayList<Node> valueNodes = DocumentTools.GetElementByLocalName(parametersNode, "value");
 			valueCount += valueNodes.size();
-			
+
 			NodeList allowValuesNodes = parametersNode.getElementsByTagName("swe:AllowedValues");
 			allowValueCount += allowValuesNodes.getLength();
 		}
-		
+
 		//Optional Test A
 		if(parametersList.getLength() > 0 && valueCount == 0)
 		{
@@ -50,10 +50,10 @@ public class ConfigurableProcesses extends BaseFixture{
 		if(parametersList.getLength() > 0 && allowValueCount > 0)
 		{
 			configurableOptional = true;
-		}	
+		}
 		//Optional Test C
 		ArrayList<String> refTurnName = new ArrayList<String>();
-		
+
 		NodeList configurationNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:configuration");
 		for(int configurationCount = 0 ; configurationCount < configurationNodes.getLength() ; configurationCount++)
 		{
@@ -63,8 +63,8 @@ public class ConfigurableProcesses extends BaseFixture{
 			{
 				refTurnName.add(setModeTemp.item(tempModeCount).getTextContent());
 			}
-		}		
-		
+		}
+
 		if(refTurnName.size() > 0)
 		{
 			ArrayList<String> targetTurnName = new ArrayList<String>();
@@ -72,9 +72,9 @@ public class ConfigurableProcesses extends BaseFixture{
 			for(int modesCount = 0 ; modesCount < modesNodes.getLength() ; modesCount++)
 			{
 				Element modesNode = (Element)modesNodes.item(modesCount);
-				
+
 				NodeList modeList = modesNode.getElementsByTagName("sml:Mode");
-				
+
 				for(int modeCount = 0 ; modeCount < modeList.getLength() ; modeCount++)
 				{
 					Element mode = (Element)modeList.item(modeCount);
@@ -85,7 +85,7 @@ public class ConfigurableProcesses extends BaseFixture{
 					}
 				}
 			}
-			
+
 			Boolean refTurnCkeck = true;
 			for(int refCount = 0 ; refCount < refTurnName.size() ; refCount++)
 			{
@@ -100,26 +100,26 @@ public class ConfigurableProcesses extends BaseFixture{
 			}
 		}
 		//Optional Test D
-		
-		
-		
+
+
+
 		if(!(configurableNessary && configurableOptional))
 		{
-			throw new SkipException("TODO: Not a Configurable Process");	
+			throw new SkipException("Not a Configurable Process");
 		}
 	}
-	
-	@Test(description = "Requirement 39" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" , "TwoModesRequired" , "SettingsProperty" , "SetValueRestriction" , "SetArrayValueRestriction" , "SetConstraintRestriction"})
+
+	@Test(description = "A.8.2 - Requirement 39" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" , "TwoModesRequired" , "SettingsProperty" , "SetValueRestriction" , "SetArrayValueRestriction" , "SetConstraintRestriction"})
 	public void PackageFullyImplemented()
 	{
 		//Dependency All ConfigurableProcesses Tests
 	}
-	
-	@Test(description = "Requirement 40" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
+
+	@Test(description = "A.8.3 - Requirement 40" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
 	public void TwoModesRequired()
 	{
 		NodeList modeChoiceNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:ModeChoice");
-		
+
 		for(int choiceCount = 0 ; choiceCount < modeChoiceNodes.getLength(); choiceCount++)
 		{
 			Element modeChoice = (Element)modeChoiceNodes.item(choiceCount);
@@ -130,8 +130,8 @@ public class ConfigurableProcesses extends BaseFixture{
 			}
 		}
 	}
-	
-	@Test(description = "Requirement 41" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
+
+	@Test(description = "A.8.4 - Requirement 41" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
 	public void SettingsProperty()
 	{
 		NodeList configurationNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:configuration");
@@ -145,19 +145,19 @@ public class ConfigurableProcesses extends BaseFixture{
 				{
 					throw new AssertionError("configuration need inclued Settings");
 				}
-			}			
+			}
 		}
 		else
 		{
 			throw new AssertionError("Shall inclued configuration property");
-		}		
+		}
 	}
-	
-	@Test(description = "Requirement 42" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
+
+	@Test(description = "A.8.5 - Requirement 42" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
 	public void SetValueRestriction()
 	{
 		NodeList setValueNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:setValue");
-				
+
 		if(setValueNodes.getLength() > 0)
 		{
 			ArrayList<String> parameterFields = new ArrayList<String>();
@@ -176,7 +176,7 @@ public class ConfigurableProcesses extends BaseFixture{
 					}
 				}
 			}
-			
+
 			for(int setValueCount = 0;setValueCount < setValueNodes.getLength();setValueCount++)
 			{
 				Element setValueNode = (Element)setValueNodes.item(setValueCount);
@@ -189,21 +189,21 @@ public class ConfigurableProcesses extends BaseFixture{
 					{
 						targetField = refSplit[refSplit.length-1];
 					}
-					
+
 					if(!parameterFields.contains(targetField))
 					{
 						throw new AssertionError("value not defined with parameters");
 					}
 				}
-			}		
+			}
 		}
 	}
-	
-	@Test(description = "Requirement 43" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
+
+	@Test(description = "A.8.6 - Requirement 43" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
 	public void SetArrayValueRestriction()
 	{
 		NodeList setArrayValuesNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:setArrayValues");
-		
+
 		if(setArrayValuesNodes.getLength() > 0)
 		{
 			ArrayList<String> parameterFields = new ArrayList<String>();
@@ -212,11 +212,11 @@ public class ConfigurableProcesses extends BaseFixture{
 			{
 				Element parameters = (Element)parametersNodes.item(parametersCount);
 				NodeList dataArrayNodes = parameters.getElementsByTagName("swe:DataArray");
-				
+
 				for(int arrayCount = 0 ; arrayCount < dataArrayNodes.getLength();arrayCount++)
 				{
 					Element arrayNode = (Element)dataArrayNodes.item(arrayCount);
-					
+
 					NodeList fieldNodes = arrayNode.getElementsByTagName("swe:field");
 					for(int fieldCount = 0 ; fieldCount < fieldNodes.getLength();fieldCount++)
 					{
@@ -229,7 +229,7 @@ public class ConfigurableProcesses extends BaseFixture{
 					}
 				}
 			}
-			
+
 			for(int setArrayValuesCount = 0;setArrayValuesCount < setArrayValuesNodes.getLength();setArrayValuesCount++)
 			{
 				Element setArrayValuesNode = (Element)setArrayValuesNodes.item(setArrayValuesCount);
@@ -242,21 +242,21 @@ public class ConfigurableProcesses extends BaseFixture{
 					{
 						targetField = refSplit[refSplit.length-1];
 					}
-					
+
 					if(!parameterFields.contains(targetField))
 					{
 						throw new AssertionError("array value not defined with parameters");
 					}
 				}
 			}
-		}	
+		}
 	}
-	
-	@Test(description = "Requirement 44" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
+
+	@Test(description = "A.8.7 - Requirement 44" , groups  = "ConfigurableProcesses" , dependsOnMethods  = { "DependencyCore" })
 	public void SetConstraintRestriction()
 	{
 		NodeList setConstraintNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:setConstraint");
-		
+
 		if(setConstraintNodes.getLength() > 0)
 		{
 			ArrayList<String> parameterFields = new ArrayList<String>();
@@ -275,7 +275,7 @@ public class ConfigurableProcesses extends BaseFixture{
 					}
 				}
 			}
-			
+
 			for(int setConstraintCount = 0;setConstraintCount < setConstraintNodes.getLength();setConstraintCount++)
 			{
 				Element setConstraintNode = (Element)setConstraintNodes.item(setConstraintCount);
@@ -288,13 +288,13 @@ public class ConfigurableProcesses extends BaseFixture{
 					{
 						targetField = refSplit[refSplit.length-1];
 					}
-					
+
 					if(!parameterFields.contains(targetField))
 					{
 						throw new AssertionError("setConstraint value not defined with parameters");
 					}
 				}
-			}		
-		}		
+			}
+		}
 	}
 }
