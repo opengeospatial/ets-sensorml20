@@ -19,12 +19,12 @@ import org.xml.sax.SAXException;
 
 public class CoreConcepts extends BaseFixture{
 
-	
-	@Test(description = "Requirement 1" ,groups  = "CoreConceptss" ,priority = 1)
+
+	@Test(description = "A.1.1 - Requirement 1" ,groups  = "CoreConcepts" ,priority = 1)
 	public void CoreConceptUsed() throws SAXException, IOException, URISyntaxException
-	{		
+	{
 		DocumentTools.MergeReference(this.testSubject, this.testSubjectUri);
-		
+
 		Schema schema = null;
 		Node documentElement = this.testSubject.getDocumentElement();
 		String documentName = documentElement.getNodeName();
@@ -42,31 +42,31 @@ public class CoreConcepts extends BaseFixture{
 			schema = ValidationUtils.CreateSchema("physical_system.xsd" , null);
 		}
         Validator validator = schema.newValidator();
-        Source source = new DOMSource(this.testSubject);       
+        Source source = new DOMSource(this.testSubject);
         ETSAssert.assertSchemaValid(validator, source);
 	}
-	
-	
-	@Test(description = "Requirement 2" , groups  = "CoreConceptss" , priority = 2)
+
+
+	@Test(description = "A.1.2 - Requirement 2" , groups  = "CoreConcepts" , priority = 2)
 	public void CoreConceptProcesses()
 	{
 		ArrayList<String> result = new ArrayList<String>();
-		
+
 		if(this.testSubject.getElementsByTagName("sml:inputs").getLength() == 0)
 		{
 			result.add("Core Model Must Define Inputs");
 		}
-		
+
 		if(this.testSubject.getElementsByTagName("sml:outputs").getLength() == 0)
 		{
 			result.add("Core Model Must Define Outputs");
 		}
-		
+
 		if(this.testSubject.getElementsByTagName("sml:parameters").getLength() == 0)
 		{
 			result.add("Core Model Must Define Parameters");
 		}
-		
+
 		String documentName = this.testSubject.getDocumentElement().getNodeName();
 		if(documentName == "sml:AggregateProcess")
 		{
@@ -76,10 +76,10 @@ public class CoreConcepts extends BaseFixture{
 				result.add(process + " Must Define Methodology");
 			}
 		}
-	
+
 		Assert.assertTrue(result.size() == 0, GetArrayToString(result) );
 	}
-	
+
 	private String GetArrayToString(ArrayList<String> ary)
 	{
 		String ret = "";
@@ -88,8 +88,8 @@ public class CoreConcepts extends BaseFixture{
 	    }
 		return ret;
 	}
-	
-	@Test(description = "Requirement 3" , groups  = "CoreConceptss" , priority = 3)
+
+	@Test(description = "A.1.3 - Requirement 3" , groups  = "CoreConcepts" , priority = 3)
 	public void CoreConceptUniqueId()
 	{
 		NodeList identifierList = this.testSubject.getDocumentElement().getElementsByTagName("gml:identifier");
@@ -116,8 +116,8 @@ public class CoreConcepts extends BaseFixture{
 			}
 		}
 	}
-	
-	@Test(description = "Requirement 4"  , priority = 4)
+
+	@Test(description = "A.1.4 - Requirement 4"  , priority = 4)
 	public void CoreConceptMetadata()
 	{
 		//check element identification is included
@@ -127,7 +127,7 @@ public class CoreConcepts extends BaseFixture{
 			isIdIncluded = true;
 		}
 		Assert.assertTrue(isIdIncluded, "Process Shall include identification metadata element " );
-		
+
 		//check to meet one of the discovery
 		boolean isAnyDiscoveryGroup = false;
 		String[] metadataName = new String[]{"sml:keywords","sml:classification"};
@@ -140,13 +140,13 @@ public class CoreConcepts extends BaseFixture{
 			}
 	    }
 		Assert.assertTrue(isAnyDiscoveryGroup, "Process Shall include discovery metadata (one of the following elements: keywords, classification) " );
-		
+
 		//check to meet one of the qualifications
 		metadataName = new String[]{ "sml:characteristics", "sml:capabilities"};
 		boolean isAnyQualificationGroup = false;
 		for (String str:metadataName) {
 			NodeList list = this.testSubject.getDocumentElement().getElementsByTagName(str);
-			
+
 			if(list.getLength() != 0)
 			{
 				isAnyQualificationGroup = true;
@@ -154,14 +154,14 @@ public class CoreConcepts extends BaseFixture{
 			}
 	    }
 		Assert.assertTrue(isAnyQualificationGroup, "Process Shall include qualification metadata (one of the following elements: characteristics, capabilities) " );
-		
+
 	}
-	
-	@Test(description = "Requirement 5" , groups  = "CoreConceptss" , priority = 5)
+
+	@Test(description = "A.1.5 - Requirement 5" , groups  = "CoreConcepts" , priority = 5)
 	public void CoreConceptExecution()
 	{
 		ArrayList<String> result = new ArrayList<String>();
-		
+
 		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:input").getLength() == 0)
 		{
 			result.add("Core Model Must Define Inputs");
@@ -177,12 +177,12 @@ public class CoreConcepts extends BaseFixture{
 		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:method").getLength() == 0)
 		{
 			result.add("Core Model Must Define Method");
-		}		
+		}
 		Assert.assertTrue(result.size() == 0, GetArrayToString(result) );
-		
+
 		//必須檢查input . output . parameter . method這四個Tag --2016/05/17
-		
-		
+
+
 		//檢查Description(3-30又覺得不太像是這樣做)
 		/*if(this.testSubject.getElementsByTagName("gml:description").getLength() == 0)
 		{
@@ -190,4 +190,3 @@ public class CoreConcepts extends BaseFixture{
 		}*/
 	}
 }
-

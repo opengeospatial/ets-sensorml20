@@ -19,28 +19,28 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class CoreAbstractProcessSchema extends BaseFixture{
-	
-	@Test(description = "Requirement 45")
+
+	@Test(description = "B.1.1 - Requirement 45")
 	public void CoreSchemaValid()
 	{
 		DOMSource source = new DOMSource(this.testSubject);
-		      
+
 /*		Schema schema = ValidationUtils.CreateSchema("core.xsd" , "http://schemas.opengis.net/sensorML/2.0/");
         Validator validator = schema.newValidator();
         ETSAssert.assertSchemaValid(validator, source);*/
-				
+
 		URL schRef = this.getClass().getResource(
 				"/org/opengis/cite/sensorml20/sch/core.sch");
 		ETSAssert.assertSchematronValid(schRef, source);
 	}
-	
-	@Test(description = "Requirement 46")
+
+	@Test(description = "B.1.2 - Requirement 46")
 	public void RefOrInlineValuePresent()
 	{
 		Node documentElement = this.testSubject.getDocumentElement();
 		Assert.assertTrue(validateAllNodesReference(documentElement), "Reference Or inline value is Empty!!" );
-	}	
-	
+	}
+
 	private Boolean validateAllNodesReference(Node node)
 	{
 		for(int i=0 ; i<node.getChildNodes().getLength() ; i++)
@@ -62,30 +62,30 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				{
 					return false;
 				}
-				
+
 				Boolean tempResult = validateAllNodesReference(subNode);
 				if(!tempResult)
 				{
 					return false;
-				}						
+				}
 			}
 		}
 		return true;
 	}
-	
-	@Test(description = "Requirement 47")
+
+	@Test(description = "B.1.3 - Requirement 47")
 	public void ExtensionNamespaceUnique()
 	{
 		NodeList extensionNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:extension");
-		
+
 		for(int extensionCount = 0 ; extensionCount < extensionNodes.getLength();extensionCount++)
 		{
 			NodeList extensionChilds = extensionNodes.item(extensionCount).getChildNodes();
-			
+
 			for(int eChildCount = 0 ; eChildCount < extensionChilds.getLength(); eChildCount++)
 			{
 				Node eChild = extensionChilds.item(eChildCount);
-				
+
 				if(eChild.getLocalName() != null && eChild.getLocalName().equals("value"))
 				{
 					NodeList extensionProcessList = eChild.getChildNodes();
@@ -101,21 +101,21 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				}
 			}
 		}
-	}	
-	
-	@Test(description = "Requirement 48")
+	}
+
+	@Test(description = "B.1.4 - Requirement 48")
 	public void ExtensionCoherentWithCore()
 	{
 		//This test cannot be run automatically as the meaning the extension shall be known and thus is not required to be implemented in the Executable Test Suite.
-	}	
-	
-	@Test(description = "Requirement 49")
+	}
+
+	@Test(description = "B.1.5 - Requirement 49")
 	public void ExtensionProcessExecution()
 	{
 		//This test cannot be run automatically as the meaning the extension shall be known and thus is not required to be implemented in the Executable Test Suite.
 	}
-	
-	@Test(description = "Requirement 50")
+
+	@Test(description = "B.1.6 - Requirement 50")
 	public void GmlDependency()
 	{
 		Boolean result = false;
@@ -129,9 +129,9 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			}
 		}
 		Assert.assertTrue(result, "This standard shall utilize and depend upon the OGC GML 3.2 standard schema" );
-	}	
-	
-	@Test(description = "Requirement 51")
+	}
+
+	@Test(description = "B.1.7 - Requirement 51")
 	public void SweCommonDependency()
 	{
 		Boolean result = false;
@@ -145,16 +145,16 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			}
 		}
 		Assert.assertTrue(result, "This standard shall utilize and depend upon the OGC SWE Common Data 2.0 standard" );
-	}	
-	
-	@Test(description = "Requirement 52")
+	}
+
+	@Test(description = "B.1.8 - Requirement 52")
 	public void GloballyUniqueId()
 	{
 		String resultMessage = "";
-		
+
 		NodeList list = this.testSubject.getDocumentElement().getElementsByTagName("gml:identifier");
 		int listCount = list.getLength();
-		
+
 		if(listCount > 1)
 		{
 			resultMessage += " gml:identifier must be only one. ";
@@ -163,7 +163,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 		{
 			resultMessage += " must have one gml:identifier. ";
 		}
-		
+
 		if(listCount == 1)
 		{
 			Element identifier = (Element)list.item(0);
@@ -181,21 +181,21 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			}
 		}
 		Assert.assertTrue(resultMessage.length() == 0, resultMessage );
-	}	
-	
-	@Test(description = "Requirement 53")
+	}
+
+	@Test(description = "B.1.9 - Requirement 53")
 	public void DocumentSecurityTags()
 	{
 		String result = "";
-		
+
 		NodeList list = this.testSubject.getDocumentElement().getElementsByTagName("sml:securityConstraints");
 		if(list.getLength() > 0)
 		{
 			Node securityConstraints = list.item(0);
 			ArrayList<Node> securityConstraintsNodes = DocumentTools.getAllNode(securityConstraints);
-			
+
 			securityConstraintsNodes.remove(0);
-			
+
 			for(int i=0 ; i<securityConstraintsNodes.size() ; i++)
 			{
 				Node sChild = securityConstraintsNodes.get(i);
@@ -207,42 +207,42 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			}
 		}
 		Assert.assertTrue(result.length() == 0, result );
-	}	
-	
-	
-	@Test(description = "Requirement 54")
+	}
+
+
+	@Test(description = "B.1.10 - Requirement 54")
 	public void IndividualSecurityTags()
 	{
 		String rootTagName = this.testSubject.getDocumentElement().getNodeName();
-		
+
 		NodeList smlSecurityNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:securityConstraints");
 		NodeList sweSecurityNodes = this.testSubject.getDocumentElement().getElementsByTagName("swe:securityConstraints");
-		
+
 		for(int i=0 ; i<smlSecurityNodes.getLength() ; i++)
 		{
 			Node sParent = smlSecurityNodes.item(i).getParentNode();
 			String parentTagName = sParent.getNodeName();
-			
+
 			if(!(parentTagName.equals("sml:extension") || parentTagName.equals(rootTagName)))
 			{
 				throw new AssertionError("Security tagging shall utilize the extension element within SensorML or SWECommon data elements");
 			}
 		}
-		
+
 		for(int i=0 ; i<sweSecurityNodes.getLength() ; i++)
 		{
 			Node sParent = sweSecurityNodes.item(i).getParentNode();
 			String parentTagName = sParent.getNodeName();
-			
+
 			if(!parentTagName.equals("swe:extension"))
 			{
 				throw new AssertionError("Security tagging shall utilize the extension element within SensorML or SWECommon data elements");
 			}
 		}
-		
-	}	
-	
-	@Test(description = "Requirement 55")
+
+	}
+
+	@Test(description = "B.1.11 - Requirement 55")
 	public void ContactRole()
 	{
 		NodeList contactNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:contact");
@@ -257,27 +257,27 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				}
 			}
 		}
-	}	
-	
-	@Test(description = "Requirement 56")
+	}
+
+	@Test(description = "B.1.12 - Requirement 56")
 	public void TypeOfReference() throws URISyntaxException
 	{
 		NodeList typeofNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:typeOf");
 		ArrayList<String> uids = new ArrayList<String>();
-	
+
 		NodeList identifiers = this.testSubject.getDocumentElement().getElementsByTagName("gml:identifier");
 		for(int identifiersCount=0;identifiersCount<identifiers.getLength();identifiersCount++)
 		{
 			uids.add(identifiers.item(identifiersCount).getTextContent());
 		}
-		
+
 		for(int i=0 ; i<typeofNodes.getLength();i++)
 		{
 			Element typeofNode = (Element)typeofNodes.item(i);
 			if(typeofNode.hasAttribute("xlink:title"))
 			{
 				String titleAttribute = typeofNode.getAttribute("xlink:title");
-					
+
 				if(uids.contains(titleAttribute))
 				{
 					throw new AssertionError("value of xlink:href attribute shall be a uniqueID");
@@ -288,7 +288,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			{
 				throw new AssertionError("typeOf property shall require meaningful values for the xlink:title");
 			}
-			
+
 			if(typeofNode.hasAttribute("xlink:href"))
 			{
 				String url = typeofNode.getAttribute("xlink:href");
@@ -296,18 +296,18 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				if(!UrlValidate.ValidateHttpUrl(uri.toString()))
 				{
 					throw new AssertionError("value of xlink:href attribute shall be a resolvable URL");
-				}				
+				}
 			}
 			else
 			{
 				throw new AssertionError("typeOf property shall require meaningful values for the xlink:href");
 			}
 		}
-	}	
-	
-	
-	
-	@Test(description = "Requirement 57")
+	}
+
+
+
+	@Test(description = "B.1.13 - Requirement 57")
 	public void FoiArcroleAndTitle()
 	{
 		NodeList featureNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:feature");
@@ -322,9 +322,9 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				}
 			}
 		}
-	}	
-	
-	@Test(description = "Requirement 58")
+	}
+
+	@Test(description = "B.1.14 - Requirement 58")
 	public void ObservableDefinition()
 	{
 		NodeList observableNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:ObservableProperty");
@@ -335,15 +335,15 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 			{
 				throw new AssertionError("the ObservableProperty element shall include the definition attribute");
 			}
-			
+
 			String url = observable.getAttribute("definition");
 			if(!UrlValidate.ValidateHttpUrl(url)) {
 				throw new AssertionError("the definition attribute in the ObservableProperty element shall include a resolvable url");
 			}
-		}	
-	}	
-	
-	@Test(description = "Requirement 59")
+		}
+	}
+
+	@Test(description = "B.1.15 - Requirement 59")
 	public void DataRecord()
 	{
 		NodeList inputNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:input");
@@ -354,7 +354,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				throw new AssertionError("Input shall be either simple types or surrounded by an appropriate aggregate data component");
 			}
 		}
-		
+
 		NodeList onputNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:output");
 		for(int i=0 ; i<onputNodes.getLength(); i++)
 		{
@@ -363,7 +363,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				throw new AssertionError("Output shall be either simple types or surrounded by an appropriate aggregate data component");
 			}
 		}
-		
+
 		NodeList parameterNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:parameter");
 		for(int i=0 ; i<parameterNodes.getLength(); i++)
 		{
@@ -372,12 +372,12 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				throw new AssertionError("Parameter shall be surrounded by an appropriate aggregate data component");
 			}
 		}
-	}	
-	
+	}
+
 	private Boolean ValidateSWEDataComponent(Node node)
 	{
 		String nodeLocalName = node.getNodeName();
-		
+
 		String[] simpleTypes = new String[]{"Quantity", "Count", "Boolean", "Category", "Time"};
 		String[] aggregateTypes = new String[]{"DataRecord", "DataArray", "Vector", "Matrix"};
 
@@ -386,17 +386,17 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 		{
 			String localName = childNodes.item(i).getLocalName();
 			String ElementName = childNodes.item(i).getNodeName();
-			
+
 			if(localName != null)
 			{
 				Boolean abstractDataComponentResult = true;
-				
+
 				if(!Arrays.asList(simpleTypes).contains(localName)
 					&&	!Arrays.asList(aggregateTypes).contains(localName))
 				{
 					abstractDataComponentResult = false;
 				}
-				
+
 				Boolean observablePropertyResult = true;
 
 				if(nodeLocalName.equals("output") || nodeLocalName.equals("output"))
@@ -406,14 +406,14 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 						observablePropertyResult = false;
 					}
 				}
-				
+
 				Boolean dataInterfaceResult = true;
 				if(!ElementName.equals("sml:DataInterface"))
 				{
 					dataInterfaceResult = false;
-				}			
-				
-				
+				}
+
+
 				if( !(abstractDataComponentResult || observablePropertyResult || dataInterfaceResult) )
 				{
 					return false;
@@ -422,8 +422,8 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 		}
 		return true;
 	}
-	
-	@Test(description = "Requirement 60")
+
+	@Test(description = "B.1.16 - Requirement 60")
 	public void VectorUse()
 	{
 		NodeList inputNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:input");
@@ -434,7 +434,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				throw new AssertionError("swe:Vector shall be used when have position value");
 			}
 		}
-		
+
 		NodeList onputNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:output");
 		for(int i=0 ; i<onputNodes.getLength(); i++)
 		{
@@ -443,7 +443,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				throw new AssertionError("swe:Vector shall be used when have position value");
 			}
 		}
-		
+
 		NodeList parameterNodes = this.testSubject.getDocumentElement().getElementsByTagName("sml:parameter");
 		for(int i=0 ; i<parameterNodes.getLength(); i++)
 		{
@@ -452,8 +452,8 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				throw new AssertionError("swe:Vector shall be used when have position value");
 			}
 		}
-	}	
-	
+	}
+
 	private Boolean ValidatePositionChildsComponent(Node node)
 	{
 		ArrayList<Node> childs = DocumentTools.getAllNode(node);
@@ -470,22 +470,22 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 		}
 		return true;
 	}
-	
-	
-	@Test(description = "Requirement 61")
+
+
+	@Test(description = "B.1.17 - Requirement 61")
 	public void DataStreamUrl()
 	{
 		Boolean result = false;
-		
+
 		NodeList dataStreamNodes = this.testSubject.getDocumentElement().getElementsByTagName("swe:DataStream");
-		
+
 		int nodesCount = dataStreamNodes.getLength();
-		
+
 		if(nodesCount == 0)
 		{
 			result = true;
 		}
-		
+
 		for(int i=0 ; i<nodesCount; i++)
 		{
 			NodeList childs = dataStreamNodes.item(i).getChildNodes();
@@ -509,15 +509,15 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 				}
 			}
 		}
-		
+
 		Assert.assertTrue(result, "DataStream shall be referenced by a resolvable URL" );
-	}	
-	
-	@Test(description = "Requirement 62")
+	}
+
+	@Test(description = "B.1.18 - Requirement 62")
 	public void MultiplexedDataStream()
 	{
 		NodeList dataStreamNodes = this.testSubject.getDocumentElement().getElementsByTagName("swe:DataStream");
-		
+
 		for(int i=0 ; i<dataStreamNodes.getLength(); i++)
 		{
 			ArrayList<Node> dataStreamChilds = DocumentTools.getAllNode(dataStreamNodes.item(i));
@@ -530,12 +530,12 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 					{
 						Node choiceChild = dataChoiceChilds.item(k);
 						if(!choiceChild.getNodeName().equals("swe:item"))
-						{						
+						{
 							throw new AssertionError("When use DataChoice , each package must defined as an item.");
 						}
 					}
 				}
-			}	
-		}		
-	}	
+			}
+		}
+	}
 }

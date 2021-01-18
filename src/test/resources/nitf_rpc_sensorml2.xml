@@ -1,304 +1,131 @@
 <sml:SimpleProcess gml:id="model.1"
-	xmlns:sml="http://www.opengis.net/sensorml/2.0"
-	xmlns:swe="http://www.opengis.net/swe/2.0"
-	xmlns:gml="http://www.opengis.net/gml/3.2"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:xlink="http://www.w3.org/1999/xlink"
-	xsi:schemaLocation="http://www.opengis.net/sensorml/2.0 http://schemas.opengis.net/sensorML/2.0/sensorML.xsd"
-	definition="http://www.opengis.net/def/sensor-model/NTB/2.1/NITF/RPC00B">
-	<gml:identifier codeSpace="uid">urn:ogc:sensor-model:ntb-nitf:2.1:RPC00B</gml:identifier>
-	<sml:identification>
-		<sml:IdentifierList>
-			<sml:identifier>
-				<sml:Term>
-					<sml:label>TRE</sml:label>
-					<sml:value>RPC00B</sml:value>
-				</sml:Term>
-			</sml:identifier>
-		</sml:IdentifierList>
-	</sml:identification>
-	<sml:classification>
-		<sml:ClassifierList>
-			<sml:classifier>
-				<sml:Term
-					definition="http://sweetontology.net/reprMathFunction/Polynomial">
-					<sml:label>Math Function Type</sml:label>
-					<sml:value>Rational Polynomial Coefficients</sml:value>
-				</sml:Term>
-			</sml:classifier>
-		</sml:ClassifierList>
-	</sml:classification>
-	<sml:characteristics name="ignored" />
-	<sml:inputs>
-		<sml:InputList>
-			<sml:input name="latitude">
-				<swe:Quantity
-					definition="http://www.opengis.net/def/axis/EPSG/9.9/108">
-					<swe:uom code="deg" />
-				</swe:Quantity>
-			</sml:input>
-			<sml:input name="longitude">
-				<swe:Quantity
-					definition="http://www.opengis.net/def/axis/EPSG/9.9/109">
-					<swe:uom code="deg" />
-				</swe:Quantity>
-			</sml:input>
-			<sml:input name="altitude">
-				<swe:Quantity
-					definition="http://www.opengis.net/def/sensor-model-param/xdomes/altitude">
-					<swe:uom code="m" />
-				</swe:Quantity>
-			</sml:input>
-		</sml:InputList>
-	</sml:inputs>
-	<sml:outputs>
-		<sml:OutputList>
-			<sml:output name="row">
-				<swe:Quantity
-					definition="http://www.opengis.net/def/ogc/Row">
-					<swe:uom code="pixel" />
-				</swe:Quantity>
-			</sml:output>
-			<sml:output name="column">
-				<swe:Quantity
-					definition="http://www.opengis.net/def/ogc/Column">
-					<swe:uom code="pixel" />
-				</swe:Quantity>
-			</sml:output>
-		</sml:OutputList>
-	</sml:outputs>
-	<sml:parameters>
-		<sml:ParameterList>
-			<sml:parameter name="LINE_OFF">
-				<swe:DataRecord
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LINE_OFF">
-					<swe:label>NITF RPC00B LINE_OFF</swe:label>
-					<swe:field name="LINE_OFF">
-						<swe:Quantity
-							definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LINE_OFF">
-							<swe:label>LINE_OFF</swe:label>
-							<swe:uom code="pixels" />
-							<swe:value>837</swe:value>
-						</swe:Quantity>
-					</swe:field>
-				</swe:DataRecord>
-			</sml:parameter>
-			<sml:parameter name="SAMP_OFF">
-				<swe:DataRecord
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/SAMP_OFF">
-					<swe:label>NITF RPC00B SAMP_OFF</swe:label>
-					<swe:field name="SAMP_OFF">
-						<swe:Quantity
-							definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/SAMP_OFF">
-							<swe:label>SAMP_OFF</swe:label>
-							<swe:uom code="pixels" />
-							<swe:value>2522</swe:value>
-						</swe:Quantity>
-					</swe:field>
-				</swe:DataRecord>
-			</sml:parameter>
-			<sml:parameter name="LAT_OFF">
-				<swe:DataRecord
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LAT_OFF">
-					<swe:label>NITF RPC00B LAT_OFF</swe:label>
-					<swe:field name="LAT_OFF">
-						<swe:Quantity
-							definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LAT_OFF">
-							<swe:label>LAT_OFF</swe:label>
-							<swe:uom code="deg" />
-							<swe:value>32.7216</swe:value>
-						</swe:Quantity>
-					</swe:field>
-				</swe:DataRecord>
-			</sml:parameter>
-			<sml:parameter name="LONG_OFF">
-				<swe:DataRecord
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LONG_OFF">
-					<swe:label>NITF RPC00B LONG_OFF</swe:label>
-					<swe:field name="LONG_OFF">
-						<swe:Quantity
-							definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LONG_OFF">
-							<swe:label>LONG_OFF</swe:label>
-							<swe:uom code="deg" />
-							<swe:value>-117.1336</swe:value>
-						</swe:Quantity>
-					</swe:field>
-				</swe:DataRecord>
-			</sml:parameter>
-			<sml:parameter name="HEIGHT_OFF">
-				<swe:DataRecord
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/HEIGHT_OFF">
-					<swe:label>NITF RPC00B HEIGHT_OFF</swe:label>
-					<swe:field name="HEIGHT_OFF">
-						<swe:Quantity
-							definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/HEIGHT_OFF">
-							<swe:label>HEIGHT_OFF</swe:label>
-							<swe:uom code="m" />
-							<swe:value>36</swe:value>
-						</swe:Quantity>
-					</swe:field>
-				</swe:DataRecord>
-			</sml:parameter>
-			<sml:parameter name="LINE_SCALE">
-				<swe:DataRecord
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LINE_SCALE">
-					<swe:label>NITF RPC00B LINE_SCALE</swe:label>
-					<swe:field name="LINE_SCALE">
-						<swe:Quantity
-							definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LINE_SCALE">
-							<swe:label>LINE_SCALE</swe:label>
-							<swe:uom code="pixels" />
-							<swe:value>1685</swe:value>
-						</swe:Quantity>
-					</swe:field>
-				</swe:DataRecord>
-			</sml:parameter>
-			<sml:parameter name="SAMP_SCALE">
-				<swe:DataRecord
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/SAMP_SCALE">
-					<swe:label>NITF RPC00B SAMP_SCALE</swe:label>
-					<swe:field name="SAMP_SCALE">
-						<swe:Quantity
-							definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/SAMP_SCALE">
-							<swe:label>SAMP_SCALE</swe:label>
-							<swe:uom code="pixels" />
-							<swe:value>6977</swe:value>
-						</swe:Quantity>
-					</swe:field>
-				</swe:DataRecord>
-			</sml:parameter>
-			<sml:parameter name="LAT_SCALE">
-				<swe:DataRecord
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LAT_SCALE">
-					<swe:label>NITF RPC00B LAT_SCALE</swe:label>
-					<swe:field name="LAT_SCALE">
-						<swe:Quantity
-							definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LAT_SCALE">
-							<swe:label>LAT_SCALE</swe:label>
-							<swe:uom code="deg" />
-							<swe:value>0.0158</swe:value>
-						</swe:Quantity>
-					</swe:field>
-				</swe:DataRecord>
-			</sml:parameter>
-			<sml:parameter name="LONG_SCALE">
-				<swe:DataRecord
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LONG_SCALE">
-					<swe:label>NITF RPC00B LONG_SCALE</swe:label>
-					<swe:field name="LONG_SCALE">
-						<swe:Quantity
-							definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LONG_SCALE">
-							<swe:label>LONG_SCALE</swe:label>
-							<swe:uom code="deg" />
-							<swe:value>0.0756</swe:value>
-						</swe:Quantity>
-					</swe:field>
-				</swe:DataRecord>
-			</sml:parameter>
-			<sml:parameter name="HEIGHT_SCALE">
-				<swe:DataRecord
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/HEIGHT_SCALE">
-					<swe:label>NITF RPC00B HEIGHT_SCALE</swe:label>
-					<swe:field name="HEIGHT_SCALE">
-						<swe:Quantity
-							definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/HEIGHT_SCALE">
-							<swe:label>HEIGHT_SCALE</swe:label>
-							<swe:uom code="m" />
-							<swe:value>223</swe:value>
-						</swe:Quantity>
-					</swe:field>
-				</swe:DataRecord>
-			</sml:parameter>
-			<sml:parameter name="LINE_NUM_COEFF">
-				<swe:DataArray
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LINE_NUM_COEFF">
-					<swe:elementCount>
-						<swe:Count>
-							<swe:value>20</swe:value>
-						</swe:Count>
-					</swe:elementCount>
-					<swe:elementType name="LINE_NUM_COEFF" />
-					<swe:encoding>
-						<swe:TextEncoding tokenSeparator=" "
-							blockSeparator="," decimalSeparator="." />
-					</swe:encoding>
-					<swe:values>
-						-0.001588273 0.005273443 -1.039472 0.0327875 0.003819024 -0.0003062242
-						0.001016708 -0.00151932 -0.003612427 -2.713315e-05 -3.844429e-07
-						5.490675e-06 -6.127862e-07 2.085306e-07 -6.623162e-06 5.271774e-07
-						-4.072381e-07 -1.934767e-06 1.603596e-06 1.012611e-08
-					</swe:values>
-				</swe:DataArray>
-			</sml:parameter>
-			<sml:parameter name="LINE_DEN_COEFF">
-				<swe:DataArray
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LINE_DEN_COEFF">
-					<swe:elementCount>
-						<swe:Count>
-							<swe:value>20</swe:value>
-						</swe:Count>
-					</swe:elementCount>
-					<swe:elementType name="LINE_DEN_COEFF" />
-					<swe:encoding>
-						<swe:TextEncoding tokenSeparator=" "
-							blockSeparator="," decimalSeparator="." />
-					</swe:encoding>
-					<swe:values>
-						1 -0.003655191 0.003474 -0.0008255868 5.955337e-07 -7.244374e-07
-						-1.469359e-06 9.931010000000001e-07 -5.120185e-07 3.186283e-07
-						1.006512e-09 0 0 0 0 0 0 -3.843238e-09 0 0
-					</swe:values>
-				</swe:DataArray>
-			</sml:parameter>
-			<sml:parameter name="SAMP_NUM_COEFF">
-				<swe:DataArray
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/SAMP_NUM_COEFF">
-					<swe:elementCount>
-						<swe:Count>
-							<swe:value>20</swe:value>
-						</swe:Count>
-					</swe:elementCount>
-					<swe:elementType name="SAMP_NUM_COEFF" />
-					<swe:encoding>
-						<swe:TextEncoding tokenSeparator=" "
-							blockSeparator="," decimalSeparator="." />
-					</swe:encoding>
-					<swe:values>
-						-0.0004272088 1.015454 0.0003112818 -0.01482898 0.00334748 -0.0003964402
-						-7.275516e-05 -0.003712349 1.155826e-06 7.837889999999999e-06
-						5.158267e-08 1.134916e-06 -1.180725e-06 1.571365e-07 1.257981e-06
-						0 1.683937e-08 -2.290939e-06 -6.143142e-08 -2.54969e-09
-					</swe:values>
-				</swe:DataArray>
-			</sml:parameter>
-			<sml:parameter name="SAMP_DEN_COEFF">
-				<swe:DataArray
-					definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/SAMP_DEN_COEFF">
-					<swe:elementCount>
-						<swe:Count>
-							<swe:value>20</swe:value>
-						</swe:Count>
-					</swe:elementCount>
-					<swe:elementType name="SAMP_DEN_COEFF" />
-					<swe:encoding>
-						<swe:TextEncoding tokenSeparator=" "
-							blockSeparator="," decimalSeparator="." />
-					</swe:encoding>
-					<swe:values>
-						1 -0.003655191 0.003474 -0.0008255868 5.955337e-07 -7.244374e-07
-						-1.469359e-06 9.931010000000001e-07 -5.120185e-07 3.186283e-07
-						1.006512e-09 0 0 0 0 0 0 -3.843238e-09 0 0
-					</swe:values>
-				</swe:DataArray>
-			</sml:parameter>
-		</sml:ParameterList>
-	</sml:parameters>
-	<sml:method>
-		<sml:ProcessMethod>
-			<swe:description>The RPC00B Tagged Record Extension contains rational
-				function polynomial coefficients and normalization parameters that
-				define the physical relationship between image coordinates and
-				ground coordinates.</swe:description>
-		</sml:ProcessMethod>
-	</sml:method>
+xmlns:sml="http://www.opengis.net/sensorml/2.0"
+xmlns:swe="http://www.opengis.net/swe/2.0"
+xmlns:gml="http://www.opengis.net/gml/3.2"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xsi:schemaLocation="http://www.opengis.net/sensorml/2.0 http://schemas.opengis.net/sensorML/2.0/sensorML.xsd"
+definition="http://www.opengis.net/def/sensor-model/NTB/2.1/NITF/RPC00B">
+
+<gml:identifier codeSpace="uid">urn:ogc:sensor-model:ntb-nitf:2.1:RPC00B</gml:identifier>
+
+<sml:identification>
+    <sml:IdentifierList>
+        <sml:identifier>
+            <sml:Term>
+                <sml:label>TRE</sml:label>
+                <sml:value>RPC00B</sml:value>
+            </sml:Term>
+        </sml:identifier>
+    </sml:IdentifierList>
+</sml:identification>
+    <sml:classification>
+        <sml:ClassifierList>
+            <sml:classifier>
+                <sml:Term definition="http://sweetontology.net/reprMathFunction/Polynomial">
+                    <sml:label>Math Function Type</sml:label>
+                    <sml:value>Rational Polynomial Coefficients</sml:value>
+                </sml:Term>
+            </sml:classifier>
+        </sml:ClassifierList>
+    </sml:classification>
+<sml:characteristics name="generalProperties">
+    <sml:CharacteristicList>
+
+    <sml:characteristic name="electricalRequirements">
+    <swe:DataRecord definition="http://sensorml.com/ont/swe/property/PowerRequirement">
+    <swe:label>Electrical Requirements</swe:label>
+
+    <swe:field name="Width">
+    <swe:Quantity definition="http://sensorml.com/ont/swe/property/Width">
+    <swe:uom code="pixels"/>
+    <swe:value>25</swe:value>
+    </swe:Quantity>
+    </swe:field>
+
+    <swe:field name="Height">
+    <swe:Quantity definition="http://sensorml.com/ont/swe/property/Height">
+    <swe:uom code="pixels"/>
+    <swe:value>14</swe:value>
+    </swe:Quantity>
+    </swe:field>
+
+    </swe:DataRecord>
+    </sml:characteristic>
+    </sml:CharacteristicList>
+</sml:characteristics>
+<sml:inputs>
+    <sml:InputList>
+        <sml:input name="latitude">
+            <swe:Quantity definition="http://www.opengis.net/def/axis/EPSG/9.9/108">
+                <swe:uom code="deg"/>
+            </swe:Quantity>
+        </sml:input>
+        <sml:input name="longitude">
+            <swe:Quantity definition="http://www.opengis.net/def/axis/EPSG/9.9/109">
+                <swe:uom code="deg"/>
+            </swe:Quantity>
+        </sml:input>
+        <sml:input name="altitude">
+            <swe:Quantity definition="http://www.opengis.net/def/sensor-model-param/xdomes/altitude">
+                <swe:uom code="m"/>
+            </swe:Quantity>
+        </sml:input>
+    </sml:InputList>
+</sml:inputs>
+<sml:outputs>
+    <sml:OutputList>
+      <sml:output name="r">
+          <swe:Quantity definition="http://www.opengis.net/def/ogc/Row">
+              <swe:uom code="pixel"/>
+          </swe:Quantity>
+      </sml:output>
+        <sml:output name="c">
+            <swe:Quantity definition="http://www.opengis.net/def/ogc/Column">
+                <swe:uom code="pixel"/>
+            </swe:Quantity>
+        </sml:output>
+    </sml:OutputList>
+ </sml:outputs>
+ <sml:parameters>
+        <sml:ParameterList>
+            <sml:parameter name="HEIGHT_OFF">
+                <swe:DataRecord definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/HEIGHT_OFF">
+                    <swe:label>NITF RPC00B HEIGHT_OFF</swe:label>
+
+                    <swe:field name="HEIGHT_OFF"> <swe:Quantity definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/HEIGHT_OFF"><swe:label>HEIGHT_OFF</swe:label><swe:uom code="m"/><swe:value>+0036.000</swe:value></swe:Quantity></swe:field>
+
+                </swe:DataRecord>
+            </sml:parameter>
+            <sml:parameter name="HEIGHT_SCALE">
+                <swe:DataRecord definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/HEIGHT_SCALE">
+                    <swe:label>NITF RPC00B HEIGHT_SCALE</swe:label>
+
+                    <swe:field name="HEIGHT_SCALE"> <swe:Quantity definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/HEIGHT_SCALE"><swe:label>HEIGHT_SCALE</swe:label><swe:uom code="m"/><swe:value>+0223.000</swe:value></swe:Quantity></swe:field>
+
+                </swe:DataRecord>
+            </sml:parameter>
+            <sml:parameter name="LINE_NUM_COEFF">
+                <swe:DataArray definition="http://www.opengis.net/def/sensor-model-param/NTB/2.1/NITF/RPC00B/LINE_NUM_COEFF">
+                    <swe:elementCount>
+                        <swe:Count>
+                            <swe:value>20</swe:value>
+                        </swe:Count>
+                    </swe:elementCount>
+                    <swe:elementType name="LINE_NUM_COEFF"/>
+                    <swe:encoding>
+                        <swe:TextEncoding tokenSeparator=" " blockSeparator="," decimalSeparator="."/>
+                    </swe:encoding>
+                    <swe:values>
+                        ﻿-1.588273187168747E-03 +5.273442922847430E-03 -1.039471585754687E+00 +3.278750158187576E-02 +3.819023852537197E-03 -3.062242258534135E-04 +1.016708448592868E-03 -1.519320441933986E-03 -3.612426572564104E-03 -2.713314744641432E-05 -3.844429079613772E-07 +5.490675196309467E-06 -6.127861611892880E-07 +2.085306461525447E-07 -6.623162087361485E-06 +5.271774026766927E-07 -4.072380660143696E-07 -1.934767492781006E-06 +1.603596435651687E-06 +1.012610843369034E-08
+                    </swe:values>
+                </swe:DataArray>
+            </sml:parameter>
+        </sml:ParameterList>
+  </sml:parameters>
+  <sml:method>
+        <sml:ProcessMethod>
+            <swe:description>The RPC00B Tagged Record Extension contains rational function polynomial coefficients and normalization parameters that define the physical relationship between image coordinates and ground coordinates.</swe:description>
+        </sml:ProcessMethod>
+  </sml:method>
 </sml:SimpleProcess>
