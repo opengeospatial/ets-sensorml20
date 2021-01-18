@@ -249,7 +249,7 @@ public class SchematronTests extends DataFixture {
 			throw new SkipException("Schematron schema reference not found.");
 		}
 		Source xmlSource = new StreamSource(this.dataFile);
-		DOMResult result = dataValidator.validate(xmlSource);
+		DOMResult result = (DOMResult) dataValidator.validate(xmlSource);
 		Assert.assertFalse(dataValidator.ruleViolationsDetected(), ErrorMessage
 				.format(ErrorMessageKeys.NOT_SCHEMA_VALID,
 						dataValidator.getRuleViolationCount(),
