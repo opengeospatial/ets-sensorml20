@@ -1,4 +1,13 @@
 # SensorML 2.0 Release Notes
+
+## 0.10 (2021-01-28)
+
+- [#58](https://github.com/opengeospatial/ets-sensorml20/pull/58) Annotated descriptions with Annex A and B numbers
+- [#54](https://github.com/opengeospatial/ets-sensorml20/issues/54) Convert xml.xsd file encoding from UTF-16 to UTF-8
+- [#50](https://github.com/opengeospatial/ets-sensorml20/issues/50) Cleanup dependencies
+- [#52](https://github.com/opengeospatial/ets-sensorml20/issues/52) Add template to get an XML/JSON response via rest endpoint
+- [#56](https://github.com/opengeospatial/ets-sensorml20/pull/56) Bump xercesImpl from 2.11.0 to 2.12.1
+
 ## 0.9
 - [#38](https://github.com/opengeospatial/ets-sensorml20/issues/38) Create unit tests for each test
 - [#39](https://github.com/opengeospatial/ets-sensorml20/issues/39) Introduce Dockerfile and Maven Docker plugin
