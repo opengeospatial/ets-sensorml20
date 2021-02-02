@@ -52,9 +52,10 @@ public class CoreAbstractProcess extends BaseFixture{
 		for(int i=0 ; i<listLength ; i++)
 		{
 			Node item = identifierList.item(i);
-			String id = item.getNodeValue();
+			String id = item.getTextContent();
 			if(idList.contains(id))
 			{
+				
 				throw new AssertionError("ID is not unique !!");
 			}
 			else

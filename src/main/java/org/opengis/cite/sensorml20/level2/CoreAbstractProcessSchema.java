@@ -157,7 +157,7 @@ public class CoreAbstractProcessSchema extends BaseFixture{
 
 		if(listCount > 1)
 		{
-			resultMessage += " gml:identifier must be only one. ";
+			//resultMessage += " gml:identifier must be only one. "; //Cannot be used since getElementsByTagName retrieves elements from child nodes
 		}
 		if(listCount == 0)
 		{

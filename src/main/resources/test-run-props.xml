@@ -2,6 +2,6 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties version="1.0">
     <comment>Sample test run arguments</comment>
-    <entry key="iut">file:///Users/gobehobona/Documents/GitHub/ets-sensorml20/src/test/resources/OEM_Sensor_SecurityConstraints.xml</entry>
+    <entry key="iut">file:///home/ogccite/Documents/52NorthSensorML2b.xml</entry>
     <entry key="ics">class-A,class-B</entry>
 </properties>

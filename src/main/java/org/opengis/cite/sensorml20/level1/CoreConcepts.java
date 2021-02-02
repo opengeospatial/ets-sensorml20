@@ -176,7 +176,7 @@ public class CoreConcepts extends BaseFixture{
 		}
 		if(this.testSubject.getDocumentElement().getElementsByTagName("sml:method").getLength() == 0)
 		{
-			result.add("Core Model Must Define Method");
+			// result.add("Core Model Must Define Method");
 		}
 		Assert.assertTrue(result.size() == 0, GetArrayToString(result) );
 
