@@ -46,7 +46,7 @@
   <properties>
     <ets-code>sensorml20</ets-code>
     <spec-version>2.0</spec-version>
-    <docker.teamengine.version>5.4</docker.teamengine.version>
+    <docker.teamengine.version>5.4.1</docker.teamengine.version>
   </properties>
 
   <dependencies>
