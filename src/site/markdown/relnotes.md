@@ -1,5 +1,10 @@
 # SensorML 2.0 Release Notes
 
+## 1.0 (2021-05-11)
+
+- [#60](https://github.com/opengeospatial/ets-sensorml20/issues/60) Prepare Production release
+- [#59](https://github.com/opengeospatial/ets-sensorml20/pull/59) Set Docker TEAM Engine version to 5.4.1
+
 ## 0.10 (2021-01-28)
 
 - [#58](https://github.com/opengeospatial/ets-sensorml20/pull/58) Annotated descriptions with Annex A and B numbers
