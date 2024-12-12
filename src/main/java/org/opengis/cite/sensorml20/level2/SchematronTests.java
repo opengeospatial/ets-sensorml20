@@ -34,33 +34,32 @@ import org.testng.log4testng.Logger;
 
 /**
  * Verifies that a SensorML instance document adheres to the constraints defined in
- * Schematron schemas. An application-specific schema may be associated with the
- * instance document by either of the following means:
- * 
+ * Schematron schemas. An application-specific schema may be associated with the instance
+ * document by either of the following means:
+ *
  * <ol>
  * <li>Specify the schema location using the <code>xml-model</code> processing
- * instruction, where the value of the "schematypens" data item is the name of
- * the Schematron namespace (see sample listing below).</li>
- * <li>Specify the schema location as the value of the {@link TestRunArg#SCH
- * sch} test run argument;</li>
- * 
+ * instruction, where the value of the "schematypens" data item is the name of the
+ * Schematron namespace (see sample listing below).</li>
+ * <li>Specify the schema location as the value of the
+ * {@link org.opengis.cite.sensorml20.TestRunArg#SCH sch} test run argument;</li>
+ *
  * </ol>
  * <p>
  * <strong>Using the xml-model PI to refer to a Schematron schema</strong>
  * </p>
- * 
+ *
  * <pre>
  * {@code
  * <?xml version="1.0" encoding="UTF-8"?>
- * <?xml-model href="http://example.org/constraints.sch" 
- *             schematypens="http://purl.oclc.org/dsdl/schematron" 
+ * <?xml-model href="http://example.org/constraints.sch"
+ *             schematypens="http://purl.oclc.org/dsdl/schematron"
  *             phase="#ALL"?>
  * }
  * </pre>
- * 
- * The processing instruction takes precedence if multiple schema references are
- * found.
- * 
+ *
+ * The processing instruction takes precedence if multiple schema references are found.
+ *
  * <p style="margin-bottom: 0.5em">
  * <strong>Sources</strong>
  * </p>
@@ -68,36 +67,30 @@ import org.testng.log4testng.Logger;
  * <li><a href=
  * "http://standards.iso.org/ittf/PubliclyAvailableStandards/c040833_ISO_IEC_19757-3_2006(E).zip"
  * >ISO 19757-3:2006</a></li>
- * <li><a href="http://www.w3.org/TR/xml-model/">Associating Schemas with XML
- * documents 1.0 (Second Edition)</a></li>
+ * <li><a href="http://www.w3.org/TR/xml-model/">Associating Schemas with XML documents
+ * 1.0 (Second Edition)</a></li>
  * </ul>
- * 
  */
 public class SchematronTests extends DataFixture {
 
 	private SchematronValidator dataValidator;
 
 	/**
-	 * Attempts to construct a Schematron validator from a schema reference
-	 * given in (a) the SML data file, or (b) a test run argument (in the ISuite
-	 * context).
-	 * 
-	 * @param testContext
-	 *            The test set context.
+	 * Attempts to construct a Schematron validator from a schema reference given in (a)
+	 * the SML data file, or (b) a test run argument (in the ISuite context).
+	 * @param testContext The test set context.
 	 */
-	
 	public void createSchematronValidator(ITestContext testContext) {
 		Map<String, String> piData = getXmlModelPIData(this.dataFile);
 		String phase = "#ALL";
 		URI schematronURI;
 		Source schema = null;
-		//schematron URI in PI
+		// schematron URI in PI
 		if (isSchematronReference(piData)) {
 			schematronURI = URI.create(piData.get("href"));
 			if (!schematronURI.isAbsolute()) {
 				// resolve relative URI against location of GML data
-				String dataURI = testContext.getSuite().getParameter(
-						TestRunArg.XML.toString());
+				String dataURI = testContext.getSuite().getParameter(TestRunArg.XML.toString());
 				URI baseURI = URI.create(dataURI);
 				schematronURI = baseURI.resolve(schematronURI);
 			}
@@ -106,20 +99,19 @@ public class SchematronTests extends DataFixture {
 				phase = piData.get("phase");
 		}
 		// look for suite attribute (test run argument)
-		else { 
+		else {
 			Set<String> suiteAttrs = testContext.getSuite().getAttributeNames();
 			if (suiteAttrs.contains(SuiteAttribute.SCHEMATRON.getName())) {
-				schematronURI = (URI) testContext.getSuite().getAttribute(
-						SuiteAttribute.SCHEMATRON.getName());
+				schematronURI = (URI) testContext.getSuite().getAttribute(SuiteAttribute.SCHEMATRON.getName());
 				schema = new StreamSource(schematronURI.toString());
 			}
 		}
 		if (null != schema) {
 			try {
 				this.dataValidator = new SchematronValidator(schema, phase);
-			} catch (Exception e) {
-				Logger.getLogger(getClass()).warn(
-						"Failed to create SchematronValidator.\n", e);
+			}
+			catch (Exception e) {
+				Logger.getLogger(getClass()).warn("Failed to create SchematronValidator.\n", e);
 			}
 		}
 	}
@@ -127,122 +119,109 @@ public class SchematronTests extends DataFixture {
 	/**
 	 * [{@code Test}] Verifies that a SensorML instance satisfies the additional
 	 * Schematron constraints specified in the conformance classes of Core.
-	 * 
+	 *
 	 * <p style="margin-bottom: 0.5em">
 	 * <strong>Sources</strong>
 	 * </p>
 	 * <ul>
-	 * <li><a
-	 * href="http://schemas.opengis.net/sensorML/2.0/core.sch">
-	 * Schematron constraints for conformance classes of Core in SensorML 2.0</a></li>
+	 * <li><a href="http://schemas.opengis.net/sensorML/2.0/core.sch"> Schematron
+	 * constraints for conformance classes of Core in SensorML 2.0</a></li>
 	 * </ul>
 	 */
 	public void checkCoreConstraints() {
-		URL schRef = this.getClass().getResource(
-				"/org/opengis/cite/sensorml20/sch/core.sch");
-		ETSAssert
-				.assertSchematronValid(schRef, new StreamSource(this.dataFile));
+		URL schRef = this.getClass().getResource("/org/opengis/cite/sensorml20/sch/core.sch");
+		ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
 	}
+
 	/**
 	 * [{@code Test}] Verifies that a SensorML instance satisfies the additional
 	 * Schematron constraints specified in the conformance classes of SimpleProcess.
-	 * 
+	 *
 	 * <p style="margin-bottom: 0.5em">
 	 * <strong>Sources</strong>
 	 * </p>
 	 * <ul>
-	 * <li><a
-	 * href="http://schemas.opengis.net/sensorML/2.0/simple_process.sch">
+	 * <li><a href="http://schemas.opengis.net/sensorML/2.0/simple_process.sch">
 	 * Schematron constraints for conformance classes of Core in SensorML 2.0</a></li>
 	 * </ul>
 	 */
 	public void checkSimpleProcessConstraints() {
-		URL schRef = this.getClass().getResource(
-				"/org/opengis/cite/sensorml20/sch/simple_process.sch");
-		ETSAssert
-				.assertSchematronValid(schRef, new StreamSource(this.dataFile));
+		URL schRef = this.getClass().getResource("/org/opengis/cite/sensorml20/sch/simple_process.sch");
+		ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
 	}
+
 	/**
 	 * [{@code Test}] Verifies that a SensorML instance satisfies the additional
 	 * Schematron constraints specified in the conformance classes of AggregateProcess.
-	 * 
+	 *
 	 * <p style="margin-bottom: 0.5em">
 	 * <strong>Sources</strong>
 	 * </p>
 	 * <ul>
-	 * <li><a
-	 * href="http://schemas.opengis.net/sensorML/2.0/aggregate_process.sch">
+	 * <li><a href="http://schemas.opengis.net/sensorML/2.0/aggregate_process.sch">
 	 * Schematron constraints for conformance classes of Core in SensorML 2.0</a></li>
 	 * </ul>
 	 */
 	public void checkAggregateProcessConstraints() {
-		URL schRef = this.getClass().getResource(
-				"/org/opengis/cite/sensorml20/sch/aggregate_process.sch");
-		ETSAssert
-				.assertSchematronValid(schRef, new StreamSource(this.dataFile));
+		URL schRef = this.getClass().getResource("/org/opengis/cite/sensorml20/sch/aggregate_process.sch");
+		ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
 	}
+
 	/**
 	 * [{@code Test}] Verifies that a SensorML instance satisfies the additional
 	 * Schematron constraints specified in the conformance classes of PhysicalComponent.
-	 * 
+	 *
 	 * <p style="margin-bottom: 0.5em">
 	 * <strong>Sources</strong>
 	 * </p>
 	 * <ul>
-	 * <li><a
-	 * href="http://schemas.opengis.net/sensorML/2.0/physical_component.sch">
+	 * <li><a href="http://schemas.opengis.net/sensorML/2.0/physical_component.sch">
 	 * Schematron constraints for conformance classes of Core in SensorML 2.0</a></li>
 	 * </ul>
 	 */
 	public void checkPhysicalComponentConstraints() {
-		URL schRef = this.getClass().getResource(
-				"/org/opengis/cite/sensorml20/sch/physical_component.sch");
-		ETSAssert
-				.assertSchematronValid(schRef, new StreamSource(this.dataFile));
+		URL schRef = this.getClass().getResource("/org/opengis/cite/sensorml20/sch/physical_component.sch");
+		ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
 	}
+
 	/**
 	 * [{@code Test}] Verifies that a SensorML instance satisfies the additional
 	 * Schematron constraints specified in the conformance classes of PhysicalComponent.
-	 * 
+	 *
 	 * <p style="margin-bottom: 0.5em">
 	 * <strong>Sources</strong>
 	 * </p>
 	 * <ul>
-	 * <li><a
-	 * href="http://schemas.opengis.net/sensorML/2.0/physical_system.sch">
+	 * <li><a href="http://schemas.opengis.net/sensorML/2.0/physical_system.sch">
 	 * Schematron constraints for conformance classes of Core in SensorML 2.0</a></li>
 	 * </ul>
 	 */
 	public void checkPhysicalSystemConstraints() {
-		URL schRef = this.getClass().getResource(
-				"/org/opengis/cite/sensorml20/sch/physical_system.sch");
-		ETSAssert
-				.assertSchematronValid(schRef, new StreamSource(this.dataFile));
+		URL schRef = this.getClass().getResource("/org/opengis/cite/sensorml20/sch/physical_system.sch");
+		ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
 	}
+
 	/**
-	 * [{@code Test}] Verifies that a GML instance satisfies the additional
-	 * Schematron constraints specified in ISO 19136.
-	 * 
+	 * [{@code Test}] Verifies that a GML instance satisfies the additional Schematron
+	 * constraints specified in ISO 19136.
+	 *
 	 * <p style="margin-bottom: 0.5em">
 	 * <strong>Sources</strong>
 	 * </p>
 	 * <ul>
-	 * <li><a
-	 * href="http://schemas.opengis.net/gml/3.2.1/SchematronConstraints.xml">
+	 * <li><a href="http://schemas.opengis.net/gml/3.2.1/SchematronConstraints.xml">
 	 * Schematron constraints for ISO 19136</a></li>
 	 * </ul>
 	 */
 	public void checkGMLSchematronConstraints() {
-		URL schRef = this.getClass().getResource(
-				"/org/opengis/cite/iso19136/sch/gml-3.2.1.sch");
-		ETSAssert
-				.assertSchematronValid(schRef, new StreamSource(this.dataFile));
-	}	
+		URL schRef = this.getClass().getResource("/org/opengis/cite/iso19136/sch/gml-3.2.1.sch");
+		ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
+	}
 
 	/**
-	 * [{@code Test}] Validates a XML document against a set of Schematron
-	 * constraints associated with it using either the {@code xml-model}
-	 * processing instruction or the {@code sch} test run argument.
+	 * [{@code Test}] Validates a XML document against a set of Schematron constraints
+	 * associated with it using either the {@code xml-model} processing instruction or the
+	 * {@code sch} test run argument.
 	 */
 	public void checkSchematronConstraints() {
 		if (null == this.dataValidator) {
@@ -250,20 +229,16 @@ public class SchematronTests extends DataFixture {
 		}
 		Source xmlSource = new StreamSource(this.dataFile);
 		DOMResult result = (DOMResult) dataValidator.validate(xmlSource);
-		Assert.assertFalse(dataValidator.ruleViolationsDetected(), ErrorMessage
-				.format(ErrorMessageKeys.NOT_SCHEMA_VALID,
-						dataValidator.getRuleViolationCount(),
+		Assert.assertFalse(dataValidator.ruleViolationsDetected(),
+				ErrorMessage.format(ErrorMessageKeys.NOT_SCHEMA_VALID, dataValidator.getRuleViolationCount(),
 						XMLUtils.writeNodeToString(result.getNode())));
 	}
 
 	/**
-	 * Indicates whether or not the given PI data includes a Schematron schema
-	 * reference.
-	 * 
-	 * @param piData
-	 *            A Map containing PI data (pseudo-attributes).
+	 * Indicates whether or not the given PI data includes a Schematron schema reference.
+	 * @param piData A Map containing PI data (pseudo-attributes).
 	 * @return {@code true} if the "schematypens" pseudo-attribute has the value
-	 *         otherwise;
+	 * otherwise;
 	 */
 	boolean isSchematronReference(Map<String, String> piData) {
 		if (null != piData && null != piData.get("schematypens")) {
@@ -273,13 +248,11 @@ public class SchematronTests extends DataFixture {
 	}
 
 	/**
-	 * Extracts the data items from the {@code xml-model} processing
-	 * instruction. The PI must appear before the document element.
-	 * 
-	 * @param dataFile
-	 *            A File containing the GML instance.
-	 * @return A Map containing the supplied pseudo-attributes, or {@code null}
-	 *         if the PI is not present.
+	 * Extracts the data items from the {@code xml-model} processing instruction. The PI
+	 * must appear before the document element.
+	 * @param dataFile A File containing the GML instance.
+	 * @return A Map containing the supplied pseudo-attributes, or {@code null} if the PI
+	 * is not present.
 	 */
 	Map<String, String> getXmlModelPIData(File dataFile) {
 		Map<String, String> piData = null;
@@ -299,24 +272,25 @@ public class SchematronTests extends DataFixture {
 						piData = new HashMap<String, String>();
 						for (String pseudoAttr : pseudoAttrs) {
 							String[] nv = pseudoAttr.split("=");
-							piData.put(nv[0].trim(), nv[1].replace('"', ' ')
-									.trim());
+							piData.put(nv[0].trim(), nv[1].replace('"', ' ').trim());
 						}
 						break;
 					}
 				}
 			}
-		} catch (Exception e) {
-			TestSuiteLogger.log(Level.WARNING, "Failed to parse document at "
-					+ dataFile.getAbsolutePath(), e);
+		}
+		catch (Exception e) {
+			TestSuiteLogger.log(Level.WARNING, "Failed to parse document at " + dataFile.getAbsolutePath(), e);
 			return null; // not an XML document
-		} finally {
+		}
+		finally {
 			try {
 				if (null != reader)
 					reader.close();
 				if (null != input)
 					input.close();
-			} catch (Exception x) {
+			}
+			catch (Exception x) {
 				TestSuiteLogger.log(Level.INFO, x.getMessage());
 			}
 		}
@@ -324,4 +298,3 @@ public class SchematronTests extends DataFixture {
 	}
 
 }
-

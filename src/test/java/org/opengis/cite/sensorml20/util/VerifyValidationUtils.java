@@ -18,7 +18,7 @@ import org.opengis.cite.validation.SchematronValidator;
  */
 public class VerifyValidationUtils {
 
-    public VerifyValidationUtils() {
-    }
+	public VerifyValidationUtils() {
+	}
 
 }

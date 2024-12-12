@@ -8,107 +8,115 @@ import org.testng.annotations.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public class AggregateProcess extends BaseFixture{
-	@Test(description = "A.4.1 - Requirement 22" , groups  = "AggregateProcess" , dependsOnGroups  = { "SimpleProcess" })
-	public void DependencyCore()
-	{
+/**
+ * <p>
+ * AggregateProcess class.
+ * </p>
+ *
+ */
+public class AggregateProcess extends BaseFixture {
+
+	/**
+	 * <p>
+	 * DependencyCore.
+	 * </p>
+	 */
+	@Test(description = "A.4.1 - Requirement 22", groups = "AggregateProcess", dependsOnGroups = { "SimpleProcess" })
+	public void DependencyCore() {
 		String rootName = this.testSubject.getDocumentElement().getNodeName();
 
-		if(!rootName.equals("sml:AggregateProcess"))
-		{
+		if (!rootName.equals("sml:AggregateProcess")) {
 			throw new SkipException("Not an Aggregate Process");
 		}
 	}
 
-	@Test(description = "A.4.2 - Requirement 23" , groups  = "AggregateProcess" , dependsOnMethods  = { "DependencyCore" , "Definition" , "Components" })
-	public void PackageFullyImplemented()
-	{
-		//Dependency All AggregateProcess Tests
+	/**
+	 * <p>
+	 * PackageFullyImplemented.
+	 * </p>
+	 */
+	@Test(description = "A.4.2 - Requirement 23", groups = "AggregateProcess",
+			dependsOnMethods = { "DependencyCore", "Definition", "Components" })
+	public void PackageFullyImplemented() {
+		// Dependency All AggregateProcess Tests
 	}
 
-	@Test(description = "A.4.3 - Requirement 24" , groups  = "AggregateProcess" , dependsOnMethods  = { "DependencyCore" })
-	public void Definition()
-	{
+	/**
+	 * <p>
+	 * Definition.
+	 * </p>
+	 */
+	@Test(description = "A.4.3 - Requirement 24", groups = "AggregateProcess", dependsOnMethods = { "DependencyCore" })
+	public void Definition() {
 		String rootName = this.testSubject.getDocumentElement().getNodeName();
 
-		if(rootName == "sml:AggregateProcess")
-		{
-			if(this.testSubject.getElementsByTagName("sml:inputs").getLength() == 0)
-			{
+		if (rootName == "sml:AggregateProcess") {
+			if (this.testSubject.getElementsByTagName("sml:inputs").getLength() == 0) {
 				throw new AssertionError("AggregateProcess Must Define Inputs !!");
 			}
 
-			if(this.testSubject.getElementsByTagName("sml:outputs").getLength() == 0)
-			{
+			if (this.testSubject.getElementsByTagName("sml:outputs").getLength() == 0) {
 				throw new AssertionError("AggregateProcess Must Define Outputs !!");
 			}
 
-			if(this.testSubject.getElementsByTagName("sml:components").getLength() == 0)
-			{
+			if (this.testSubject.getElementsByTagName("sml:components").getLength() == 0) {
 				throw new AssertionError("AggregateProcess Must Define Sub Process !!");
 			}
 		}
 	}
 
-	@Test(description = "A.4.4 - Requirement 25" , groups  = "AggregateProcess" , dependsOnMethods  = { "DependencyCore" })
-	public void Components()
-	{
+	/**
+	 * <p>
+	 * Components.
+	 * </p>
+	 */
+	@Test(description = "A.4.4 - Requirement 25", groups = "AggregateProcess", dependsOnMethods = { "DependencyCore" })
+	public void Components() {
 		String rootName = this.testSubject.getDocumentElement().getNodeName();
 
-		if(rootName == "sml:AggregateProcess")
-		{
+		if (rootName == "sml:AggregateProcess") {
 			NodeList components = this.testSubject.getDocumentElement().getElementsByTagName("sml:components");
-			if(components.getLength() > 0)
-			{
+			if (components.getLength() > 0) {
 				ArrayList<Element> componentsList = new ArrayList<Element>();
 
 				NodeList tempList = components.item(0).getChildNodes();
-				for(int i=0 ; i<tempList.getLength() ; i++)
-				{
-					Element item = (Element)tempList.item(i);
-					if(item.getNodeName() == "sml:ComponentsList")
-					{
+				for (int i = 0; i < tempList.getLength(); i++) {
+					Element item = (Element) tempList.item(i);
+					if (item.getNodeName() == "sml:ComponentsList") {
 						componentsList.add(item);
 					}
 				}
 
-				if(componentsList.size() > 1)
-				{
+				if (componentsList.size() > 1) {
 					NodeList component = componentsList.get(0).getChildNodes();
-					if(component.getLength() == 0)
-					{
+					if (component.getLength() == 0) {
 						throw new AssertionError("requires one or more Process !!");
 					}
-					else
-					{
+					else {
 						Boolean checkComponent = false;
 
-						for(int i=0 ; i<component.getLength() ; i++)
-						{
-							Element item = (Element)component.item(i);
-							if(item.getNodeName() == "sml:component")
-							{
+						for (int i = 0; i < component.getLength(); i++) {
+							Element item = (Element) component.item(i);
+							if (item.getNodeName() == "sml:component") {
 								checkComponent = true;
 							}
-						    Assert.assertTrue(checkComponent , "Sub Process Not SimpleProcess!!" );
+							Assert.assertTrue(checkComponent, "Sub Process Not SimpleProcess!!");
 						}
 					}
 				}
-				else
-				{
+				else {
 					throw new AssertionError("componentsList does not exist !!");
 				}
 
 			}
-			else
-			{
+			else {
 				throw new AssertionError("components does not exist !!");
 			}
 
-			if(this.testSubject.getDocumentElement().getElementsByTagName("sml:connections").getLength() == 0)
-			{
+			if (this.testSubject.getDocumentElement().getElementsByTagName("sml:connections").getLength() == 0) {
 				throw new AssertionError("connection does not exist !!");
 			}
 		}
 	}
+
 }

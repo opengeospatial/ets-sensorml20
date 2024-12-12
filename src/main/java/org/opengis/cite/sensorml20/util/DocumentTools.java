@@ -22,167 +22,209 @@ import org.xml.sax.SAXException;
 
 import com.beust.jcommander.internal.Console;
 
-public class DocumentTools {	
-	
+/**
+ * <p>
+ * DocumentTools class.
+ * </p>
+ *
+ */
+public class DocumentTools {
+
 	private static ArrayList<String> ProcessNames = new ArrayList<String>();
-	
-	public static ArrayList<Node> getAllNode(Node node)
-	{
+
+	/**
+	 * <p>
+	 * getAllNode.
+	 * </p>
+	 * @param node a {@link org.w3c.dom.Node} object
+	 * @return a {@link java.util.ArrayList} object
+	 */
+	public static ArrayList<Node> getAllNode(Node node) {
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		nodes.add(node);
-		
-		for(int i=0 ; i<node.getChildNodes().getLength() ; i++)
-		{
+
+		for (int i = 0; i < node.getChildNodes().getLength(); i++) {
 			Node tempNode = node.getChildNodes().item(i);
-			if(tempNode.getLocalName() != null)
-			{
+			if (tempNode.getLocalName() != null) {
 				ArrayList<Node> childs = getAllNode(tempNode);
 				nodes.addAll(childs);
 			}
 		}
 		return nodes;
 	}
-	
-	public static String GetMasterParentNodeName(Node node)
-	{
-		if(ProcessNames.size() == 0)
-		{
+
+	/**
+	 * <p>
+	 * GetMasterParentNodeName.
+	 * </p>
+	 * @param node a {@link org.w3c.dom.Node} object
+	 * @return a {@link java.lang.String} object
+	 */
+	public static String GetMasterParentNodeName(Node node) {
+		if (ProcessNames.size() == 0) {
 			ProcessNames.add("sml:SimpleProcess");
 			ProcessNames.add("sml:AggregateProcess");
 			ProcessNames.add("sml:PhysicalComponent");
 			ProcessNames.add("sml:PhysicalSystem");
 		}
-		
-		if(ProcessNames.contains(node.getNodeName()))
-		{
+
+		if (ProcessNames.contains(node.getNodeName())) {
 			return node.getNodeName();
 		}
-		else
-		{
+		else {
 			Node parentNode = node.getParentNode();
-			if(parentNode != null)
-			{
+			if (parentNode != null) {
 				return GetMasterParentNodeName(node.getParentNode());
 			}
-			else
-			{
+			else {
 				return "";
 			}
 		}
 	}
-	
-	public static ArrayList<Node> GetElementByLocalName(Node node , String localName)
-	{
+
+	/**
+	 * <p>
+	 * GetElementByLocalName.
+	 * </p>
+	 * @param node a {@link org.w3c.dom.Node} object
+	 * @param localName a {@link java.lang.String} object
+	 * @return a {@link java.util.ArrayList} object
+	 */
+	public static ArrayList<Node> GetElementByLocalName(Node node, String localName) {
 		ArrayList<Node> nodes = getAllNode(node);
 		ArrayList<Node> rets = new ArrayList<Node>();
-		
-	    for (Node item : nodes) 
-	    {
-	    	if(item.getLocalName().equals(localName))
-	    	{
-	    		rets.add(item);
-	    	}
-	    }
-	    return rets;
+
+		for (Node item : nodes) {
+			if (item.getLocalName().equals(localName)) {
+				rets.add(item);
+			}
+		}
+		return rets;
 	}
-		
-	public static void MergeReference(Document doc, URI docUri) throws URISyntaxException, SAXException, IOException
-	{
+
+	/**
+	 * <p>
+	 * MergeReference.
+	 * </p>
+	 * @param doc a {@link org.w3c.dom.Document} object
+	 * @param docUri a {@link java.net.URI} object
+	 * @throws java.net.URISyntaxException if any.
+	 * @throws org.xml.sax.SAXException if any.
+	 * @throws java.io.IOException if any.
+	 */
+	public static void MergeReference(Document doc, URI docUri) throws URISyntaxException, SAXException, IOException {
 		System.out.println("Start Merging");
-        if(doc != null)
-        {
-        	//System.out.println("Document is not null");
-        	NodeList typeofNodes = doc.getElementsByTagName("sml:typeOf");
-        	if(typeofNodes.getLength() > 0)
-        	{
-        		Element typeofNode = (Element)typeofNodes.item(0);
-        		//TODO: the href attribute should allow relative URL
-        		String ref = typeofNode.getAttribute("xlink:href");
-        		URI uri = URIUtils.getAbsoluteUri(ref, docUri);
-        		Document merge = URIUtils.parseURI(uri);
-        		DocumentTools.MergeDocument(doc, merge);
-//        		System.out.println("Merged result: ");
-//        		System.out.println(DocumentTools.DocumentToString(doc));
-        		NamedNodeMap docImports = doc.getDocumentElement().getAttributes();
-        		NamedNodeMap mergeImports = merge.getDocumentElement().getAttributes();
-        		
-        		for(int mergeCount = 0 ; mergeCount < mergeImports.getLength() ; mergeCount++)
-        		{
-        			Node mergeItem = mergeImports.item(mergeCount);
-        			Boolean isAdd = true;
-        			for(int docCount = 0 ; docCount < docImports.getLength() ; docCount++)
-        			{
-        				Node docItem = docImports.item(docCount);
-            			if(docItem.getNodeName().equals(mergeItem.getNodeName()))
-            			{
-            				isAdd = false;
-            			}
-        			}
-        			if(isAdd)
-        			{
-        				doc.getDocumentElement().setAttribute(mergeItem.getNodeName(), mergeItem.getNodeValue());
-        			}
-        		}
-        	}
-        }
+		if (doc != null) {
+			// System.out.println("Document is not null");
+			NodeList typeofNodes = doc.getElementsByTagName("sml:typeOf");
+			if (typeofNodes.getLength() > 0) {
+				Element typeofNode = (Element) typeofNodes.item(0);
+				// TODO: the href attribute should allow relative URL
+				String ref = typeofNode.getAttribute("xlink:href");
+				URI uri = URIUtils.getAbsoluteUri(ref, docUri);
+				Document merge = URIUtils.parseURI(uri);
+				DocumentTools.MergeDocument(doc, merge);
+				// System.out.println("Merged result: ");
+				// System.out.println(DocumentTools.DocumentToString(doc));
+				NamedNodeMap docImports = doc.getDocumentElement().getAttributes();
+				NamedNodeMap mergeImports = merge.getDocumentElement().getAttributes();
+
+				for (int mergeCount = 0; mergeCount < mergeImports.getLength(); mergeCount++) {
+					Node mergeItem = mergeImports.item(mergeCount);
+					Boolean isAdd = true;
+					for (int docCount = 0; docCount < docImports.getLength(); docCount++) {
+						Node docItem = docImports.item(docCount);
+						if (docItem.getNodeName().equals(mergeItem.getNodeName())) {
+							isAdd = false;
+						}
+					}
+					if (isAdd) {
+						doc.getDocumentElement().setAttribute(mergeItem.getNodeName(), mergeItem.getNodeValue());
+					}
+				}
+			}
+		}
 	}
-	
-	public static void MergeDocument(Document base , Document merge)
-	{
+
+	/**
+	 * <p>
+	 * MergeDocument.
+	 * </p>
+	 * @param base a {@link org.w3c.dom.Document} object
+	 * @param merge a {@link org.w3c.dom.Document} object
+	 */
+	public static void MergeDocument(Document base, Document merge) {
 		Element mergeRootNode = merge.getDocumentElement();
-		
+
 		NodeList mergeRootChilds = mergeRootNode.getChildNodes();
-		
-		for(int mergeChildCount = 0 ; mergeChildCount < mergeRootChilds.getLength(); mergeChildCount++)
-		{
+
+		for (int mergeChildCount = 0; mergeChildCount < mergeRootChilds.getLength(); mergeChildCount++) {
 			Node kid = mergeRootChilds.item(mergeChildCount).cloneNode(true);
-			/*kid = base.importNode(kid, true);
-			base.getDocumentElement().appendChild(kid);	*/
+			/*
+			 * kid = base.importNode(kid, true);
+			 * base.getDocumentElement().appendChild(kid);
+			 */
 
-			//System.out.println("Merge Count : " + mergeChildCount + " Total : " + mergeRootChilds.getLength() + "Node : " + kid.getNodeName());
-			//kid = base.importN	ode(kid, true);
-			//System.out.println("Node : "  + kid.getNodeName());
+			// System.out.println("Merge Count : " + mergeChildCount + " Total : " +
+			// mergeRootChilds.getLength() + "Node : " + kid.getNodeName());
+			// kid = base.importN ode(kid, true);
+			// System.out.println("Node : " + kid.getNodeName());
 			base.adoptNode(kid);
-			base.getDocumentElement().appendChild(kid);	
+			base.getDocumentElement().appendChild(kid);
 
-		}	
+		}
 	}
-	
-	public static Boolean ValidateNewNameSpace(String pre)
-	{
-		if(pre.equals("sml"))
-		{
+
+	/**
+	 * <p>
+	 * ValidateNewNameSpace.
+	 * </p>
+	 * @param pre a {@link java.lang.String} object
+	 * @return a {@link java.lang.Boolean} object
+	 */
+	public static Boolean ValidateNewNameSpace(String pre) {
+		if (pre.equals("sml")) {
 			return false;
 		}
-		if(pre.equals("gml"))
-		{
+		if (pre.equals("gml")) {
 			return false;
 		}
-		if(pre.equals("swe"))
-		{
+		if (pre.equals("swe")) {
 			return false;
 		}
 		return true;
 	}
-	
-	public static void ElementToStream(Element element, OutputStream out) 
-	{
-		try 
-		{
+
+	/**
+	 * <p>
+	 * ElementToStream.
+	 * </p>
+	 * @param element a {@link org.w3c.dom.Element} object
+	 * @param out a {@link java.io.OutputStream} object
+	 */
+	public static void ElementToStream(Element element, OutputStream out) {
+		try {
 			DOMSource source = new DOMSource(element);
 			StreamResult result = new StreamResult(out);
 			TransformerFactory transFactory = TransformerFactory.newInstance();
 			Transformer transformer = transFactory.newTransformer();
 			transformer.transform(source, result);
-		} catch (Exception ex) 
-		{
+		}
+		catch (Exception ex) {
 		}
 	}
-	 
-	public static String DocumentToString(Document doc) 
-	{
-	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	    ElementToStream(doc.getDocumentElement(), baos);
-	    return new String(baos.toByteArray());
+
+	/**
+	 * <p>
+	 * DocumentToString.
+	 * </p>
+	 * @param doc a {@link org.w3c.dom.Document} object
+	 * @return a {@link java.lang.String} object
+	 */
+	public static String DocumentToString(Document doc) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ElementToStream(doc.getDocumentElement(), baos);
+		return new String(baos.toByteArray());
 	}
+
 }
