@@ -1,6 +1,5 @@
 package org.opengis.cite.sensorml20;
 
-import com.sun.jersey.api.client.Client;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -12,16 +11,16 @@ import java.util.logging.Level;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.stream.StreamSource;
 
-import org.opengis.cite.sensorml20.SuiteAttribute;
-import org.opengis.cite.sensorml20.util.ValidationUtils;
-import org.opengis.cite.sensorml20.TestRunArg;
 import org.opengis.cite.sensorml20.util.ClientUtils;
-import org.opengis.cite.sensorml20.util.XMLUtils;
 import org.opengis.cite.sensorml20.util.TestSuiteLogger;
 import org.opengis.cite.sensorml20.util.URIUtils;
+import org.opengis.cite.sensorml20.util.ValidationUtils;
+import org.opengis.cite.sensorml20.util.XMLUtils;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 import org.w3c.dom.Document;
+
+import jakarta.ws.rs.client.Client;
 
 /**
  * A listener that performs various tasks before and after a test suite is run,
