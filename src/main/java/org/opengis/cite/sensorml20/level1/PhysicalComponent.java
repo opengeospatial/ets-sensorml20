@@ -1,8 +1,8 @@
 package org.opengis.cite.sensorml20.level1;
 
+import org.opengis.cite.sensorml20.BaseFixture;
 import org.testng.Assert;
 import org.testng.SkipException;
-import org.opengis.cite.sensorml20.BaseFixture;
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

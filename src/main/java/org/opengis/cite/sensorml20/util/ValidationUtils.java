@@ -18,6 +18,7 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
 
 import org.apache.xerces.util.XMLCatalogResolver;
 import org.opengis.cite.sensorml20.Namespaces;
@@ -25,8 +26,6 @@ import org.opengis.cite.validation.SchematronValidator;
 import org.opengis.cite.validation.XmlSchemaCompiler;
 import org.w3c.dom.ls.LSResourceResolver;
 import org.xml.sax.SAXException;
-
-import javax.xml.validation.Schema;
 
 /**
  * A utility class that provides convenience methods to support schema validation.

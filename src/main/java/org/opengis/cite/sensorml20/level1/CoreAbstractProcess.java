@@ -1,22 +1,23 @@
 package org.opengis.cite.sensorml20.level1;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.util.DocumentTools;
 import org.opengis.cite.sensorml20.util.URIUtils;
 import org.opengis.cite.sensorml20.util.UrlValidate;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import org.testng.SkipException;
 
 /**
  * <p>

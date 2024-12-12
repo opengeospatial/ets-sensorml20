@@ -3,10 +3,12 @@ package org.opengis.cite.sensorml20.level1;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
+
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.ETSAssert;
 import org.opengis.cite.sensorml20.util.DocumentTools;

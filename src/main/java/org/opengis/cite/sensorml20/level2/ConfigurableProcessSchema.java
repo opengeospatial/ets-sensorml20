@@ -2,7 +2,9 @@ package org.opengis.cite.sensorml20.level2;
 
 import java.net.URL;
 import java.util.ArrayList;
+
 import javax.xml.transform.dom.DOMSource;
+
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.opengis.cite.sensorml20.ETSAssert;
 import org.opengis.cite.sensorml20.util.DocumentTools;

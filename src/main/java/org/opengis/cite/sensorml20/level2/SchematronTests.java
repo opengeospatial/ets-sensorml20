@@ -15,21 +15,19 @@ import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.opengis.cite.sensorml20.level1.DataFixture;
 import org.opengis.cite.sensorml20.ETSAssert;
 import org.opengis.cite.sensorml20.ErrorMessage;
 import org.opengis.cite.sensorml20.ErrorMessageKeys;
 import org.opengis.cite.sensorml20.Namespaces;
 import org.opengis.cite.sensorml20.SuiteAttribute;
 import org.opengis.cite.sensorml20.TestRunArg;
-import org.opengis.cite.sensorml20.util.XMLUtils;
+import org.opengis.cite.sensorml20.level1.DataFixture;
 import org.opengis.cite.sensorml20.util.TestSuiteLogger;
+import org.opengis.cite.sensorml20.util.XMLUtils;
 import org.opengis.cite.validation.SchematronValidator;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.SkipException;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 import org.testng.log4testng.Logger;
 
 /**

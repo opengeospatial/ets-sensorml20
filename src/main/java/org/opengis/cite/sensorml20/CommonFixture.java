@@ -1,8 +1,5 @@
 package org.opengis.cite.sensorml20;
 
-import java.net.URI;
-import java.util.Map;
-
 import org.glassfish.jersey.client.ClientRequest;
 import org.glassfish.jersey.client.ClientResponse;
 import org.opengis.cite.sensorml20.util.ClientUtils;
@@ -13,8 +10,6 @@ import org.testng.annotations.BeforeMethod;
 import org.w3c.dom.Document;
 
 import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 
 /**
  * A supporting base class that sets up a common test fixture. These configuration methods

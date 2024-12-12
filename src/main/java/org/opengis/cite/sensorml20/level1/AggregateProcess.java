@@ -1,6 +1,7 @@
 package org.opengis.cite.sensorml20.level1;
 
 import java.util.ArrayList;
+
 import org.opengis.cite.sensorml20.BaseFixture;
 import org.testng.Assert;
 import org.testng.SkipException;

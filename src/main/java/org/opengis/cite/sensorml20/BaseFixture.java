@@ -1,14 +1,10 @@
 package org.opengis.cite.sensorml20;
 
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
+
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
-import com.thaiopensource.util.Uri;
 
 /**
  * <p>
