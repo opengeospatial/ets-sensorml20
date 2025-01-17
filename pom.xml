@@ -1,10 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <parent>
     <groupId>org.opengis.cite</groupId>
     <artifactId>ets-common</artifactId>
-    <version>13</version>
+    <version>14</version>
   </parent>
+
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ets-sensorml20</artifactId>
   <version>1.1-SNAPSHOT</version>
@@ -12,17 +14,17 @@
 
   <name>Sensor Model Language (SensorML)</name>
   <description>Describe purpose of test suite.</description>
-  <url>http://opengeospatial.github.io/ets-sensorml20/</url>
+  <url>https://opengeospatial.github.io/ets-sensorml20/</url>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
-      <url>http://opensource.org/licenses/Apache-2.0</url>
+      <url>https://opensource.org/licenses/Apache-2.0</url>
     </license>
   </licenses>
 
   <organization>
     <name>Open Geospatial Consortium</name>
-    <url>http://www.opengeospatial.org/</url>
+    <url>https://www.ogc.org/</url>
   </organization>
   <scm>
     <connection>scm:git:https://github.com/opengeospatial/ets-sensorml20.git</connection>
@@ -40,12 +42,15 @@
       <url>https://github.com/</url>
       <timezone>Taipei</timezone>
     </developer>
+    <developer>
+      <name>Dirk Stenger</name>
+      <url>https://github.com/dstenger</url>
+    </developer>
   </developers>
 
   <properties>
     <ets-code>sensorml20</ets-code>
     <spec-version>2.0</spec-version>
-    <docker.teamengine.version>5.4.1</docker.teamengine.version>
   </properties>
 
   <dependencies>
@@ -77,10 +82,10 @@
       <groupId>xerces</groupId>
       <artifactId>xercesImpl</artifactId>
       <exclusions>
-      	<exclusion>
-      		<groupId>xml-apis</groupId>
-      		<artifactId>xml-apis</artifactId>
-      	</exclusion>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -103,20 +108,10 @@
               <mainClass>org.opengis.cite.sensorml20.TestNGController</mainClass>
             </manifest>
           </archive>
-          <descriptors>
-            <descriptor>${basedir}/src/assembly/deps.xml</descriptor>
-            <descriptor>${basedir}/src/assembly/ctl-scripts.xml</descriptor>
-            <descriptor>${basedir}/src/assembly/aio.xml</descriptor>
-          </descriptors>
         </configuration>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-scm-publish-plugin</artifactId>
       </plugin>
     </plugins>
 
@@ -128,28 +123,6 @@
           <configuration>
             <images>
               <image>
-                <name>ogccite/${project.artifactId}</name>
-                <build>
-                  <dockerFileDir>${project.basedir}/src/docker</dockerFileDir>
-                  <tags>
-                    <tag>${project.version}-teamengine-${docker.teamengine.version}</tag>
-                  </tags>
-                  <assembly>
-                    <inline>
-                      <fileSets>
-                        <fileSet>
-                          <directory>${project.build.directory}</directory>
-                          <outputDirectory>.</outputDirectory>
-                          <includes>
-                            <include>dependency/*teamengine-*.war</include>
-                            <include>dependency/*teamengine-*.zip</include>
-                            <include>*ets-*.zip</include>
-                          </includes>
-                        </fileSet>
-                      </fileSets>
-                    </inline>
-                  </assembly>
-                </build>
                 <run>
                   <ports>
                     <port>8081:8080</port>
@@ -164,7 +137,7 @@
               </image>
             </images>
           </configuration>
-        </plugin> 
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -204,18 +177,13 @@
           </plugin>
         </plugins>
       </build>
-    </profile> 
+    </profile>
   </profiles>
 
   <distributionManagement>
-    <repository>
-      <id>sonatype-nexus-staging</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
     <site>
       <id>site</id>
       <url>scm:git:git@github.com:opengeospatial/ets-sensorml20.git</url>
     </site>
   </distributionManagement>
-
 </project>
