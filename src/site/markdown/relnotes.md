@@ -1,5 +1,11 @@
 # SensorML 2.0 Release Notes
 
+## 1.1 (2025-01-27)
+
+Attention: Java 17 and Tomcat 10.1 are required.
+
+- [#62](https://github.com/opengeospatial/ets-sensorml20/issues/62) Migrate test suite to TEAM Engine 6 (Java 17)
+
 ## 1.0 (2021-05-11)
 
 - [#60](https://github.com/opengeospatial/ets-sensorml20/issues/60) Prepare Production release
